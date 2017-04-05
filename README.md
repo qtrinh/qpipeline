@@ -9,4 +9,4 @@ qpipeline
 5. and equally important, allows users to quickly extract and combine data from a large number of samples for further downstream analysis.
 
 ### INSTALLATION
-see [INSTALLATION](INSTALLATION.md)
+see [installation instructions](INSTALLATION.md)
