@@ -4,15 +4,14 @@
 # other external libraries/tools 
 #
 # 
-#EXTERNAL_LIBRARIES=`pwd`/external_libraries
-EXTERNAL_LIBRARIES=external_libraries
+EXTERNAL_TOOLS=external_tools
 
-SAMTOOLS=$(EXTERNAL_LIBRARIES)/samtools/samtools-0.1.18
+SAMTOOLS=$(EXTERNAL_TOOLS)/samtools/samtools-0.1.18
 
-TABIX=$(EXTERNAL_LIBRARIES)/tabix/tabix-0.2.5
+TABIX=$(EXTERNAL_TOOLS)/tabix/tabix-0.2.5
 #TABIX=/u/qtrinh/qtrinh/applications/tabix-0.2.6
 
-GSL=$(EXTERNAL_LIBRARIES)/gsl/gsl-1.9
+GSL=$(EXTERNAL_TOOLS)/gsl/gsl-1.9
 
 
 ################################
