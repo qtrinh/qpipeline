@@ -26,6 +26,7 @@ Recompile both **samtools** and **tabix**
 ```
 cd ${QPIPELINE_HOME}/external_tools/samtools/samtools-0.1.18
 make
+
 cd ${QPIPELINE_HOME}/external_tools/tabix/tabix-0.2.5
 make
 ```
