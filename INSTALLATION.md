@@ -33,7 +33,7 @@ Check to see if **_qpipeline_** is compiled successfully
 If you see the following, then you have successuflly compiled **_qpipeline_**
 ```
 
-A pipeline for processing Next Gen Sequencing data. 
+A collection of utils for Next Gen Sequencing (NGS) data.
 
 Usage:
         qpipeline txt
