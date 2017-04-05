@@ -26,20 +26,26 @@ Recompile both **samtools** and **tabix** binaries to ensure they work on your s
 cd ${QPIPELINE_HOME}
 make
 ```
+Check to see if **_qpipeline_** is compiled successfully
+```
+./qpipeline
+```
+If you see the following, then you have successuflly compiled **_qpipeline_**
+```
+
+A pipeline for processing Next Gen Sequencing data. 
+
+Usage:
+        qpipeline txt
+        ...
+```
+
+
 Add ${QPIPELINE_HOME} to your PATH
 ```
 export PATH=$PATH:$QPIPELINE_HOME
 ```
 Check to see if qpipeline2 is in your path:
 ```
-qpipeline2
-```
-If you see the following, then you have successuflly installed **_qpipeline_**
-```
-
-A pipeline for processing Next Gen Sequencing data. 
-
-Usage:
-        qpipeline2 txt
-        ...
+qpipeline
 ```
