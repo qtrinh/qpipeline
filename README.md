@@ -9,9 +9,9 @@ qpipeline
 5. and equally important, allows users to quickly extract and combine data from a large number of samples for further downstream analysis.
 
 ### INSTALLATION
-**_qpipeline_** uses samtools ( https://sourceforge.net/projects/samtools/files/samtools ) and tabix ( https://sourceforge.net/projects/samtools/files/tabix ).  Both samtools and tabix are available in external_tools directory.
+**_qpipeline_** uses samtools ( https://sourceforge.net/projects/samtools/files/samtools ) and tabix ( https://sourceforge.net/projects/samtools/files/tabix ).  Both samtools and tabix are available in **_external_tools_** directory.
 
-Go to a directory to install **_qpipeline_**
+Go to a directory where to install **_qpipeline_**
 ```s
 # clone qpipeline 
 git clone https://github.com/qtrinh/qpipeline.git
