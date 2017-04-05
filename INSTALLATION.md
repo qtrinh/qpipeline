@@ -1,7 +1,7 @@
 ### INSTALLATION
 **_qpipeline_** uses **samtools** ( https://sourceforge.net/projects/samtools/files/samtools ) and **tabix** ( https://sourceforge.net/projects/samtools/files/tabix ).  Both samtools and tabix are available in **_external_tools_** directory.
 
-Go to a directory where to install **_qpipeline_**
+Select a directory of where to install **_qpipeline_**
 ```
 # clone qpipeline 
 git clone https://github.com/qtrinh/qpipeline.git
@@ -20,8 +20,11 @@ make
 cd ${QPIPELINE_HOME}/external_tools/tabix/tabix-0.2.5
 make
 ```
+Add both **samtools** and **tabix** to your path:
+```
+export PATH=$PATH:$QPIPELINE_HOME
+```
 Compile **_qpipeline_**
-Recompile both **samtools** and **tabix** binaries to ensure they work on your system:
 ```
 cd ${QPIPELINE_HOME}
 make
