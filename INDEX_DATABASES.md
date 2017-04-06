@@ -36,7 +36,7 @@ That is, either '1',..., '22', 'X', 'Y', 'M' or 'chr1',..., 'chr22', 'chrX', 'ch
 The sample input VCF file uses 'chr1',...,'chr22', 'chrX', 'chrY','chrM' so we will add the prefix 'chr' to _common_all_20161122.vcf_ before indexing it.
 ```
 # Again, set FILE so we can cut and paste and reuse all the commands below 
-# for different BED database file when needed 
+# for different VCF database file when needed 
 FILE="common_all_20161122.vcf"
 
 # get just the VCF header
