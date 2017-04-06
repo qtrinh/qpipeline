@@ -23,7 +23,7 @@ Usage:
         qpipeline vcf 
 ```
 
-Each file format has multiple modes supporting different functions.  For example, **_qpipeline tabix_** currently supported two functions: (1) annotate a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
+Each file format has multiple modes supporting different tasks.  For example, **_qpipeline tabix_** currently supported two tasks: (1) annotate a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
 ```
 Utils for annotating VCF files using tabix.
 
@@ -31,4 +31,21 @@ Utils for annotating VCF files using tabix.
 
         -m 2000 annotate a VCF file against a BED database file.
         -m 2020 annotate a VCF file against a VCF database file.
+```
+
+Then, use -m to get usage for a particular task.  For example, **_qpipeline tabix -m 2000_** gives usage and example on how to annotate a VCF file against a BED database file:
+```
+Utils for annotating VCF files using tabix.
+
+        qpipeline tabix [ -m mode ]  [ options ]
+
+        -m 2000 annotate a VCF file against a BED database file.
+                -d TABIX_DATABASE_FILE  database file indexed by tabix ( .gz ).
+                -q STR  prefix string to annotate.  e.g., ON_TARGET.
+                -i FILE input VCF file.
+
+                Example:
+                        qpipeline tabix -m 2000 -d test_data/vcf/target.txt.sorted.gz -i test_data/vcf/sample.vcf -q ON_TARGET
+
+        Missing input file (-i).  Please see usage above!
 ```
