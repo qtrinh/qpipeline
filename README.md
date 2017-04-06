@@ -11,7 +11,7 @@ qpipeline
 ### INSTALLATION
 see [installation instructions](INSTALLATION.md)
 ### USAGE
-**_qpipeline_** is designed to work with different file formats.  Below are usage information for using **_qpipeline_** with differnt file formats
+**_qpipeline_** is designed to work with different file formats.  Below are usage information for using **_qpipeline_** with different file formats
 
 * VCF
 
