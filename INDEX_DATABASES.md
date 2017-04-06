@@ -33,6 +33,7 @@ The sample input VCF file uses 'chr1',...,'chr22', 'chrX', 'chrY','chrM' so we w
 ```
 # get VCF header
 cat common_all_20161122.vcf | grep ^# > common_all_20161122.vcf.modified.vcf
+
 # add 'chr' to chromosomes
 cat common_all_20161122.vcf | grep -v ^# | awk '{ print "chr"$0 }' >> common_all_20161122.vcf.modified.vcf
 ```
