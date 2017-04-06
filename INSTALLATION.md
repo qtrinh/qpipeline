@@ -43,3 +43,4 @@ Usage:
         qpipeline txt
         ...
 ```
+Now you are ready to use **_qpipeline_**!
