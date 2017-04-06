@@ -6,7 +6,6 @@
 
 
 ### Annotate input VCF files against a BED database file
-To be updated
-
+Use **tabix** to index the BED database file - see [INDEX_DATABASES](#INDEX_DATABASES.md) 
 ### Annotate input VCF files against a VCF database file such as COSMIC or dbSNP
 To be updated
