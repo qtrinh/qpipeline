@@ -13,17 +13,17 @@ see [installation instructions](INSTALLATION.md)
 ## USAGE
 **_qpipeline_** is designed to work with different file formats.  Run **_qpipeline_** by itself to see what file formats currently supported
 ```
-cn3-87 > ./qpipeline 
+qpipeline 
 
 Written by Quang M Trinh <quang.trinh@gmail.com>. 
 
 A collection of utils for Next Gen Sequencing (NGS) data.
 
 Usage:
-        ./qpipeline txt 
-        ./qpipeline fasta
-        ./qpipeline fastq
-        ./qpipeline tabix
-        ./qpipeline vcf 
+        qpipeline txt 
+        qpipeline fasta
+        qpipeline fastq
+        qpipeline tabix
+        qpipeline vcf 
 ```
 
