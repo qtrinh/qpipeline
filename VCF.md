@@ -1,6 +1,6 @@
 
 
-## Using **_qpipeline_** with input VCF files:
+## Using **_qpipeline_** with input VCF files to:
 * [Annotate input VCF files against a BED database file](#Annotate-input-VCF-files-against-a-BED-database-file)
 * [Annotate input VCF files with a VCF database file such as COSMIC or dbSNP](#Annotate-input-VCF-file-with-VCF-database-file)  
 
