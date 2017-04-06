@@ -14,5 +14,16 @@ cd ${QPIPELINE_HOME}/test_data/vcf
 
 qpipeline tabix -m 2000 -d target.txt.sorted.gz -i sample.vcf -q ON_TARGET > sample.vcf.out
 ```
+Count number of entries in _sample.vcf.out_
+```
+cat sample.vcf.out | grep -v ^# | wc -l
+10
+```
+Count number of entries in _sample.vcf.out_ that are on target 
+```
+cat sample.vcf.out | grep ON_TARGET=1 | wc -l
+2
+```
+
 ### Annotate input VCF files against a VCF database file such as COSMIC or dbSNP
 To be updated
