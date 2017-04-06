@@ -6,7 +6,7 @@
 
 
 ## Index a BED database file
-The instructions provided here can be used to create any BED database files.  For simplicity, an example BED file _target.bed_ is provided in _${QPIPELINE_HOME}/test_data/vcf_.  
+The instructions provided here can be used to create any BED database files.  For simplicity, a simple and an example BED file called _target.bed_ is provided in _${QPIPELINE_HOME}/test_data/vcf_.  
 
 Change directory to _${QPIPELINE_HOME}/test_data/vcf_.  To create a BED database file for _target.bed_, do the following
 ```
