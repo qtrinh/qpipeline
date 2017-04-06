@@ -48,7 +48,7 @@ Add ${QPIPELINE_HOME} to your path
 ```
 export PATH=$PATH:$QPIPELINE_HOME
 ```
-Check to see if qpipeline is in your path
+Check to see if **_qpipeline_** is in your path
 ```
 qpipeline
 ```
