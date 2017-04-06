@@ -13,8 +13,6 @@ see [installation instructions](INSTALLATION.md)
 ## USAGE
 **_qpipeline_** is designed to work with different file formats.  Run **_qpipeline_** by itself to see what file formats currently supported
 ```
-Written by Quang M Trinh <quang.trinh@gmail.com>. 
-
 A collection of utils for Next Gen Sequencing (NGS) data.
 
 Usage:
@@ -27,8 +25,6 @@ Usage:
 
 Each file format has multiple modes supporting different functions.  For example, **_qpipeline tabix_** currently supported two functions: (1) annotating a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
 ```
-Written by Quang M Trinh <quang.trinh@gmail.com>. 
-
 Utils for annotating VCF files using tabix.
 
         qpipeline tabix [ -m mode ]  [ options ]
