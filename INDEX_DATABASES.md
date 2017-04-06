@@ -10,6 +10,8 @@ For simplicity, an example target file _target.bed_ is provided in _${QPIPELINE_
 
 Do the following to create a BED file database
 ```
+# set FILE so we can cut and paste and reuse all the commands below 
+# for different BED database file when needed 
 FILE="target.bed"
 
 #sort the file by chromosomes, start, and end
@@ -33,19 +35,22 @@ That is, either '1',..., '22', 'X', 'Y', 'M' or 'chr1',..., 'chr22', 'chrX', 'ch
 
 The sample input VCF file uses 'chr1',...,'chr22', 'chrX', 'chrY','chrM' so we will add the prefix 'chr' to _common_all_20161122.vcf_ before indexing it.
 ```
-# get VCF header
-cat common_all_20161122.vcf | grep ^# > common_all_20161122.vcf.modified.vcf
+# Again, set FILE so we can cut and paste and reuse all the commands below 
+# for different BED database file when needed 
+FILE="common_all_20161122.vcf"
+
+# get just the VCF header
+cat $FILE | grep ^# >  ${FILE}.modified.vcf
 
 # add 'chr' to chromosomes
-cat common_all_20161122.vcf | grep -v ^# | awk '{ print "chr"$0 }' >> common_all_20161122.vcf.modified.vcf
-```
-Zip and index using **tabix**
-```
-# zip 
-bgzip common_all_20161122.vcf.modified.vcf 
+cat $FILE | grep -v ^# | awk '{ print "chr"$0 }' >> ${FILE}.modified.vcf
+
+# Zip and index using **tabix**
+
+bgzip  ${FILE}.modified.vcf
 
 # index using VCF format 
-tabix -p vcf common_all_20161122.vcf.modified.vcf.gz 
+tabix -p vcf  ${FILE}.modified.vcf.gz 
 ```
 **tabix** should generated the index file _${QPIPELINE_HOME}/test_data/vcf/common_all_20161122.vcf.modified.vcf.gz.tbi_.
 
