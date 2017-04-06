@@ -1,11 +1,11 @@
 
 
-## Index database files with **tabix**:
+# Index database files with **tabix**:
 * [Index a BED database file](#index-a-bed-database-file)
 * [Index a VCF database file](#index-a-vcf-database-file)
 
 
-### Index a BED database file
+## Index a BED database file
 As an example, we use the file _target.txt_ provided in _${QPIPELINE_HOME}/test_data/vcf_ 
 
 Sort the BED file by chromosomes, start, and end
@@ -23,7 +23,7 @@ tabix -p bed target.txt.sorted.gz
 **tabix** should generated the index file _${QPIPELINE_HOME}/test_data/vcf/target.txt.sorted.gz.tbi_.
 
 
-### Index a VCF database file 
+## Index a VCF database file 
 As an example, we use the file _common_all_20161122.vcf_ in _${QPIPELINE_HOME}/test_data/vcf_.  This file is a small subset of chromsome 1 downloaded from ftp://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606/VCF/common_all_20161122.vcf.gz
 
 NOTE: Both the input VCF file and the VCF database file must have the same chromosome format. 
