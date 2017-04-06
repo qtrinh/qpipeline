@@ -1,12 +1,12 @@
 
 
-## Using **_qpipeline_** with VCF file:
-* [Annotate VCF files against a BED database file such as targeted file](#Annotate-VCF-files-against-a-BED-database-file-such-as-targeted-file)
-* [Annotate VCF files with a VCF database file such as COSMIC or dbSNP](#Annotate-VCF-file-with-VCF-database-file)  
+## Using **_qpipeline_** with input VCF files:
+* [Annotate input VCF files against a BED database file](#Annotate-input-VCF-files-against-a-BED-database-file)
+* [Annotate input VCF files with a VCF database file such as COSMIC or dbSNP](#Annotate-input-VCF-file-with-VCF-database-file)  
 
 
-### Annotate VCF files against a BED database file such as targeted file
+### Annotate input VCF files against a BED database file
 To be updated
 
-### Annotate VCF files against a VCF database file such as COSMIC or dbSNP
+### Annotate input VCF files against a VCF database file such as COSMIC or dbSNP
 To be updated
