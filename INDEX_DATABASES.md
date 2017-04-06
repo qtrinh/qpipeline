@@ -43,7 +43,6 @@ bgzip common_all_20161122.vcf.modified.vcf
 
 # index using VCF format 
 tabix -p vcf common_all_20161122.vcf.modified.vcf.gz 
-
 ```
 **tabix** should generated the index file _${QPIPELINE_HOME}/test_data/vcf/common_all_20161122.vcf.modified.vcf.gz.tbi_.
 
