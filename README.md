@@ -12,4 +12,4 @@ qpipeline
 see [installation instructions](INSTALLATION.md)
 
 ## USAGE
-see [usage instructions](#USAGE.md)
+see [usage instructions](USAGE.md)
