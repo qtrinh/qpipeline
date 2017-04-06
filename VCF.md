@@ -12,7 +12,7 @@ Go to _${QPIPELINE_HOME}/test_data/vcf_ directory and annotate _sample.vcf_ with
 ```
 cd ${QPIPELINE_HOME}/test_data/vcf
 
-qpipeline tabix -m 2000 -d target.txt.sorted.gz -i sample.vcf -q ON_TARGET > sample.vcf.out
+qpipeline tabix -m 2000 -d target.bed.sorted.gz -i sample.vcf -q ON_TARGET > sample.vcf.out
 ```
 Count number of entries in _sample.vcf.out_
 ```
