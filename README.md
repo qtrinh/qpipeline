@@ -45,7 +45,7 @@ Utils for annotating VCF files using tabix.
                 -i FILE input VCF file.
 
                 Example:
-                        qpipeline tabix -m 2000 -d test_data/vcf/target.txt.sorted.gz -i test_data/vcf/sample.vcf -q ON_TARGET
+                        qpipeline tabix -m 2000 -d test_data/vcf/target.bed.sorted.gz -i test_data/vcf/sample.vcf -q ON_TARGET
 
         Missing input file (-i).  Please see usage above!
 ```
