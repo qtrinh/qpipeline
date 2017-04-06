@@ -6,6 +6,8 @@
 
 
 ### Annotate input VCF files against a BED database file
+The following section uses sample files provided in _${QPIPELINE_HOME}/test_data/vcf_ directory.
+
 Use **tabix** to index the BED database file - see [Index a BED database file](INDEX_DATABASES.md#index-a-bed-database-file) 
 
 Go to _${QPIPELINE_HOME}/test_data/vcf_ directory and annotate _sample.vcf_ with _target.txt.sorted.gz_ 
