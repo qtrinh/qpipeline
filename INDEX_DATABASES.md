@@ -6,7 +6,7 @@
 
 
 ## Index a BED database file
-For simplicity, an example target file _target.bed_ is provided in _${QPIPELINE_HOME}/test_data/vcf_ 
+For simplicity, an example BED file _target.bed_ is provided in _${QPIPELINE_HOME}/test_data/vcf_ 
 
 Do the following to create a BED file database
 ```
