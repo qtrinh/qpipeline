@@ -20,7 +20,7 @@ Index the zipped file using **tabix**
 ```
 tabix -p bed target.txt.sorted.gz
 ```
-**tabix** should generated the index file _target.txt.sorted.gz.tbi_.
+**tabix** should generated the index file _ ${QPIPELINE_HOME}/test_data/vcf/target.txt.sorted.gz.tbi_.
 
 
 ### Index a VCF database file 
