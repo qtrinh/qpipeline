@@ -39,3 +39,4 @@ Utils for annotating VCF files using tabix.
 
         Missing input file (-i).  Please see usage above!
 ```
+Typically, databases are zipped and indexed by **tabix** - see [instructions on how to index databases for tabix](INDEX_DATABASES.md)
