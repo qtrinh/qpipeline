@@ -9,7 +9,7 @@
 Use **tabix** to index the BED database file - see [Index a BED database file](INDEX_DATABASES.md#index-a-bed-database-file) 
 
 ```
-qpipeline tabix -m 2000 qpipeline tabix -m 2000 -d test_data/vcf/target.txt.sorted.gz -i test_data/vcf/sample.vcf -q ON_TARGET  | less
+qpipeline tabix -m 2000 -d test_data/vcf/target.txt.sorted.gz -i test_data/vcf/sample.vcf -q ON_TARGET  | less
 ```
 ### Annotate input VCF files against a VCF database file such as COSMIC or dbSNP
 To be updated
