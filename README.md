@@ -23,7 +23,7 @@ Usage:
         qpipeline vcf 
 ```
 
-Each file format has multiple modes supporting different functions.  For example, **_qpipeline tabix_** currently supported two functions: (1) annotating a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
+Each file format has multiple modes supporting different functions.  For example, **_qpipeline tabix_** currently supported two functions: (1) annotate a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
 ```
 Utils for annotating VCF files using tabix.
 
