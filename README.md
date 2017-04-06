@@ -33,7 +33,7 @@ Utils for annotating VCF files using tabix.
         -m 2020 annotate a VCF file against a VCF database file.
 ```
 
-Then, use -m to get usage for a particular task.  For example, **_qpipeline tabix -m 2000_** gives usage and example on how to annotate a VCF file against a BED database file:
+Use -m argument to get usage for a particular task.  For example, **_qpipeline tabix -m 2000_** gives usage and example on how to annotate a VCF file against a BED database file:
 ```
 Utils for annotating VCF files using tabix.
 
