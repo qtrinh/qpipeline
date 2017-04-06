@@ -34,7 +34,7 @@ void tabix_main_Usage(int argc, char *argv[], struct input_data *id) {
 			printf("\n\t\t-i FILE\tinput VCF file.");
 			//printf("\n\t\t-N\tdo not include data from TABIX_DATABASE_FILE in output.  Default, all columns in TABIX_DATABASE_FILE are included in output.");
 
-			printf ("\n\n\t\tExample:\n\t\t\t%s tabix -m %d -d test_data/vcf/target.txt.gz -i test_data/vcf/sample.vcf -q ON_TARGET", argv[0], MODE_TABIX_ANNOTATE_VCF_WITH_BED);
+			printf ("\n\n\t\tExample:\n\t\t\t%s tabix -m %d -d test_data/vcf/target.bed.gz -i test_data/vcf/sample.vcf -q ON_TARGET", argv[0], MODE_TABIX_ANNOTATE_VCF_WITH_BED);
 		}
 	}
 
