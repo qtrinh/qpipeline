@@ -8,7 +8,7 @@
 ## Index a BED database file
 For simplicity, an example BED file _target.bed_ is provided in _${QPIPELINE_HOME}/test_data/vcf_ 
 
-Do the following to create a BED file database
+To create a BED database file, do the following
 ```
 # set FILE so we can cut and paste and reuse all the commands below 
 # for different BED database file when needed 
@@ -34,6 +34,8 @@ NOTE: Both the input VCF file and the VCF database file must have the same chrom
 That is, either '1',..., '22', 'X', 'Y', 'M' or 'chr1',..., 'chr22', 'chrX', 'chrY', 'chrM'.  Check to make sure your input VCF file and your VCF database file have the same format before indexing your VCF database file.
 
 The sample input VCF file uses 'chr1',...,'chr22', 'chrX', 'chrY','chrM' so we will add the prefix 'chr' to _common_all_20161122.vcf_ before indexing it.
+
+To create a VCF database file, do the following
 ```
 # Again, set FILE so we can cut and paste and reuse all the commands below 
 # for different VCF database file when needed 
