@@ -1,8 +1,8 @@
 
 
 ## Index database files with **tabix**:
-* [Index a BED database file](#Index-a-BED-database-file)
-* [Index a VCF database file](#Index-a-VCF-database-file)
+* [Index a BED database file](#index-a-bed-database-file)
+* [Index a VCF database file](#index-a-vcf-database-file)
 
 
 ### Index a BED database file
