@@ -17,7 +17,7 @@ FILE="target.bed"
 #sort the file by chromosomes, start, and end
 cat $FILE  | sort -k1,1 -k2,2n -k3,3n > ${FILE}.sorted
 
-# Zip the sorted file using bgzip 
+# Zip the sorted file using bgzip ( bgzip is part of tabix )
 bgzip ${FILE}.sorted
 
 
