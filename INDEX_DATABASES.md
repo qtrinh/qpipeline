@@ -34,7 +34,7 @@ The instructions provided here can be used to create any VCF database files.  Fo
 NOTE: Both the input VCF file and the VCF database file must have the same chromosome format. 
 That is, either '1',..., '22', 'X', 'Y', 'M' or 'chr1',..., 'chr22', 'chrX', 'chrY', 'chrM'.  Check to make sure your input VCF file and your VCF database file have the same format before indexing your VCF database file.
 
-The sample input VCF file ( ${QPIPELINE_HOME}/test_data/vcf/sample.vcf_ ) uses 'chr1',...,'chr22', 'chrX', 'chrY','chrM' so we will add the prefix 'chr' to _common_all_20161122.vcf_ before indexing it.
+The sample input VCF file ( _${QPIPELINE_HOME}/test_data/vcf/sample.vcf_ ) uses 'chr1',...,'chr22', 'chrX', 'chrY','chrM' so we will add the prefix 'chr' to _common_all_20161122.vcf_ before indexing it.
 
 To create a VCF database file, do the following
 ```
