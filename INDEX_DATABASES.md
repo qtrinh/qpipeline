@@ -43,10 +43,8 @@ Change directory to _${QPIPELINE_HOME}/test_data/vcf_.  To create a tabix databa
 # for different VCF database file when needed 
 FILE="common_all_20161122.vcf"
 
-# get just the VCF header
+# get just the VCF header then add 'chr' to all entries
 cat $FILE | grep ^# >  ${FILE}.modified.vcf
-
-# add 'chr' to chromosomes
 cat $FILE | grep -v ^# | awk '{ print "chr"$0 }' >> ${FILE}.modified.vcf
 
 # Zip and index using **tabix**
