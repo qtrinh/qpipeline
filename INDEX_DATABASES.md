@@ -36,7 +36,8 @@ That is, either '1',..., '22', 'X', 'Y', 'M' or 'chr1',..., 'chr22', 'chrX', 'ch
 
 The sample input VCF file ( _${QPIPELINE_HOME}/test_data/vcf/sample.vcf_ ) uses 'chr1',...,'chr22', 'chrX', 'chrY','chrM' so we will add the prefix 'chr' to _common_all_20161122.vcf_ before indexing it.
 
-To create a VCF database file, do the following
+Change directory to _${QPIPELINE_HOME}/test_data/vcf_.  To create a tabix databases file for _common_all_20161122.vcf_, d the following
+
 ```
 # Again, set FILE so we can cut and paste and reuse all the commands below 
 # for different VCF database file when needed 
