@@ -48,7 +48,7 @@ cat $FILE | grep ^# >  ${FILE}.modified.vcf
 cat $FILE | grep -v ^# | awk '{ print "chr"$0 }' >> ${FILE}.modified.vcf
 
 
-# Zip and index using **tabix**
+# bgzip the newly created file ( bgzip is part of tabix )
 bgzip  ${FILE}.modified.vcf
 
 
