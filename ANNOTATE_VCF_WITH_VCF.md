@@ -37,5 +37,5 @@ tabix -p vcf  ${FILE}.modified.vcf.gz
 ## Annotate input file against the VCF database
 
 ```
-${QPIPELINE_HOME}/qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz   -q COMMON_ALL
+${QPIPELINE_HOME}/qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz   -q COMMON_ALL > sample.common_all.vcf 
 ```
