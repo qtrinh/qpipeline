@@ -1,8 +1,5 @@
 
-
-
-
-# Create and index a VCF database file 
+## Create and index a VCF database file 
 The instructions provided here can be used to create any VCF database files.  For simplicity, a partial VCF file from NCBI called _common_all_20161122.vcf_ is provided in _${QPIPELINE_HOME}/test_data/vcf_ directory.  This file contained only small number of entries from chromsome 1 downloaded from ftp://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606/VCF/common_all_20161122.vcf.gz
 
 NOTE: Both the input VCF file and the VCF database file must have the same chromosome format. 
