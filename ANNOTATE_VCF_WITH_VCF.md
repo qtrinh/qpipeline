@@ -41,14 +41,17 @@ tabix -p vcf  ${FILE}.modified.vcf.gz
 
 ## Annotate input file against the VCF database
 
-Annotate _sample.vcf_ against the _common_all_20161122.vcf.modified.vcf.gz_ database 
+Annotate _sample.vcf_ with the _common_all_20161122.vcf.modified.vcf.gz_ database and direct output to _sample.common_all.vcf_
 ```
-${QPIPELINE_HOME}/qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q dbSNP_COMMON > sample.common_all.vcf 
+${QPIPELINE_HOME}/qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q COMMON_ALL > sample.common_all.vcf 
 ```
-where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage )
+where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage info )
 ```
 -i input VCF file 
 -d bgziped and tabix indexed VCF database file 
--q identifer string for the VCF database.  For example, dbSNP_COMMON.
+-q VCF database identifer.  For example, COMMON_ALL.
 ```
+In the annotation command above, the input VCF file is _sample.vcf_, the bgzipped and tabix indexed VCF database is _common_all_20161122.vcf.modified.vcf.gz_, the VCF database identifier is _COMMON_ALL_ and the rediected output file is _sample.COMMON_ALL.vcf_.
+
+dbSNP_COMMON=1,1,dbSNP_COMMON_VARIANT_MATCHED<D7>chr1<
 
