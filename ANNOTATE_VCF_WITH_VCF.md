@@ -43,11 +43,12 @@ tabix -p vcf  ${FILE}.modified.vcf.gz
 
 Annotate _sample.vcf_ against the _common_all_20161122.vcf.modified.vcf.gz_ database 
 ```
-${QPIPELINE_HOME}/qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q COMMON_ALL > sample.common_all.vcf 
+${QPIPELINE_HOME}/qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q dbSNP_COMMON > sample.common_all.vcf 
+```
+where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage )
+```
+-i input VCF file 
+-d bgziped and tabix indexed VCF database file 
+-q identifer string for the VCF database.  For example, dbSNP_COMMON.
 ```
 
-To get usage of mode 2020, do the following
-
-```
-( ${QPIPELINE_HOME}/qpipeline tabix -m 2020
-```
