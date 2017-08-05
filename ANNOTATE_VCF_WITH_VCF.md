@@ -53,5 +53,4 @@ where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage info )
 ```
 In the annotation command above, the input VCF file is _sample.vcf_, the bgzipped and tabix indexed VCF database is _common_all_20161122.vcf.modified.vcf.gz_, the VCF database identifier is _COMMON_ALL_ and the rediected output file is _sample.COMMON_ALL.vcf_.
 
-dbSNP_COMMON=1,1,dbSNP_COMMON_VARIANT_MATCHED<D7>chr1<
 
