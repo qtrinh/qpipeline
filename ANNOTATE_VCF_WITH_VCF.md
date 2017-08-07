@@ -39,7 +39,7 @@ tabix -p vcf  ${FILE}.modified.vcf.gz
 ```
 
 
-## Annotate input file against the VCF database
+## Annotate input VCF file against the VCF database file
 
 Annotate _sample.vcf_ with the _common_all_20161122.vcf.modified.vcf.gz_ database and direct output to _sample.common_all.vcf_
 ```
