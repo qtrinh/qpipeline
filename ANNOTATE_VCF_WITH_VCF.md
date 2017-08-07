@@ -43,7 +43,7 @@ tabix -p vcf  ${FILE}.modified.vcf.gz
 
 Annotate _sample.vcf_ with the _common_all_20161122.vcf.modified.vcf.gz_ database and direct output to _sample.common_all.vcf_
 ```
-${QPIPELINE_HOME}/qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q COMMON_ALL > sample.COMMON_ALL.vcf 
+qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q COMMON_ALL > sample.COMMON_ALL.vcf 
 ```
 where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage info )
 ```
