@@ -143,8 +143,8 @@ printf $fh "\t%.2f",$xCoverage25;
 printf $fh "\t%.2f",$xCoverage50;
 close $fh;
 
-# cleaning up 
-#system "rm $OUTPUT_FILE.* ";
+# cleaning up temporary and intermediate files 
+system "rm $OUTPUT_FILE.* ";
 print "\n";
 
 exit (0);
