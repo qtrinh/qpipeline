@@ -26,6 +26,9 @@ char ** my_string_arrayOfChars2arrayOfStrings(struct input_data *id, char input[
 	char **array ;
 	int localVerbose = 0;
 
+	if (id->verbose && localVerbose) 
+		printf ("\n[%s:%d] - input string is '%s' .. \n", __FILE__, __LINE__, input);
+
 	// count the number of strings separated by delimeter
 	n = 0;
 	while (*ptr) {
@@ -48,11 +51,11 @@ char ** my_string_arrayOfChars2arrayOfStrings(struct input_data *id, char input[
 	ptr = input;
 	i = 0;
 	n = 0;
-	while (*ptr) {
+	while ((*ptr) && (*ptr != '\0')) {
 		if (*ptr == delimeter) {
 			str[i] = '\0';
 			if (localVerbose && id->verbose)
-				printf ("\n[%s:%d] - complete parsing string '%s' ( index %d ) ", __FILE__, __LINE__, str, n); fflush(stdout);
+				printf ("\n[%s:%d] - complete parsing sub string '%s' ( index %d ) ", __FILE__, __LINE__, str, n); fflush(stdout);
 			array[n] = (char *) malloc ((strlen(str) + 1)* sizeof(char));
 			strcpy(array[n], str);
 			n++;
@@ -65,8 +68,9 @@ char ** my_string_arrayOfChars2arrayOfStrings(struct input_data *id, char input[
 	}
 	// get the last string 
 	str[i] = '\0';
+	
 	if (localVerbose && id->verbose)
-		printf ("\n[%s:%d] - complete parsing string '%s' ( index %d ) ", __FILE__, __LINE__, str, *length); fflush(stdout);
+		printf ("\n[%s:%d] - complete parsing sub string '%s' ( index %d ) ", __FILE__, __LINE__, str, n); fflush(stdout);
 	array[n] = (char *) malloc ((strlen(str)+1) * sizeof(char));
 	strcpy(array[n], str);
 	*length = n+1;

@@ -455,8 +455,11 @@ void vcf_MODE_VCF_PARSE_INFO_COLUMN_FOR_KEY(struct input_data *id, struct output
 		}
 
 		if (strstr(id->line,"#CHROM")) {
-			utils_addTextHeader(textHeaderStr, key);
-			printf ("%s\n", textHeaderStr);
+			if (minValue == INT_MIN)  {
+				// print TEXT_HEADER_ROW only when we do parsing
+				utils_addTextHeader(textHeaderStr, key);
+				printf ("%s\n", textHeaderStr);
+			}
 
 			printf ("%s", id->line);
 			vcf_parseHEADER(id, myVCF);
@@ -693,6 +696,9 @@ void vcf_MODE_VCF_PARSE_FORMAT_COLUMN_FOR_KEY(struct input_data *id, struct outp
 	char **data;
 	int j;
 	int attributeIndex;
+	char textHeaders[1024];
+
+	int text_header_row = 0;
 
 
    id->inputFile = fopen(id->inputFileName, "r");
@@ -705,16 +711,71 @@ void vcf_MODE_VCF_PARSE_FORMAT_COLUMN_FOR_KEY(struct input_data *id, struct outp
 	// read input file 
    while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
 
+
+		if (strstr(id->line,TEXT_HEADER_ROW)) {
+
+			text_header_row = 1;
+
+			// remove '\n' 
+			id->line[strlen(id->line)-1] = '\0';
+
+			myVCF->textHeaders = input_data_parseLineMem(id, id->line, '\t', &(myVCF->textHeadersN));
+			if (id->verbose)
+				input_data_printParsedLineMemDebugging(myVCF->textHeaders,myVCF->textHeadersN);
+			continue;
+		}
+
 		if (strstr(id->line,"#CHROM")) {
-			printf ("%s", id->line);
 			vcf_parseHEADER(id, myVCF);
 			passes = (int *) malloc (sizeof(int) * myVCF->numberOfSamples);
 			data = (char **) malloc (sizeof(char) * myVCF->numberOfSamples);
+			if (text_header_row == 0) {
+				// if there is no TEXT_HEADER_ROW line yet 
+				//strcpy(textHeader,TEXT_HEADER_ROW);
+			}
+			strcpy(textHeaders,"");
+			char str[1024];
 			for (i = 0; i < myVCF->numberOfSamples; i++) {
 				passes[i] = 0;
 				data[i] = (char *) malloc (1024 * sizeof(char));
 				strcpy(data[i],"");
+
+				//sprintf(str,"%s_SAMPLE_NAME\t%s_%s\t",myVCF->sampleNames[i],myVCF->sampleNames[i],key);
+				sprintf(str,"%s_%s\t",myVCF->sampleNames[i],key);
+				strcat(textHeaders,str);
 			}
+			if (text_header_row == 0) {
+				textHeaders[strlen(textHeaders)-1] = '\0';
+				if (value == INT_MIN)
+					// print TEXT_HEADER_ROW only when we do parsing
+					printf ("%s%s\n", TEXT_HEADER_ROW, textHeaders);
+			} else {
+				if (value == INT_MIN)
+					// print TEXT_HEADER_ROW only when we do parsing
+					printf ("%s%s", TEXT_HEADER_ROW, textHeaders);
+
+				// extract the first header and print 
+				for (i = 0; i < strlen(myVCF->textHeaders[1]); i++) {
+					int k, j ;
+					if ((myVCF->textHeaders[1][i] == ':') && (myVCF->textHeaders[1][i+1] == ':')) {
+						k = i+2;
+						j = 0;
+						for (k = i+2; k < strlen(myVCF->textHeaders[1]); k++) {
+							str[j] = myVCF->textHeaders[1][k];
+							j++;
+						}
+						str[j] = '\0';
+						// so we can terminate the for loop 
+						i = strlen(myVCF->textHeaders[1]);
+					}
+				}
+				printf ("%s", str);
+				for (i = 2; i <= myVCF->textHeadersN; i++) {
+					printf ("\t%s", myVCF->textHeaders[i]);
+				}
+				printf ("\n");
+			}
+			printf ("%s\n", id->line);
 			continue;
 		}
 
@@ -777,10 +838,10 @@ void vcf_MODE_VCF_PARSE_FORMAT_COLUMN_FOR_KEY(struct input_data *id, struct outp
 				// for each sample 
 				if ((atof(myVCF->formatValues[sampleIndex][attributeIndex]) >= value) || (value == INT_MIN)) {
 					if (strlen(data[sampleIndex]) == 0) {
-						sprintf (tmp,"%s\t%s=%s", myVCF->sampleNames[sampleIndex], myVCF->formatKeys[attributeIndex],myVCF->formatValues[sampleIndex][attributeIndex]);
+						sprintf (tmp,"%s_%s=%s", myVCF->sampleNames[sampleIndex], myVCF->formatKeys[attributeIndex],myVCF->formatValues[sampleIndex][attributeIndex]);
 						strcpy(data[sampleIndex], tmp);
 					} else {
-						sprintf (tmp,"\t%s\t%s=%s", myVCF->sampleNames[sampleIndex], myVCF->formatKeys[attributeIndex],myVCF->formatValues[sampleIndex][attributeIndex]);
+						sprintf (tmp,"\t%s_%s=%s", myVCF->sampleNames[sampleIndex], myVCF->formatKeys[attributeIndex],myVCF->formatValues[sampleIndex][attributeIndex]);
 						strcat(data[sampleIndex], tmp);
 					}
 

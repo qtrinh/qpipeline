@@ -33,6 +33,15 @@ void txt_main_Usage(int argc, char *argv[], struct input_data *id) {
 			printf("\n\n\t\tExample:\n\t\t\t%s txt -m %d -i test_data/txt/data.txt", argv[0], MODE_TXT_COUNT_ENTRY);
 		}
 	}
+	if ((id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) || (id->mode == 0))  {
+		printf("\n\t-m %d\textract columns from file.",MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
+		if ((id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) )  {
+			printf("\n\t\t-i FILE\tinput txt file.");
+			printf("\n\t\t-s STR\tcolumn names to be extracted in double quotes and separated by ','.  For example, \"filename,count\"");
+			printf("\n\t\t-A\talso print all other columns following columns identified by -s ");
+			printf("\n\n\t\tExample:\n\t\t\t%s txt -m %d -i test_data/txt/data.txt", argv[0], MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
+		}
+	}
 
 	printf("\n\n");
 }
@@ -49,15 +58,23 @@ void txt_main(int argc, char *argv[]) {
 	char ignoreLinesStartingWith = '#';
 
 	char secondInputFileName[1024] = "";
-	char str[1024] = "";
+	char str[1000000] = "";
 
-	while ((c = getopt(argc, argv, "m:i:j:q:k:vH")) != -1) {
+	int alsoPrintOtherColumns = 0;
+
+	while ((c = getopt(argc, argv, "s:m:i:j:q:k:vAH")) != -1) {
 		switch (c) {
+		case 'A':
+			alsoPrintOtherColumns = 1;
+			break;
 		case 'm':
 			id->mode = atoi(optarg);
 			break;
 		case 'q':
 			strcpy(id->inputFilePrefix, optarg);
+			break;
+		case 's':
+			strcpy(str, optarg);
 			break;
 		case 'i':
 			strcpy(id->inputFileName, optarg);
@@ -92,11 +109,6 @@ void txt_main(int argc, char *argv[]) {
 		txt_main_Usage(argc,argv,id);
 		printf ("\tMissing input file (-i).  Please see usage above!\n\n");
 		exit(1);
-	} else if (strstr(id->inputFileName,"/dev/stdin") && (strlen(id->inputFilePrefix)==0))  {
-		// if piping then we need inputFilePrefix 
-		txt_main_Usage(argc,argv,id);
-		printf ("\tMissing input file prefix (-q).  Please see usage above!\n\n");
-		exit(1);
 	}
 
 	if ((id->mode == MODE_TXT_COUNT_ENTRY)) {
@@ -117,6 +129,13 @@ void txt_main(int argc, char *argv[]) {
 			}
 			printf ("\n");
 		}
+	} else if (id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) {
+		if (strlen(str) == 0) {
+			txt_main_Usage(argc,argv,id);
+			printf ("\tMissing columns to be extracted (-s).  Please see usage above!\n\n");
+			exit(1);
+		}
+		txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(id, id->inputFileName, str, alsoPrintOtherColumns);
 	}
 }
 

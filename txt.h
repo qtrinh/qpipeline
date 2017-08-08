@@ -13,6 +13,7 @@
 #define TXT_H 
 
 #define MODE_TXT_COUNT_ENTRY 1001
+#define MODE_TXT_EXTRACT_COLUMN_FROM_FILE 1010
 
 int txt_MODE_TXT_COUNT_ENTRY(struct input_data *id, char inputFileName[], char ignoreLinesStartingWith) ;
 

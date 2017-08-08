@@ -28,7 +28,7 @@ INCLUDES=-I. -I $(SAMTOOLS) -I $(TABIX) -I $(GSL)
 LIBDIRS=-L. -L$(SAMTOOLS) -L$(TABIX) -L$(GSL)
 LIBS= -lm -lbam -lz -ltabix 
 
-SOURCES=utils.c log.c acgtn.c pileup.c input_data.c output_data.c my_string.c txt.c txt_main.c snpeff.c fasta.c fasta_main.c vcf.c vcf_main.c my_tabix.c tabix_main.c fastq.c fastq_main.c main.c 
+SOURCES=utils.c log.c acgtn.c pileup.c input_data.c output_data.c my_string.c txt.c txt_main.c bedtools.c bedtools_main.c snpeff.c fasta.c fasta_main.c vcf.c vcf_main.c my_tabix.c tabix_main.c fastq.c fastq_main.c main.c 
 
 OBJECTS=$(SOURCES:.c=.o)
 HEADERS=$(SOURCES:.c=.h)

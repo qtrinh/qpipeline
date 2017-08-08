@@ -80,6 +80,11 @@ struct vcf {
 	// https://www.mun.ca/biology/scarr/Transitions_vs_Transversions.html
 	int *Ts, *Tv;
 
+	        
+	// text headers
+	char **textHeaders;
+	int textHeadersN;
+
 };
 
 

@@ -14,6 +14,7 @@
 #include "common.h"
 
 #include "vcf.h"
+#include "my_tabix.h"
 
 /**
   vcf usage 
@@ -80,12 +81,12 @@ void vcf_main_Usage(int argc, char *argv[], struct input_data *id) {
 
 	  
 	if ((id->mode == MODE_VCF_PARSE_ANNOTATED_DATABASE) || (id->mode == 0))  {
-		printf("\n\t-m %d\tparse annotated database.", MODE_VCF_PARSE_ANNOTATED_DATABASE);
+		printf("\n\t-m %d\tparse annotated database ( %s tabix -m %d ).", MODE_VCF_PARSE_ANNOTATED_DATABASE, argv[0], MODE_TABIX_ANNOTATE_VCF_WITH_VCF);
 		if (id->mode == MODE_VCF_PARSE_ANNOTATED_DATABASE)  {
 			printf("\n\t\t-i FILE\tinput VCF file.");
-			printf("\n\t\t-k STR\tannnotated database prefix string to look for.  e.g., COSMIC_v69.");
-			printf("\n\t\t-r STR\tmatching record separator (OPTIONAL)");
-			printf("\n\t\t-c STR\tmatching column separator (OPTIONAL)");
+			printf("\n\t\t-k STR\tannnotated database identifier.  e.g., COSMIC_v69.");
+			//printf("\n\t\t-r STR\tmatching record separator (OPTIONAL)");
+			//printf("\n\t\t-c STR\tmatching column separator (OPTIONAL)");
 		}
 	}
 

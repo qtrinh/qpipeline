@@ -103,7 +103,7 @@ void input_data_printParsedLineMemDebugging(char **data, int n) {
 	printf ("\nnumber of columns %d", n);
 	fflush(stdout);
 	for (i = 1; i <= n; i++) {
-		printf ("\n%3d\t%10d\t'%s'", i, (int)strlen(data[i]), data[i]);
+		printf ("\ncolumn %3d\t'%s'", i, data[i]);
 	}
 	printf("\n\n\n");
 	fflush(stdout);

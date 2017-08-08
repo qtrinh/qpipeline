@@ -42,7 +42,7 @@ void tabix_main_Usage(int argc, char *argv[], struct input_data *id) {
 		printf("\n\t-m %d\tannotate a VCF file against a VCF database file.", MODE_TABIX_ANNOTATE_VCF_WITH_VCF);
 		if (id->mode == MODE_TABIX_ANNOTATE_VCF_WITH_VCF)  {
 			printf("\n\t\t-d TABIX_DATABASE_FILE\tdatabase file indexed by tabix ( .gz ).");
-			printf("\n\t\t-q STR\tprefix string to annotate.  e.g., ON_TARGET.");
+			printf("\n\t\t-q STR\tVCF database identifier.  e.g., COSMIC_69.");
 			printf("\n\t\t-i FILE\tinput VCF file.");
 			printf("\n\t\t-R\tinclude matches where the ALT do not match.  Default, both REF and ALT must match.");
 			//printf("\n\t\t-N\tdo not include data from TABIX_DATABASE_FILE in output.  Default, all columns in TABIX_DATABASE_FILE are included in output.");
