@@ -39,7 +39,7 @@ tabix -p vcf  ${FILE}.modified.vcf.gz
 ```
 
 
-## Annotate input VCF file against the VCF database file
+## Annotate input VCF file against VCF database file
 
 Annotate _sample.vcf_ with the _common_all_20161122.vcf.modified.vcf.gz_ database and direct output to _sample.common_all.vcf_
 ```
@@ -52,5 +52,6 @@ where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage info )
 -q VCF database identifer.  For example, COMMON_ALL.
 ```
 In the annotation command above, the input VCF file is _sample.vcf_, the bgzipped and tabix indexed VCF database is _common_all_20161122.vcf.modified.vcf.gz_, the VCF database identifier is _COMMON_ALL_ and the rediected output file is _sample.COMMON_ALL.vcf_.
+
 
 
