@@ -13,7 +13,7 @@ Usage:
         qpipeline vcf 
 ```
 
-Each file format has multiple modes supporting different tasks.  For example, **_qpipeline tabix_** currently supported two tasks: (1) annotate a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
+Each file format (txt, fasta, fastq, etc. ) has multiple modes supporting different tasks.  For example, **_qpipeline tabix_** currently supported two tasks: (1) annotate a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
 ```
 Utils for annotating VCF files using tabix.
 
@@ -31,12 +31,14 @@ Utils for annotating VCF files using tabix.
 
         -m 2000 annotate a VCF file against a BED database file.
                 -d TABIX_DATABASE_FILE  database file indexed by tabix ( .gz ).
-                -q STR  prefix string to annotate.  e.g., ON_TARGET.
+                -q STR  target name.  e.g., BREAST_CANCER_PANEL.
                 -i FILE input VCF file.
 
                 Example:
-                        qpipeline tabix -m 2000 -d test_data/vcf/target.bed.sorted.gz -i test_data/vcf/sample.vcf -q ON_TARGET
+                        qpipeline tabix -m 2000 -d test_data/vcf/target.bed.sorted.gz -i test_data/vcf/sample.vcf -q BREAST_CANCER_PANEL
 
         Missing input file (-i).  Please see usage above!
 ```
-Typically, databases are zipped and indexed by **tabix** - see [instructions on how to index databases for tabix](INDEX_DATABASES.md)
+
+Most of the tasks are straight forward and their detailed usage information can be used as a guide on how to use them.   
+
