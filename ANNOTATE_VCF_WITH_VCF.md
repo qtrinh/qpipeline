@@ -46,12 +46,21 @@ Annotate _sample.vcf_ with the _common_all_20161122.vcf.modified.vcf.gz_ databas
 qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q COMMON_ALL > sample.COMMON_ALL.vcf 
 ```
 where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage info )
-```
--i input VCF file 
--d bgziped and tabix indexed VCF database file 
--q VCF database identifer.  For example, COMMON_ALL.
-```
+* -i input VCF file 
+* -d bgziped and tabix indexed VCF database file 
+* -q VCF database identifer.  For example, COMMON_ALL.
+
 In the annotation command above, the input VCF file is _sample.vcf_, the bgzipped and tabix indexed VCF database is _common_all_20161122.vcf.modified.vcf.gz_, the VCF database identifier is _COMMON_ALL_ and the rediected output file is _sample.COMMON_ALL.vcf_.
 
+If an entry in the input file is matched with one or more entries in the database file ( based on chromosome, position, reference and variant alleles ) then the annotation is added to the VCF INFO column as followed:
 
+```
+IDENTIFER=[0|1],N,MATCHING_DECRIPTION(S),DATA;
+```
+where 
+
+* IDENTIFIER is the VCF database identifer entered by user; IDENTIFER=0 means no matching entries in database found; IDENTIFER=1 means found in database.
+* N is the number of entries matched or found ( based on chromosome, position, reference and alternative alleles ) in the database.
+* MATCHING_DECRIPTION is the description of the matching record.
+* DATA is the data entry from the database.
 
