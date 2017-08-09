@@ -40,6 +40,6 @@ Utils for annotating VCF files using tabix.
         Missing input file (-i).  Please see usage above!
 ```
 
-Most of the tasks for each file format are straight forward and their usage information can be used as a guide on how to run them.  
+Most tasks for each supported file format are straight forward and their usage information can be used as a guide on how to run them.  
 
 
