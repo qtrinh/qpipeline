@@ -1,6 +1,6 @@
 
 
-The following describe how to use **qpipeline** to annotate a VCF file with a VCF database file.
+The following sections describe how to use **qpipeline** to annotate a VCF file with a VCF database file.
 
 ## Create and index VCF database file 
 
