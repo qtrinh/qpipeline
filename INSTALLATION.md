@@ -43,4 +43,4 @@ Usage:
         qpipeline txt
         ...
 ```
-Now you are ready to use **_qpipeline_**!  See [usage](https://github.com/qtrinh/qpipeline/blob/master/USAGE.md) on how to use **_qpipeline_** 
+Now you are ready to use **_qpipeline_**!  See [usage instructions](https://github.com/qtrinh/qpipeline/blob/master/USAGE.md) on how to use **_qpipeline_** 
