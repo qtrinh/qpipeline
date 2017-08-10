@@ -11,8 +11,12 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
  qpipeline vcf -m 1500 -i common_all_20161122.vcf -k VC= 
 ```
 
-* parse an attribute from the FORMAT column.  For example, 
+* parse an attribute from the FORMAT column: 
 ```
  qpipeline vcf -m 1600  
+```
+* print only passed filter entriies:
+```
+ qpipeline vcf -m 1000  
 ```
 ---
