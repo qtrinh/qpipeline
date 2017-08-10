@@ -13,3 +13,4 @@ qpipeline fasta -m 1000 -i chr1.fa  -r chr1:20000-20100
 ```
 qpipeline fasta -m 1000 -i chr1.fa -T targets.txt
 ```
+More to come!
