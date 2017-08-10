@@ -1,5 +1,5 @@
 
-The following sections describe how to use **_qpipeline_** with FASTA input file.  The examples below used data in **${QPIPELINE_HOME}/test_data/fasta** folder.
+The following sections describe how to use **_qpipeline_** with input FASTA files.  The examples below used data in **${QPIPELINE_HOME}/test_data/fasta** folder.
 
 
 [Extract FASTA sequences from FASTA file](#extract-fasta-sequences-from-fasta-file)
