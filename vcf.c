@@ -1793,7 +1793,7 @@ void vcf_parseAnnotatedDatabase(int verbose, char line[], char infoColumn[], cha
 	// looking for database prefix 
 	ptr = strstr(infoColumn, databasePrefix);
 	if (ptr) {
-		// AMPLICON=1,1,.<D7>chr1<D7>11562873<D7>11562989<D8>
+		// AMPLICON=1,.<D7>chr1<D7>11562873<D7>11562989<D8>
 		 if (verbose) 
 			printf ("\n[%s:%d] - FOUND database prefix '%s' ->  '%s' ... ",__FILE__, __LINE__, databasePrefix, ptr);
 

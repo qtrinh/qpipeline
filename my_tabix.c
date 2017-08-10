@@ -391,9 +391,9 @@ void tabix_MODE_TABIX_ANNOTATE_VCF_WITH_VCF(struct input_data *id, struct output
 						//sprintf (tabix->datacpy, "%s\t%s","VARIANT_MATCHED",tabix->data);
 						//my_tabix_concatAnnotationData(tabix->datacpy,tabix->outputData);
 					} else if (r == VCF_REF_MISMATCHED) {
-						//tabix->matches++;
-						//sprintf (tabix->datacpy, "%s\t%s","REF_BASE_MISMATCHED",tabix->data);
-						//my_tabix_concatAnnotationData(tabix->datacpy,tabix->outputData);
+						tabix->matches++;
+						sprintf (tabix->datacpy, "%s\t%s","REF_BASE_MISMATCHED",tabix->data);
+						my_tabix_concatAnnotationData(tabix->datacpy,tabix->outputData);
 					} else if ((r == VCF_ALT_MISMATCHED) && (tabix->considerMisMatchedALT == 1)){
 						tabix->matches++;
 						sprintf (tabix->datacpy, "%s_ALT_BASE_MISMATCHED\t%s",tabix->inputFilePrefix,tabix->data);

@@ -122,7 +122,8 @@ if ($TARGET_FILE ne "NULL") {
 
 open(my $fh, '>', $OUTPUT_FILE) or die "Could not open file '$OUTPUT_FILE' $!";
 
-print $fh "\ntotal_number_of_reads";
+print $fh "input_file";
+print $fh "\ttotal_number_of_reads";
 print $fh "\tnumber_of_reads_aligned_to_hg19";
 print $fh "\tpercent_of_reads_aligned_to_hg19";
 print $fh "\tnumber_of_reads_aligned_to_target";
@@ -132,7 +133,8 @@ print $fh "\tmean_coverage";
 print $fh "\t1x_or_higher";
 print $fh "\t25x_or_higher";
 print $fh "\t50x_or_higher";
-print $fh "\n$numberOfReads\t$numberOfReadsAligned";
+print $fh "\n$BAM_FILE";
+print $fh "\t$numberOfReads\t$numberOfReadsAligned";
 printf $fh "\t%.2f", $percentOfReadsAligned;
 print $fh "\t$numberOfReadsAlignedTarget";
 printf $fh "\t%.2f", $percentOfReadsAlignedTarget;
@@ -141,6 +143,7 @@ print $fh "\t$meanCoverage";
 printf $fh "\t%.2f", $xCoverage1;
 printf $fh "\t%.2f",$xCoverage25;
 printf $fh "\t%.2f",$xCoverage50;
+printf $fh "\n";
 close $fh;
 
 # cleaning up temporary and intermediate files 

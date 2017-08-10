@@ -34,11 +34,11 @@ void txt_main_Usage(int argc, char *argv[], struct input_data *id) {
 		}
 	}
 	if ((id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) || (id->mode == 0))  {
-		printf("\n\t-m %d\textract columns from file.",MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
+		printf("\n\t-m %d\textract one or more columns from a file.",MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
 		if ((id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) )  {
 			printf("\n\t\t-i FILE\tinput txt file.");
 			printf("\n\t\t-s STR\tcolumn names to be extracted in double quotes and separated by ','.  For example, \"filename,count\"");
-			printf("\n\t\t-A\talso print all other columns following columns identified by -s ");
+			printf("\n\t\t-A\talso print all columns following columns identified by -s ");
 			printf("\n\n\t\tExample:\n\t\t\t%s txt -m %d -i test_data/txt/data.txt", argv[0], MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
 		}
 	}
