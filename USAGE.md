@@ -42,5 +42,6 @@ Utils for annotating VCF files using tabix.
 
 Most tasks for each supported file format are straight forward and their usage information can be used as a guide on how to run them.  
 
-* [annotate a VCF file with a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
+* VCF
+  * [annotate a VCF file with a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
 
