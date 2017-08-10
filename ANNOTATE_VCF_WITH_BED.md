@@ -40,7 +40,7 @@ where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2000 for full usage info )
 
 In the annotation command above, the input VCF file is _sample.vcf_, the bgzipped and tabix indexed BED database is _target.bed.sorted.gz_, the BED database identifier is _MY_TARGET_ and the rediected output file is _sample.target.vcf_.
 
-If an entry in the input file is matched with one or more entries in the database file ( based on chromosome and position ) then the annotation added to the VCF INFO column looks like as follows:
+If a position ( chromosome and position ) of an entry in the input file falls within any of the ranges in the BED file, then the annotation added to the VCF INFO column looks like as follows:
 
 ```
 ...;IDENTIFER=n,M,.,DATA;...
@@ -48,8 +48,8 @@ If an entry in the input file is matched with one or more entries in the databas
 where 
 
 * IDENTIFIER is the BED database identifer entered by the user and n is either 0 (no matches from the BED database ) or 1 ( there is at least one matched from the BED database)
-* M is the number of matches from the BED database.   These matches must have their chromosomes and positions falled within the ranges of the target in the BED file.
-* DATA is the matched entries from the BED database.
+* M is the number of targets from the BED database.   These matches must have their chromosomes and positions falled within the ranges of the targets in the BED file.
+* DATA is the target entries from the BED database.
 
 
 
