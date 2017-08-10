@@ -19,4 +19,5 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
 ```
  qpipeline vcf -m 1000  
 ```
+Run **_qpipeline vcf_** by itself to see what other tasks are available.
 ---
