@@ -29,53 +29,28 @@ tabix -p bed ${FILE}.sorted.gz
 
 ## Annotate an input VCF file against a BED database file
 
-Annotate _sample.vcf_ with the _common_all_20161122.vcf.modified.vcf.gz_ database and direct output to _sample.common_all.vcf_
+Annotate _sample.vcf_ with the _target.bed.sorted.gz_ database and direct output to _sample.target.vcf_
 ```
-qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q dbSNP142_COMMON_ALL > sample.dbSNP142_COMMON_ALL.vcf 
+qpipeline tabix -m 2000 -i sample.vcf  -d target.bed.sorted.gz -q MY_TARGET > sample.target.vcf 
 ```
-where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2020 for full usage info )
+where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2000 for full usage info )
 * -i input VCF file 
-* -d bgziped and tabix indexed VCF database file 
-* -q VCF database identifer.  For example, dbSNP142_COMMON_ALL.
+* -d bgziped and tabix indexed BED database file 
+* -q BED database identifer.  For example, MY_TARGET.
 
-In the annotation command above, the input VCF file is _sample.vcf_, the bgzipped and tabix indexed VCF database is _common_all_20161122.vcf.modified.vcf.gz_, the VCF database identifier is _dbSNP142_COMMON_ALL_ and the rediected output file is _sample.dbSNP142_COMMON_ALL.vcf_.
+In the annotation command above, the input VCF file is _sample.vcf_, the bgzipped and tabix indexed BED database is _target.bed.sorted.gz_, the BED database identifier is _MY_TARGET_ and the rediected output file is _sample.target.vcf_.
 
-If an entry in the input file is matched with one or more entries in the database file ( based on chromosome, position, reference and variant alleles ) then the annotation added to the VCF INFO column looks like as follows:
+If an entry in the input file is matched with one or more entries in the database file ( based on chromosome and position ) then the annotation added to the VCF INFO column looks like as follows:
 
 ```
-...;IDENTIFER=n,M,MATCHING_DECRIPTIONS,DATA;...
+...;IDENTIFER=n,M,.,DATA;...
 ```
 where 
 
-* IDENTIFIER is the VCF database identifer entered by the user and n is either 0 (no matches from the VCF database ) or 1 ( there is at least one matched from the VCF database)
-* M is the number of matches from the VCF database.   These matches have the same chromosomes, positions, reference (REF) and alternative  (ALT) alleles.
-* MATCHING_DECRIPTIONS are the descriptions of the matching record.
-* DATA is the matched entries from the VCF database.
+* IDENTIFIER is the BED database identifer entered by the user and n is either 0 (no matches from the BED database ) or 1 ( there is at least one matched from the BED database)
+* M is the number of matches from the BED database.   These matches must have their chromosomes and positions falled within the ranges of the target in the BED file.
+* DATA is the matched entries from the BED database.
 
-The last two lines in the ouput file shows: (1) position chr1:11008 ( C->T ) is not in the dbSNP142_COMMON_ALL database (that is, dbSNP142_COMMON_ALL=0 ) and position chr1:11012 ( C->G ) is in the dbSNP142_COMMON_ALL database with one matching entry (that is, dbSNP142_COMMON_ALL=1,1 ): 
-```
-chr1    11008   .     C       T       .       .       RS=575272151;dbSNP142_COMMON_ALL=0,0,.
-chr1    11012   rs544419019     C       G       .       .       RS=544419019;dbSNP142_COMMON_ALL=1,1,dbSNP142_COMMON_ALL_VARIANT_MATCHED�chr1�11012�rs544419019�C�G�.�.�RS=544419019;RSPOS=11012;dbSNPBuildID=142;SSR=0;SAO=0;VP=0x050000020005150024000100;GENEINFO=DDX11L1:100287102;WGT=1;VC=SNV;R5;ASP;VLD;G5;KGPhase3;CAF=0.9119,0.08806;COMMON=1�
-```
-***qpipeline*** also allows matches with mismatches REF or ALT allele by using **-R** argument as showed below:
-```
-qpipeline tabix -m 2020  -i sample.vcf -d common_all_20161122.vcf.modified.vcf.gz -q dbSNP142_COMMON_ALL -R > sample.dbSNP142_COMMON_ALL.vcf 
-```
 
-The second last line now shows position chr1:11008 has one match from the dbSNP142_COMMON_ALL database with a mismatched ALT base.  That is, C->T in the input file but C->G in the database file:
-```
-chr1    11008   .       C       T       .       .       RS=575272151;dbSNP142_COMMON_ALL=1,1,dbSNP142_COMMON_ALL_ALT_BASE_MISMATCHED�chr1�11008�rs575272151�C�G�.�.�RS=575272151;RSPOS=11008;dbSNPBuildID=142;SSR=0;SAO=0;VP=0x050000020005150024000100;GENEINFO=DDX11L1:100287102;WGT=1;VC=SNV;R5;ASP;VLD;G5;KGPhase3;CAF=0.9119,0.08806;COMMON=1�
-chr1    11012   rs544419019     C       G       .       .       RS=544419019;dbSNP142_COMMON_ALL=1,1,dbSNP142_COMMON_ALL_VARIANT_MATCHED�chr1�11012�rs544419019�C�G�.�.�RS=544419019;RSPOS=11012;dbSNPBuildID=142;SSR=0;SAO=0;VP=0x050000020005150024000100;GENEINFO=DDX11L1:100287102;WGT=1;VC=SNV;R5;ASP;VLD;G5;KGPhase3;CAF=0.9119,0.08806;COMMON=1�
-```
-Once annotated, other quick stats can be generated such as:
-```
-# number of entries in the input file found in the dbSNP142_COMMON_ALL database 
-cat  sample.dbSNP142_COMMON_ALL.vcf | grep  dbSNP142_COMMON_ALL=1 | wc -l 
 
-# number of entries in the input file found in the dbSNP142_COMMON_ALL database with exact matches based on chromosomes, positions, REF and ALT alleles
-cat  sample.dbSNP142_COMMON_ALL.vcf | grep  dbSNP142_COMMON_ALL_VARIANT_MATCHED | wc -l 
-```
-Similarly, if the input file is annotated with multiple databases, for example, with COSMIC69 and CLINVAR as VCF database identifers, then the number of entries found in both COSMIC69 and CLINVAR can be counted as follows:
-```
-cat FILE.vcf | grep COSMIC69=1 | grep CLINVAR=1 | wc -l
-```
+
