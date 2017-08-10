@@ -2,7 +2,7 @@
 
 The following sections describe how to use **qpipeline** to annotate a VCF file with a VCF database file.
 
-## Create and index VCF database file 
+## Create and index a VCF database file 
 
 The instructions provided here can be used to create any VCF database files.  For simplicity, a partial VCF file from NCBI called _common_all_20161122.vcf_ is provided in _${QPIPELINE_HOME}/test_data/vcf_ directory.  This file contained only small number of entries from chromsome 1 downloaded from ftp://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606/VCF/common_all_20161122.vcf.gz
 
@@ -40,7 +40,7 @@ tabix -p vcf  ${FILE}.modified.vcf.gz
 ```
 
 
-## Annotate input VCF file against VCF database file
+## Annotate an input VCF file against a VCF database file
 
 Annotate _sample.vcf_ with the _common_all_20161122.vcf.modified.vcf.gz_ database and direct output to _sample.common_all.vcf_
 ```
