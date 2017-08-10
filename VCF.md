@@ -6,9 +6,13 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
 
 ---
 ## Other miscellaneous tasks
-* parse a key from INFO column, for example, VC (Variant Class)
+* parse an attribute from the INFO column.  For example, VC (Variant Class)
 ```
  qpipeline vcf -m 1500 -i common_all_20161122.vcf -k VC= 
 ```
 
+* parse an attribute from the FORMAT column.  For example, 
+```
+ qpipeline vcf -m 1600  
+```
 ---
