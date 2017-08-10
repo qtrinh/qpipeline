@@ -87,7 +87,7 @@ cat  sample.dbSNP142_COMMON_ALL.vcf | grep  dbSNP142_COMMON_ALL=1 | wc -l
 # number of entries in the input file found in the dbSNP142_COMMON_ALL database with exact matches based on chromosomes, positions, REF and ALT alleles
 cat  sample.dbSNP142_COMMON_ALL.vcf | grep  dbSNP142_COMMON_ALL_VARIANT_MATCHED | wc -l 
 ```
-Similarly, if the input file is annotated with multiple databases, for example, with COSMIC69 and CLINVAR as VCF database identifers, then the number of entries found in both COSMIC69 and CLINVAR can be counted by:
+Similarly, if the input file is annotated with multiple databases, for example, with COSMIC69 and CLINVAR as VCF database identifers, then the number of entries found in both COSMIC69 and CLINVAR can be counted as follows:
 ```
 cat FILE.vcf | grep COSMIC69=1 | grep CLINVAR=1 | wc -l
 ```
