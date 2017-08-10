@@ -1,7 +1,7 @@
 ### INSTALLATION
 **_qpipeline_** uses **samtools** ( https://sourceforge.net/projects/samtools/files/samtools ) and **tabix** ( https://sourceforge.net/projects/samtools/files/tabix ) Application Programming Interface (API).  Both **samtools** and **tabix** are available in **_external_tools_** directory.
 
-Change to directory of where to install **_qpipeline_**
+Change to a directory where to install **_qpipeline_**
 ```
 # clone qpipeline 
 git clone https://github.com/qtrinh/qpipeline.git
@@ -9,7 +9,7 @@ git clone https://github.com/qtrinh/qpipeline.git
 # change into qpipeline directory 
 cd qpipeline
 ```
-Set QPIPELINE_HOME by adding the following line to your .bashrc 
+Set QPIPELINE_HOME environment variable by adding the following line to your ~/.bashrc 
 ```
 export QPIPELINE_HOME=/path/to/where/qpipeline/is/stored
 ```
@@ -21,7 +21,7 @@ make
 cd ${QPIPELINE_HOME}/external_tools/tabix/tabix-0.2.5
 make
 ```
-Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the following line to your .bashrc
+Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the following line to your ~/.bashrc 
 ```
 export PATH=$PATH:${QPIPELINE_HOME}:${QPIPELINE_HOME}/external_tools/samtools/samtools-0.1.18:${QPIPELINE_HOME}/external_tools/tabix/tabix-0.2.5
 ```
@@ -30,7 +30,7 @@ Compile **_qpipeline_**
 cd ${QPIPELINE_HOME}
 make
 ```
-Check to see if **_qpipeline_** is compiled successfully
+Run **_qpipeline_** by itself to see if it is compiled successfully
 ```
 qpipeline
 ```
