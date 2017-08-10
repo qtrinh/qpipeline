@@ -40,7 +40,7 @@ Utils for annotating VCF files using tabix.
         Missing input file (-i).  Please see usage above!
 ```
 
-Most tasks for each supported file format are straight forward and their usage information can be used as a guide on how to run them.  
+Most tasks for each supported file format are straight forward and their usage information can be used as a guide on how to run them ( run **_qpipeline_** by itself to see its usage information ).  
 
 * VCF
   * [annotate a VCF file with a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
