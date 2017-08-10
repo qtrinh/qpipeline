@@ -6,6 +6,7 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
 
 ---
 ## Other miscellaneous tasks
+
 * parse an attribute from the INFO column.  For example, VC (Variant Class)
 ```
  qpipeline vcf -m 1500 -i common_all_20161122.vcf -k VC= 
@@ -19,5 +20,7 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
 ```
  qpipeline vcf -m 1000  
 ```
+
 Run **_qpipeline vcf_** by itself to see what other tasks are available.
+
 ---
