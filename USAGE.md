@@ -42,6 +42,7 @@ Utils for annotating VCF files using tabix.
 
 Most of the tasks are straight forward to run and their usage information can be used as a guide on how to run them ( run **_qpipeline_** by itself to see its usage information ).  Some tasks, such as annotate a VCF against a VCF database, require additional information so they will be described in detailed.  
 
+* [FASTA](FASTA.md)
 * VCF
   * [annotate a VCF file with a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
 
