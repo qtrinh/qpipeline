@@ -4,3 +4,11 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
 * [Annotate an input VCF file against a BED database file](ANNOTATE_VCF_WITH_BED.md)
 * [Annotate an input VCF file against a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
 
+---
+## Other miscellaneous tasks
+* parse a key from INFO column, for example, VC (Variant Class)
+```
+ qpipeline vcf -m 1500 -i common_all_20161122.vcf -k VC= 
+```
+
+---
