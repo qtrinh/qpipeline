@@ -21,6 +21,7 @@ To create a tabix database file for _common_all_20161122.vcf_, do the following
 
 ```
 # set FILE variable to "common_all_20161122.vcf" so we can cut, paste, and use the commands below
+# for any databases that set to FILE 
 FILE="common_all_20161122.vcf"
 
 # get just the VCF header then add 'chr' to all entries
