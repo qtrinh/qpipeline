@@ -95,5 +95,5 @@ Similarly, if the input file is annotated with multiple databases, for example, 
 cat FILE.vcf | grep COSMIC69=1 | grep CLINVAR=1 | wc -l
 
 # number of entries in COSMIC82 that are not in COSMIC69
-cat FILE.vcf | grep COSMIC69=0 | grep COSMIC82=1 | wc -l
+cat FILE.vcf | grep COSMIC82=1 | grep COSMIC69=0 | wc -l
 ```
