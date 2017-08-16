@@ -5,7 +5,7 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
 * [Annotate an input VCF file against a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
 
 ---
-## Other miscellaneous tasks
+## Other miscellaneous commands
 
 * parse an attribute from the INFO column.  For example, VC (Variant Class)
 ```
@@ -21,6 +21,6 @@ The following sections describe how to use **_qpipeline_** with input VCF files.
  qpipeline vcf -m 1000  
 ```
 
-Run **_qpipeline vcf_** by itself to see what other tasks are available.
+Run **_qpipeline vcf_** by itself to see what other commands are available.
 
 ---
