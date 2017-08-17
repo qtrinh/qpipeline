@@ -27,7 +27,7 @@ sub read_SAMTOOLS_flagstat {
 }
 
 
-# we need 3 arguments:  BAM file, BED file, and output file 
+# we need input 3 arguments:  BAM file, zipped BED file, and output file 
 if ( @ARGV != 3 ) {
    print "\n";
    print "\nGenerate BAM alignment stats:\n\tnumber of reads\n\tnumber of reads aligned to reference genome\n\tpercent of reads aligned to reference genome\n\tnumber of reads aligned to target (if target file provided )\n\tpercent of reads aligned to target\n\tpercent of bases on target at 1x or higher\n\tpercent of bases on target at 25x or higher\n\tpercent of bases on target at 50x or higher";
@@ -71,9 +71,10 @@ my $tmp;
 
 my $meanCoverage = 0;
 my $targetSize = 0;
-my $xCoverage1 = 0;
-my $xCoverage25 = 0;
-my $xCoverage50 = 0;
+my $xCoverage1 = 0;# percent of bases on target at 1x or higher 
+my $xCoverage25 = 0;# percent of bases on target at 25x or higher 
+my $xCoverage50 = 0;# percent of bases on target at 50x or higher 
+
 print "\ngetting samtools flagstat ... ";
 system "samtools flagstat $BAM_FILE  > $OUTPUT_FILE.flagstat";
 ( $numberOfReads, $numberOfReadsAligned, $percentOfReadsAligned) = read_SAMTOOLS_flagstat("$OUTPUT_FILE.flagstat");
@@ -83,13 +84,13 @@ my $numberOfReadsTarget=0;
 my $numberOfReadsAlignedTarget=0;
 my $percentOfReadsAlignedTarget=0;
 if ($TARGET_FILE ne "NULL") {
-	print "\ngetting samtools target ... ";
+	print "\ngetting samtools stats for target ... ";
 	system "samtools view -L $TARGET_FILE $BAM_FILE -b | samtools flagstat /dev/stdin > $OUTPUT_FILE.flagstat.target" ;
 	( $numberOfReadsTarget, $numberOfReadsAlignedTarget, $percentOfReadsAlignedTarget) = read_SAMTOOLS_flagstat("$OUTPUT_FILE.flagstat.target");
 	$percentOfReadsAlignedTarget = $numberOfReadsAlignedTarget /  $numberOfReads * 100;
 
 
-	print "\ngetting bedtools coverage ... ";
+	print "\ngetting bedtools coverage for target ... ";
 	system "bedtools coverage -abam $BAM_FILE -b $TARGET_FILE -hist | grep ^all > $OUTPUT_FILE.coverage" ;
 	
 	# mean coverage 
@@ -120,6 +121,7 @@ if ($TARGET_FILE ne "NULL") {
 	
 }
 
+# open file for writtin g
 open(my $fh, '>', $OUTPUT_FILE) or die "Could not open file '$OUTPUT_FILE' $!";
 
 print $fh "input_file";
@@ -146,7 +148,7 @@ printf $fh "\t%.2f",$xCoverage50;
 printf $fh "\n";
 close $fh;
 
-# cleaning up temporary and intermediate files 
+# cleaning up temporary and/or intermediate files 
 system "rm $OUTPUT_FILE.* ";
 print "\n";
 

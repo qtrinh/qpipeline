@@ -106,6 +106,56 @@ plot_percent_on_Y ("1x_or_higher");
 plot_percent_on_Y ("25x_or_higher");
 plot_log10_on_Y ("mean_coverage");
 
+# ===============================================
+
+$myColumn = "total_number_of_reads,percent_of_reads_aligned_to_target";
+$title = "number of reads vs % aligned to target";
+print "\n\nplotting $myColumn";
+$outputFile = "_bam_${myColumn}.data.txt";
+
+# use qpipeline to extract these two columns 
+$desc = "$myColumn,category";
+system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -s $desc > $outputFile";
+
+system "echo \"x|y|category\" | tr '|' '\t' > _data.2.plot"; 
+system "cat $outputFile | grep -v category >> _data.2.plot";
+
+# =====
+$xlab = "total number of reads"; $ylab="percent of reads aligned to target" ;
+$myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_category_dot.ggplot.R`;
+#$myRscript =~ s/#USE_MILLION_ON_X_AXIS#//;
+$myRscript =~ s/#USE_LOG_10_ON_X_AXIS#//g;
+$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,100, 10), limits=c(0,100)/g;
+
+open FILE, ">$rFile";
+print FILE $myRscript;
+close FILE;
+
+system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.pdf";
+
+# =====
+$myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_2d.scatter_ggplot.R`;
+$myRscript =~ s/#USE_LOG_10_ON_X_AXIS#//g;
+$myRscript =~ s/#USE_BIN_WIDTH#//g;
+$myRscript =~ s/WIDTH/0.5/g;
+$myRscript =~ s/HEIGHT/5/g;
+$myRscript =~ s/( TITLE INFO )//g;
+
+$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,100, 10), limits=c(0,100)/g;
+
+open FILE, ">$rFile";
+print FILE $myRscript;
+close FILE;
+
+system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.2d.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.2d.pdf";
+
+
+
+
+
+
 
 system "gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=Rplots.pdf  $pdfFiles ; cp Rplots.pdf ~/JUNK";
 

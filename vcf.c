@@ -458,7 +458,10 @@ void vcf_MODE_VCF_PARSE_INFO_COLUMN_FOR_KEY(struct input_data *id, struct output
 			if (minValue == INT_MIN)  {
 				// print TEXT_HEADER_ROW only when we do parsing
 				utils_addTextHeader(textHeaderStr, key);
-				printf ("%s\n", textHeaderStr);
+				//printf ("%s\n", textHeaderStr);
+				strcpy(str,id->line);
+				str[strlen(str)-1] = '\0';
+				printf ("%s\t%s\n", textHeaderStr,str);
 			}
 
 			printf ("%s", id->line);
@@ -502,7 +505,7 @@ void vcf_MODE_VCF_PARSE_INFO_COLUMN_FOR_KEY(struct input_data *id, struct output
 			}
 			*pptr = '\0';
 			if (id->verbose) 
-				printf ("\n[%s:%d] - FOUND AA key '%s' ->  '%s' ... \n\n",__FILE__, __LINE__, key, ptr);
+				printf ("\n[%s:%d] - FOUND key '%s' ->  '%s' ... \n\n",__FILE__, __LINE__, key, ptr);
 
 			utils_getKeyNValue(ptr,localKey,localValue);
 

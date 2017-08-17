@@ -33,7 +33,7 @@ void fasta_main_Usage(int argc, char *argv[], struct input_data *id) {
 			//printf("\n\t\t-v\t\tturn on verbose for debugging");
 			printf("\n\n\t\tNOTE: Only one of -T or -r is needed."); 
 
-			printf ("\n\n\t\tExample:\n\t\t\t%s fasta -m %d -i test_data/fasta/WS220.fasta -T test_data/fasta/targets.txt", argv[0], FASTA_MODE_GET_DNA_SEQUENCE);
+			printf ("\n\n\t\tExample:\n\t\t\t%s fasta -m %d -i test_data/fasta/chr1.fa -T test_data/fasta/targets.txt", argv[0], FASTA_MODE_GET_DNA_SEQUENCE);
 		}
 	}
 
@@ -87,6 +87,13 @@ void fasta_main(int argc, char *argv[]) {
 	}
 		
 	if (id->mode == FASTA_MODE_GET_DNA_SEQUENCE) {
+		if ((strlen(fa->region)==0) &&  (strlen(id->targetFileName) == 0)) {
+			fasta_main_Usage(argc,argv,id);
+			printf ("\tMissing region (-r) or target file (-T). Please see usage above!\n\n");
+			exit(1);
+
+		}
+
 		fasta_FASTA_MODE_GET_DNA_SEQUENCE(id, fa);
 	}
 }
