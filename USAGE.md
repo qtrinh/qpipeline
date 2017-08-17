@@ -42,7 +42,7 @@ Utils for annotating VCF files using tabix.
 
 Most of the commands are straight forward to run and their usage information can be used as a guide on how to run them ( run **_qpipeline_** by itself to see its usage information ).  Some commands, such as annotate a VCF against a VCF database, require additional information so they will be described in detailed.  
 
-* TXT](TXT.md)
+* [TXT](TXT.md)
 * [FASTQ](FASTQ.md)
 * [FASTA](FASTA.md)
 * [VCF](VCF.md)
