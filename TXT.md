@@ -8,9 +8,8 @@ Sometimes it is handy to be able to select one or more columns from a text file 
 ```
 cut -f N FILE
 ```
-will work, however, if any columns in the input file are changed, then _N_ needs to be updated accordingly.  Inspired by the SQL _select_ statement, **_qpipeline_** can be used to select one or more columns from the input file regardless of where the columns are in the input file.  For example, select _mean_coverage_ column from the file _alignment.stats.txt_:
+will work, however, if any columns in the input file are changed, then _N_ needs to be updated accordingly.  Inspired by the SQL _select_ statement, **_qpipeline_** can be used to select one or more columns from the input file regardless of where the columns are in the file.  For example, select _mean_coverage_ column from the file _alignment.stats.txt_:
 ```
-
 qpipeline txt  -m 1010 -i alignment.stats.txt -s "mean_coverage" | less
 ```
 
