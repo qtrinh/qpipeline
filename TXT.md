@@ -12,11 +12,12 @@ will work, however, if any columns in the input file are changed, then _N_ needs
 ```
 qpipeline txt  -m 1010 -i alignment.stats.txt -s "mean_coverage" | less
 ```
+
 A more complicated example would be select entries in the file _alignment.stats.txt_ where _mean_coveage_ is greater than 200.    This can be done easily as follows:
 ```
 qpipeline txt  -m 1010 -i alignment.stats.txt -s "mean_coverage" -A | awk '$1>200' | cut -f 2- | less
 ```
-
+ 
 ---
 
 Run **_qpipeline txt_** by itself to see other commands and their usage.
