@@ -16,4 +16,4 @@ qpipeline fasta -m 1000 -i chr1.fa -T targets.txt
 where _targets.txt_ is a 3-column (chromosome, start, and end ) text file.
 
 ---
-Run **_qpipeline fasta_** by itself to see other commands and their usage.
+Run **_qpipeline fasta_** by itself to see other available commands and their usage.
