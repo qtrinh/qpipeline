@@ -20,4 +20,4 @@ The following sections describe how to use **_qpipeline_** with input FASTQ file
 ```
 ---
 
-Run **_qpipeline fastq_** by itself to see other commands and their usage.
+Run **_qpipeline fastq_** by itself to see other available commands and their usage.
