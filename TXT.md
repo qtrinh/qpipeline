@@ -24,4 +24,5 @@ where
 
 ---
 
-Run **_qpipeline txt_** by itself to see other commands and their usage.
+Run **_qpipeline txt_** by itself to see other available commands and their usage.
+
