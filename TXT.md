@@ -15,12 +15,12 @@ qpipeline txt  -m 1010 -i alignment.stats.txt -k "input_file,mean_coverage" | le
 
 A more complicated example would be select entries in the file _alignment.stats.txt_ where _mean_coveage_ is greater than 200.    This can be done easily as follows:
 ```
-qpipeline txt  -m 1010 -i alignment.stats.txt -k "mean_coverage" -A | awk '$1>200' | cut -f 2- | less
+qpipeline txt  -m 1010 -i alignment.stats.txt -k "mean_coverage" -s 100 -A | cut -f 2- | less
 ```
 where
 * -A indicates adding all columns in the input file to the right of the selected column "mean_coverage"
-* awk '$1>200' prints only rows where values in column 1 ( i.e., values of the mean_coverage column ) is greater than 200
-* cut -f 2- prints all columns starting from column 2
+* -s 100 prints only rows where value of mean_coverage is greater than 100
+* cut -f 2- extracts all columns starting from column 2
 
 ---
 
