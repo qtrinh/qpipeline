@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <float.h>
 
 #include "input_data.h"
 #include "utils.h"
@@ -44,8 +45,9 @@ int txt_MODE_TXT_COUNT_ENTRY(struct input_data *id, char inputFileName[], char i
 
 /**
   extract columns from file 
+
   **/
-int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileName[], char columnsToBeExtracted[], int alsoPrintAllOtherColumns) { 
+int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileName[], char columnsToBeExtracted[], double value, int alsoPrintAllOtherColumns) { 
 
 	// use this to turn on local verbose for debuggin 
 	int localVerbose = 0;
@@ -77,6 +79,12 @@ int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileN
 		}
 		printf ("\n");
 	}
+
+	if ((value > DBL_MIN) && (columns2ExtractN != 1)) {
+		printf ("\n\nOnly 1 column is allowed when filtering!\n\n");
+		exit (1);
+	}
+
 
 	// this is the order of columns to print 
 	orderOfcolumnsToPrint = (int *)malloc (columns2ExtractN * sizeof(int));
@@ -180,20 +188,32 @@ int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileN
 		id->columns = input_data_parseLineMem(id, id->line, '\t', &(id->n));
 		if (id->verbose)
 			input_data_printParsedLineMemDebugging(id->columns, id->n);
+	
+	
 
+		int printEntry ;
 		for (i = 0; i <= indexToPrint; i++) {
-			printf ("%s", id->columns[orderOfcolumnsToPrint[i]]);
-			if (i < indexToPrint)
-				printf ("\t");
+			printEntry = 0;
+			if ((atof(id->columns[orderOfcolumnsToPrint[i]]) >= value) || (value == DBL_MIN)){
+				// print entry if filtering and condition met ( data > value enter by user ) or no filtering at all ( value == DBL_MI )
+				printEntry = 1;
+
+				printf ("%s", id->columns[orderOfcolumnsToPrint[i]]);
+				if (i < indexToPrint)
+					printf ("\t");
+				}
 		}
-		if (alsoPrintAllOtherColumns) {
-			// sometimes is handy to also print out all other columns 
-			for (i = 1; i <= id->n; i++) {
-				printf ("\t%s", id->columns[i]);
-			}
+
+		if (printEntry) {
+			if (alsoPrintAllOtherColumns){
+				// sometimes is handy to also print out all other columns 
+				for (i = 1; i <= id->n; i++) {
+					printf ("\t%s", id->columns[i]);
+				}
+			} 
+			printf ("\n");
 		}
-		printf ("\n");
-		        
+		
 		input_data_freeMem(id->columns, id->n);
    }   
    fclose(id->inputFile);

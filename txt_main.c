@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <float.h>
 #include <sys/stat.h>
 
 #include "input_data.h"
@@ -25,7 +26,7 @@ void txt_main_Usage(int argc, char *argv[], struct input_data *id) {
 	printf("\n");
 	
 	if ((id->mode == MODE_TXT_COUNT_ENTRY) || (id->mode == 0))  {
-		printf("\n\t-m %d\tcount number of lines.",MODE_TXT_COUNT_ENTRY);
+		printf("\n\t-m %d\tcount number of lines in input text file.",MODE_TXT_COUNT_ENTRY);
 		if ((id->mode == MODE_TXT_COUNT_ENTRY) )  {
 			printf("\n\t\t-i FILE\tinput txt file.");
 			printf("\n\t\t-k CHAR\tignore or don't count lines starting with this character.  Default '#'");
@@ -37,7 +38,7 @@ void txt_main_Usage(int argc, char *argv[], struct input_data *id) {
 		printf("\n\t-m %d\textract one or more columns from a file.",MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
 		if ((id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) )  {
 			printf("\n\t\t-i FILE\tinput txt file.");
-			printf("\n\t\t-s STR\tcolumn names to be extracted in double quotes and separated by ','.  For example, \"filename,count\"");
+			printf("\n\t\t-k STR\tcolumn names to be extracted in double quotes and separated by ','.  For example, \"filename,count\"");
 			printf("\n\t\t-A\talso print all columns following columns identified by -s ");
 			printf("\n\n\t\tExample:\n\t\t\t%s txt -m %d -i test_data/txt/data.txt", argv[0], MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
 		}
@@ -59,10 +60,12 @@ void txt_main(int argc, char *argv[]) {
 
 	char secondInputFileName[1024] = "";
 	char str[1000000] = "";
+	char key[1024] = "";
+	double value = DBL_MIN;
 
 	int alsoPrintOtherColumns = 0;
 
-	while ((c = getopt(argc, argv, "s:m:i:j:q:k:vAH")) != -1) {
+	while ((c = getopt(argc, argv, "v:s:m:i:j:q:k:vAH")) != -1) {
 		switch (c) {
 		case 'A':
 			alsoPrintOtherColumns = 1;
@@ -73,18 +76,19 @@ void txt_main(int argc, char *argv[]) {
 		case 'q':
 			strcpy(id->inputFilePrefix, optarg);
 			break;
-		case 's':
-			strcpy(str, optarg);
-			break;
 		case 'i':
 			strcpy(id->inputFileName, optarg);
 			break;
 		case 'j':
 			strcpy(secondInputFileName, optarg);
 			break;
-		case 'k':
+		case 's':
 			strcpy(str, optarg);
-			ignoreLinesStartingWith = str[0];
+			value = atof(str);
+			break;
+		case 'k':
+			strcpy(key, optarg);
+			ignoreLinesStartingWith = key[0];
 			break;
 		case 'H':
 			od->outputOrientation = OUTPUT_ORIENTATION_HORIZONTAL;
@@ -130,12 +134,12 @@ void txt_main(int argc, char *argv[]) {
 			printf ("\n");
 		}
 	} else if (id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) {
-		if (strlen(str) == 0) {
+		if (strlen(key) == 0) {
 			txt_main_Usage(argc,argv,id);
-			printf ("\tMissing columns to be extracted (-s).  Please see usage above!\n\n");
+			printf ("\tMissing columns to be extracted (-k).  Please see usage above!\n\n");
 			exit(1);
 		}
-		txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(id, id->inputFileName, str, alsoPrintOtherColumns);
+		txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(id, id->inputFileName, key,value, alsoPrintOtherColumns);
 	}
 }
 

@@ -65,7 +65,7 @@ $outputFile = "_bam_${myColumn}.data.txt";
 
 # use qpipeline to extract these two columns 
 $desc = "$myColumn,category";
-system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -s $desc > $outputFile";
+system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
 
 # get unique types ; and use it to group data together 
 system "cat $outputFile | cut -f2  | grep -v category | sort | uniq > _tmp " ;
@@ -115,7 +115,7 @@ $outputFile = "_bam_${myColumn}.data.txt";
 
 # use qpipeline to extract these two columns 
 $desc = "$myColumn,category";
-system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -s $desc > $outputFile";
+system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
 
 system "echo \"x|y|category\" | tr '|' '\t' > _data.2.plot"; 
 system "cat $outputFile | grep -v category >> _data.2.plot";
@@ -138,9 +138,11 @@ $pdfFiles = $pdfFiles . " $outputFile.pdf";
 $myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_2d.scatter_ggplot.R`;
 $myRscript =~ s/#USE_LOG_10_ON_X_AXIS#//g;
 $myRscript =~ s/#USE_BIN_WIDTH#//g;
-$myRscript =~ s/WIDTH/0.5/g;
-$myRscript =~ s/HEIGHT/5/g;
-$myRscript =~ s/( TITLE INFO )//g;
+my $W = 0.5;
+my $H = 5;
+$myRscript =~ s/WIDTH/$W/g;
+$myRscript =~ s/HEIGHT/$H/g;
+$myRscript =~ s/TITLE_INFO/$W x $H/g;
 
 $myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,100, 10), limits=c(0,100)/g;
 
@@ -152,6 +154,51 @@ system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.p
 $pdfFiles = $pdfFiles . " $outputFile.2d.pdf";
 
 
+# ===============================================
+
+$myColumn = "percent_of_reads_aligned_to_hg19,percent_of_reads_aligned_to_target";
+$title = "percent of reads aligned to hg19 vs target";
+print "\n\nplotting $myColumn";
+$outputFile = "_bam_${myColumn}.data.txt";
+
+# use qpipeline to extract these two columns 
+$desc = "$myColumn,category";
+system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
+
+system "echo \"x|y|category\" | tr '|' '\t' > _data.2.plot"; 
+system "cat $outputFile | grep -v category >> _data.2.plot";
+
+# =====
+$xlab = "percent of reads aligned to hg19"; $ylab="percent of reads aligned to target" ;
+$myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_category_dot.ggplot.R`;
+$myRscript =~ s/#SET_X_RANGE#//g; $myRscript =~ s/X_RANGE/breaks = seq(0,100, 20), limits=c(0,100)/g;
+$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,100, 20), limits=c(0,100)/g;
+
+open FILE, ">$rFile";
+print FILE $myRscript;
+close FILE;
+
+system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.pdf";
+
+# =====
+$myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_2d.scatter_ggplot.R`;
+$myRscript =~ s/#USE_BIN_WIDTH#//g;
+$W = 5;
+$H = 5;
+$myRscript =~ s/WIDTH/$W/g;
+$myRscript =~ s/HEIGHT/$H/g;
+$myRscript =~ s/TITLE_INFO/$W x $H/g;
+
+$myRscript =~ s/#SET_X_RANGE#//g; $myRscript =~ s/X_RANGE/breaks = seq(0,100, 20), limits=c(0,101)/g;
+$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,100, 20), limits=c(0,101)/g;
+
+open FILE, ">$rFile";
+print FILE $myRscript;
+close FILE;
+
+system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.2d.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.2d.pdf";
 
 
 
@@ -175,7 +222,7 @@ $outputFile = "_bam_${myColumn}.data.txt";
 
 # use qpipeline to extract these two columns 
 $desc = "$myColumn,category";
-system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -s $desc > $outputFile";
+system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
 
 # get unique types ; and use it to group data together 
 system "cat $outputFile | cut -f2  | grep -v category | sort | uniq > _tmp " ;
@@ -213,7 +260,7 @@ $outputFile = "_bam_${myColumn}.data.txt";
 
 # use qpipeline to extract these two columns 
 $desc = "$myColumn,category";
-system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -s $desc > $outputFile";
+system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
 
 # get unique types ; and use it to group data together 
 system "cat $outputFile | cut -f2  | grep -v category | sort | uniq > _tmp " ;
