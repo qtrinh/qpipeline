@@ -49,7 +49,7 @@ where
 
 * IDENTIFIER is the BED database identifer entered by the user and n is either 0 (no matches from the BED database ) or 1 ( there is at least one match from the BED database)
 * M is the number of targets matches from the BED database. 
-* DATA is string contained the target entries from the BED database.
+* DATA is string contained one or more target entries from the BED database.
 
 
 Once annotated, entries on target can be easily extracted by doing the following:
