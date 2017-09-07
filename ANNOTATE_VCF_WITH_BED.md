@@ -33,7 +33,7 @@ Annotate _sample.vcf_ with the _target.bed.sorted.gz_ database and direct output
 ```
 qpipeline tabix -m 2000 -i sample.vcf  -d target.bed.sorted.gz -q MY_TARGET > sample.target.vcf 
 ```
-where ( see ${QPIPELINE_HOME}/qpipeline tabix -m 2000 for full usage info )
+where ( see qpipeline tabix -m 2000 for full usage info )
 * -i input VCF file 
 * -d bgziped and tabix indexed BED database file 
 * -q BED database identifer.  For example, MY_TARGET.
@@ -50,6 +50,8 @@ where
 * IDENTIFIER is the BED database identifer entered by the user and n is either 0 (no matches from the BED database ) or 1 ( there is at least one match from the BED database)
 * M is the number of targets matches from the BED database. 
 * DATA is string contained the target entries from the BED database.
+
+## Example
 
 
 
