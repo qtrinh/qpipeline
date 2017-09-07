@@ -51,7 +51,21 @@ where
 * M is the number of targets matches from the BED database. 
 * DATA is string contained the target entries from the BED database.
 
-## Example
+
+Once annotated, entries on target can be easily extracted by doing the following:
+```
+cat sample.target.vcf | grep MY_TARGET=1
+```
+The command above produced 2 entries:
+```
+chr1	10616	rs376342519	CCGCCGTTGCAAAGGCGCGCCG	C	.	.	RS=376342519;MY_TARGET=1,1,.?chr1?10500?10700??
+chr1	10642	rs558604819	G	A	.	.	RS=558604819;MY_TARGET=1,1,.?chr1?10500?10700??
+```
+
+Similarly, number of entries that are not on target can be extracted by doing the following command
+```
+cat sample.target.vcf | grep MY_TARGET=1 | wc -l 
+```
 
 
 
