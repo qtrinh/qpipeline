@@ -6,7 +6,7 @@ Change to a directory where to install **_qpipeline_**
 # clone qpipeline 
 git clone https://github.com/qtrinh/qpipeline.git
 
-# change into qpipeline directory.  This is directory will be set as QPIPELINE_HOME
+# change into qpipeline directory ( this directory will be referred to as QPIPELINE_HOME from now on )
 cd qpipeline
 ```
 
