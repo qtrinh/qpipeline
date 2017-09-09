@@ -12,7 +12,7 @@ will work, however, if any columns in the input file changed, then _N_ needs to 
 ```
 qpipeline txt  -m 1010 -i alignment.stats.txt -k input_file,mean_coverage | less
 ```
-which outputs the following:
+which produces the following output:
 ```
 input_file      mean_coverage
 10_P.bam        739.544
