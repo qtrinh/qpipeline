@@ -10,7 +10,16 @@ cut -f N FILE | less
 ```
 will work, however, if any columns in the input file changed, then _N_ needs to be updated accordingly.  Inspired by the SQL _select_ statement, **_qpipeline_** can be used to select one or more columns from the input file regardless of where the columns are in the file.  For example, select the two columns _input_file_ and _mean_coverage_ from the file _alignment.stats.txt_:
 ```
-qpipeline txt  -m 1010 -i alignment.stats.txt -k "input_file,mean_coverage" | less
+qpipeline txt  -m 1010 -i alignment.stats.txt -k input_file,mean_coverage | less
+```
+which outputs the following:
+```
+input_file      mean_coverage
+10_P.bam        739.544
+10_R.bam        718.379
+11_P.bam        992.97
+11_R.bam        2001.93
+12_P.bam        3213.51
 ```
 
 Another example is selecting entries in the file _alignment.stats.txt_ where _mean_coveage_ is greater than 200.    This can be done easily as follows:
