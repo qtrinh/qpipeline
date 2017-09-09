@@ -4,11 +4,11 @@ The following sections describe how to use **_qpipeline_** with input text (txt)
 
 ---
 ## Selecting One or More Columns From A Text File
-Sometimes it is handy to be able to select one or more columns from a text file regardless of where the column(s) are in the file. Using the Unix command:
+Sometimes it is handy to be able to select one or more columns from a text file regardless of where the columns are in the file. Using the Unix command:
 ```
 cut -f N FILE | less
 ```
-will work, however, if any columns in the input file are changed, then _N_ needs to be updated accordingly.  Inspired by the SQL _select_ statement, **_qpipeline_** can be used to select one or more columns from the input file regardless of where the columns are in the file.  For example, select the two columns _input_file_ and _mean_coverage_ from the file _alignment.stats.txt_:
+will work, however, if any columns in the input file changed, then _N_ needs to be updated accordingly.  Inspired by the SQL _select_ statement, **_qpipeline_** can be used to select one or more columns from the input file regardless of where the columns are in the file.  For example, select the two columns _input_file_ and _mean_coverage_ from the file _alignment.stats.txt_:
 ```
 qpipeline txt  -m 1010 -i alignment.stats.txt -k "input_file,mean_coverage" | less
 ```
