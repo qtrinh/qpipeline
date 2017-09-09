@@ -29,7 +29,7 @@ Run **_qpipeline_** by itself to see if it is compiled successfully
 ```
 If you see the following, then you have successuflly compiled **_qpipeline_**
 ```
-A collection of utils for Next Gen Sequencing (NGS) data.
+An annotation and collection of utils for Next Gen Sequencing (NGS) data.
 
 Usage:
         qpipeline txt
