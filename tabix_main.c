@@ -47,7 +47,7 @@ void tabix_main_Usage(int argc, char *argv[], struct input_data *id) {
 			printf("\n\t\t-R\tinclude matches where the ALT do not match.  Default, both REF and ALT must match.");
 			//printf("\n\t\t-N\tdo not include data from TABIX_DATABASE_FILE in output.  Default, all columns in TABIX_DATABASE_FILE are included in output.");
 
-			printf ("\n\n\t\tExample:\n\t\t\t%s tabix -m %d -d test_data/vcf/dbSNP_147.vcf.gz -i test_data/vcf/sample.vcf -p dbSNP_147", argv[0], MODE_TABIX_ANNOTATE_VCF_WITH_VCF);
+			printf ("\n\n\t\tExample:\n\t\t\t%s tabix -m %d -d test_data/vcf/dbSNP_147.vcf.gz -i test_data/vcf/sample.vcf -q dbSNP_147", argv[0], MODE_TABIX_ANNOTATE_VCF_WITH_VCF);
 		}
 	}
 	

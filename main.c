@@ -22,7 +22,7 @@ void bedtools_main (int argc, char *argv[]);
 void usage(int argc, char *argv[]) {
 	printf("\n\n");
 	printf("%s", AUTHORS );
-	printf("\nA collection of utils for Next Gen Sequencing (NGS) data.");
+	printf("\nqpipeline is an annotation and a collection of utils for Next Gen Sequencing (NGS) data.");
 	printf("\n\nUsage:");
 	printf("\n\t%s txt\t", argv[0]);
 	printf("\n\t%s fasta\t", argv[0]);

@@ -510,21 +510,35 @@ void vcf_MODE_VCF_PARSE_INFO_COLUMN_FOR_KEY(struct input_data *id, struct output
 			utils_getKeyNValue(ptr,localKey,localValue);
 
 			if (minValue == INT_MIN) {
-				// no value entered by user 
+				// no filtering or no value entered by user 
 				// print key and value pair as first column follow by orginal entry 
 					if (id->verbose)
 						printf ("\n[%s:%d] - \n", __FILE__, __LINE__);
 				printf ("%s\t%s\n", ptr,id->line);
 			} else {
+
 				if (atof(localValue) >= minValue) { 
 					// print original entry because value of key is greater than
 					// user input 
 					if (id->printRejected == 0) {
+					
+						sprintf (str,"PASSED_MINIMUM_%s_FILTER:%.2f",key,minValue);
+
 						if (id->verbose)
-							printf ("\n[%s:%d] - printing entry because value of key greater than what user input \n", __FILE__, __LINE__);
-						printf ("%s\n", id->line);
+							printf ("\n[%s:%d] - adding '%s' to INFO ... \n\n",__FILE__, __LINE__,str);
+						//printf ("%s\n", id->line);
+						vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
 					}
 				} else {
+
+					//printf ("%s\n", id->line);
+					// TODO: need somehow indicate value of the failed filter
+					sprintf (str,"FAILED_MINIMUM_%s_FILTER:%.2f",key,minValue);
+					if (id->verbose) 
+						printf ("\n[%s:%d] - adding '%s' to INFO ... \n\n",__FILE__, __LINE__,str);
+					vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
+
+/*
 					// value of key is less than value user input 
 					if (id->printRejected == 0) {
 						if (id->verbose) 
@@ -533,8 +547,13 @@ void vcf_MODE_VCF_PARSE_INFO_COLUMN_FOR_KEY(struct input_data *id, struct output
 						// print rejected  entry 
 						if (id->verbose) 
 							printf ("\n[%s:%d] - printing rejected entry ... \n\n",__FILE__, __LINE__);
-						printf ("%s\n", id->line);
+
+						//printf ("%s\n", id->line);
+						// TODO: need somehow indicate value of the failed filter
+						sprintf (str,"FAILED_%s_FILTER");
+						vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
 					}
+*/
 				}
 			}
 		} else {
@@ -694,9 +713,10 @@ void vcf_MODE_VCF_PARSE_FORMAT_COLUMN_FOR_KEY(struct input_data *id, struct outp
 	struct vcf * myVCF = vcf_init();
 	int i,sampleIndex;
 	char outputStr[MAX_CHAR_PER_LINE];
+	char str[1024];
 	// an array to store passes 
-	int *passes;
-	char **data;
+	int *passes = NULL;
+	char **data = NULL;
 	int j;
 	int attributeIndex;
 	char textHeaders[1024];
@@ -853,8 +873,9 @@ void vcf_MODE_VCF_PARSE_FORMAT_COLUMN_FOR_KEY(struct input_data *id, struct outp
 				}
 			}
 			int numberOfPassedSamples = 0;
-			for (i = 0; i <  myVCF->numberOfSamples; i++)
+			for (i = 0; i <  myVCF->numberOfSamples; i++) {
 				numberOfPassedSamples += passes[i];
+			}
 
 			if (id->verbose) {
 				printf ("\n[%s:%d] - %d out of %d passed ... \n\n", __FILE__, __LINE__, numberOfPassedSamples,  myVCF->numberOfSamples);
@@ -877,13 +898,17 @@ void vcf_MODE_VCF_PARSE_FORMAT_COLUMN_FOR_KEY(struct input_data *id, struct outp
 				}
 			} else {
 				if (passes[sampleIndex2Process] == 1) {
+					sprintf (str,"%s_PASSED_MINIMUM_%s_FILTER:%.2f",myVCF->sampleNames[sampleIndex2Process],key,value);
 					if (id->verbose) {
-						printf ("\n[%s:%d] - sample with index %d passed ... printing ... \n\n", __FILE__, __LINE__, sampleIndex2Process);
+						printf ("\n[%s:%d] - adding '%s' to INFO ... \n\n",__FILE__, __LINE__,str);
 					}
-					printf ("%s\n", id->line);
+
+					vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
 				} else {
+					sprintf (str,"%s_FAILED_MINIMUM_%s_FILTER:%.2f",myVCF->sampleNames[sampleIndex2Process],key,value);
 					if (id->verbose)
-						printf ("\n[%s:%d] - sample with index %d failed ... skip printing ... \n\n", __FILE__, __LINE__, sampleIndex2Process);
+						printf ("\n[%s:%d] - adding '%s' to INFO ... \n\n",__FILE__, __LINE__,str);
+					vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
 				}
 			}
 
@@ -1868,8 +1893,6 @@ void vcf_MODE_VCF_PARSE_SNPEFF_ANN(struct input_data *id, struct output_data *od
 	char outputData[100][1024];
 	int outputDataN;
 
-	int i;
-
    id->inputFile = fopen(id->inputFileName, "r");
 	if (id->inputFile == NULL) {
 		printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, id->inputFileName);
@@ -1909,4 +1932,93 @@ void vcf_MODE_VCF_PARSE_SNPEFF_ANN(struct input_data *id, struct output_data *od
    }   
    fclose(id->inputFile);
 }
+
+
+
+/**
+  annotate variant class  ( SNV, indels, etc )
+  **/
+void vcf_MODE_VCF_ANNOTATE_VARIANT_CLASS(struct input_data *id, struct output_data *od) { 
+
+	struct vcf * myVCF = vcf_init();
+	char tmp[1024];
+	char str[1024];
+	int seenINFO = 0;
+	int printing = 1;
+
+   id->inputFile = fopen(id->inputFileName, "r");
+	if (id->inputFile == NULL) {
+		printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, id->inputFileName);
+		printf ("\n\n");
+		exit (1);
+	}
+	   
+	// read input file 
+   while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
+
+		if (strstr(id->line,"#CHROM")) {
+			printf ("%s", id->line);
+			vcf_parseHEADER(id, myVCF);
+			continue;
+		}
+
+		if (id->line[0] == '#') {
+			// looking for the ##INFO string 
+			if (strstr(id->line,"##INFO")) {
+				if (seenINFO == 0) 
+					seenINFO = 1;
+			}
+			if ((seenINFO == 1) && (!strstr(id->line,"##INFO"))&& (printing)) {
+				printing = 0;
+				//TODO print variant class description in INFO 
+			}
+			printf ("%s", id->line);
+			continue;
+		}
+
+		if (id->verbose)  {
+      	printf ("\n%s\n", LINE_DIVIDER_LONG);
+      	printf ("[%s:%d] - %s", __FILE__, __LINE__, id->line);
+		}	
+		         
+		// remove '\n' 
+		id->line[strlen(id->line)-1] = '\0';
+
+		id->columns = input_data_parseLineMem(id, id->line, '\t', &(id->n));
+		if (id->verbose)
+			input_data_printParsedLineMemDebugging(id->columns, id->n);
+
+
+		variant_class_t type = vcf_getVariantClass(id->columns[VCF_COLUMN_REF + id->columnOffSet], id->columns[VCF_COLUMN_ALT + id->columnOffSet], tmp);
+
+		if (type == VARIANT_CLASS_SUBSTITUTION_SINGLE_BASE)  {
+			strcpy(str,"VC=SNV");
+			if (id->verbose) 
+				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
+		} else if (type == VARIANT_CLASS_SUBSTITUTION_MULTIPLE_BASES) {
+			strcpy(str,"VC=MNV");
+			if (id->verbose) 
+				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
+		} else if (type == VARIANT_CLASS_INSERTION) {
+			strcpy(str,"VC=INSERTION");
+			if (id->verbose) 
+				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
+		} else if (type == VARIANT_CLASS_DELETION) {
+			strcpy(str,"VC=DELETION");
+			if (id->verbose) 
+				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
+		} else if (type == VARIANT_CLASS_INDELS) {
+			strcpy(str,"VC=INDELS");
+			if (id->verbose) 
+				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
+		}
+
+		vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
+
+		input_data_freeMem(id->columns, id->n);
+   }   
+   fclose(id->inputFile);
+}
+
+
 

@@ -35,12 +35,13 @@ void txt_main_Usage(int argc, char *argv[], struct input_data *id) {
 		}
 	}
 	if ((id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) || (id->mode == 0))  {
-		printf("\n\t-m %d\textract one or more columns from a file.",MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
+		printf("\n\t-m %d\textract/delete one or more columns from a file.",MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
 		if ((id->mode == MODE_TXT_EXTRACT_COLUMN_FROM_FILE) )  {
 			printf("\n\t\t-i FILE\tinput txt file.");
 			printf("\n\t\t-k STR\tcolumn names to be extracted in double quotes and separated by ','.  For example, \"filename,count\"");
-			printf("\n\t\t-A\talso print all columns following columns identified by -s ");
-			printf("\n\n\t\tExample:\n\t\t\t%s txt -m %d -i test_data/txt/data.txt", argv[0], MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
+			printf("\n\t\t-A\talso print all columns following columns indicated by -k STR");
+			printf("\n\t\t-D\tdelete column(s) indicated by -k STR ");
+			printf("\n\n\t\tExample:\n\t\t\t%s txt -m %d -i test_data/txt/data.txt -k total_number_of_reads -A", argv[0], MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
 		}
 	}
 
@@ -64,11 +65,15 @@ void txt_main(int argc, char *argv[]) {
 	double value = DBL_MIN;
 
 	int alsoPrintOtherColumns = 0;
+	int deleteColumns = 0;
 
-	while ((c = getopt(argc, argv, "v:s:m:i:j:q:k:vAH")) != -1) {
+	while ((c = getopt(argc, argv, "s:m:i:j:q:k:vAHD")) != -1) {
 		switch (c) {
 		case 'A':
 			alsoPrintOtherColumns = 1;
+			break;
+		case 'D':
+			deleteColumns = 1;
 			break;
 		case 'm':
 			id->mode = atoi(optarg);
@@ -139,7 +144,11 @@ void txt_main(int argc, char *argv[]) {
 			printf ("\tMissing columns to be extracted (-k).  Please see usage above!\n\n");
 			exit(1);
 		}
-		txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(id, id->inputFileName, key,value, alsoPrintOtherColumns);
+		if (deleteColumns == 0)
+			txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(id, id->inputFileName, key,value, alsoPrintOtherColumns);
+		else 
+			txt_MODE_TXT_DELETE_COLUMN_FROM_FILE(id, id->inputFileName, key);
+
 	}
 }
 

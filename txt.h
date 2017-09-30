@@ -16,7 +16,8 @@
 #define MODE_TXT_EXTRACT_COLUMN_FROM_FILE 1010
 
 int txt_MODE_TXT_COUNT_ENTRY(struct input_data *id, char inputFileName[], char ignoreLinesStartingWith) ;
-int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileName[], char columnsToBeExtracted[], double value, int alsoPrintAllOtherColumns);
+int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileName[], char columnsToBeExtracted[], double value, int alsoPrintAllOtherColumns) ;
+int txt_MODE_TXT_DELETE_COLUMN_FROM_FILE(struct input_data *id, char inputFileName[], char columnsToBeExtracted[]) ;
 
 
 

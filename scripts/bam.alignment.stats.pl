@@ -61,6 +61,12 @@ foreach my $t (@tools) {
 		exit (1);
 	}
 }
+# check to see if target file exists 
+unless (-e $TARGET_FILE) {
+	print "\n\nTarget BED file does not exist.  Please check its path:\n\n";
+	print "$TARGET_FILE\n\n";
+	exit (1);
+}
 
 
 my $numberOfReads=0;
@@ -142,7 +148,7 @@ print $fh "\t$numberOfReadsAlignedTarget";
 printf $fh "\t%.2f", $percentOfReadsAlignedTarget;
 print $fh "\t$targetSize";
 print $fh "\t$meanCoverage";
-printf $fh "\t%.2f", $xCoverage1;
+printf $fh "\t%.2f",$xCoverage1;
 printf $fh "\t%.2f",$xCoverage25;
 printf $fh "\t%.2f",$xCoverage50;
 printf $fh "\n";

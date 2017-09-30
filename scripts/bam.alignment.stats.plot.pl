@@ -67,6 +67,26 @@ $outputFile = "_bam_${myColumn}.data.txt";
 $desc = "$myColumn,category";
 system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
 
+
+# plot all samples 
+system "echo \"x|y|category\" | tr '|' '\t' > _data.2.plot.all"; 
+system "cat $outputFile | awk '\$2 ~ /BART/'  | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tTEAM UK Tumors\" }' >>  _data.2.plot.all";  
+system "cat $outputFile | awk '\$2 ~ /_P\$/' | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tGECCO Tumors\" }' >>  _data.2.plot.all";  
+#system "cat $outputFile | awk '\$2 ~ /_R\$/' | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tGECCO Normal\" }' >>  _data.2.plot.all";  
+#system "cat $outputFile | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tall-samples\" }' >>  _data.2.plot.all";  
+$xlab = "Samples"; $ylab="" ;
+$myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_category_dot.ggplot.R`;
+$myRscript =~ s/#USE_MILLION_ON_Y_AXIS#//;
+$myRscript =~ s/#SET_X_RANGE#//g; $myRscript =~ s/X_RANGE/breaks = seq(0,3000, 500), limits=c(0,3000)/g;
+$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,50, 10), limits=c(0,50)/g;
+open FILE, ">$rFile";
+print FILE $myRscript;
+close FILE;
+
+system "Rscript _plot.R _data.2.plot.all \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.all.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.all.pdf";
+
+
 # get unique types ; and use it to group data together 
 system "cat $outputFile | cut -f2  | grep -v category | sort | uniq > _tmp " ;
 
@@ -135,23 +155,29 @@ system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.p
 $pdfFiles = $pdfFiles . " $outputFile.pdf";
 
 # =====
+
+
+my $W;# width
+my $H;# height
+
+
 $myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_2d.scatter_ggplot.R`;
 $myRscript =~ s/#USE_LOG_10_ON_X_AXIS#//g;
 $myRscript =~ s/#USE_BIN_WIDTH#//g;
-my $W = 0.5;
-my $H = 5;
+$W = 0.5;
+$H = 5;
 $myRscript =~ s/WIDTH/$W/g;
 $myRscript =~ s/HEIGHT/$H/g;
 $myRscript =~ s/TITLE_INFO/$W x $H/g;
 
-$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,100, 10), limits=c(0,100)/g;
+$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(-10,100, 10), limits=c(-10,100)/g;
 
 open FILE, ">$rFile";
 print FILE $myRscript;
 close FILE;
 
-system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.2d.pdf";
-$pdfFiles = $pdfFiles . " $outputFile.2d.pdf";
+system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.2d.log10.on.y.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.2d.log10.on.y.pdf";
 
 
 # ===============================================

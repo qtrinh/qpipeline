@@ -54,8 +54,9 @@ void vcf_main_Usage(int argc, char *argv[], struct input_data *id) {
 		if (id->mode == MODE_VCF_PARSE_INFO_COLUMN_FOR_KEY) {
 			printf("\n\t\t-i FILE\tinput VCF file.");
 			printf("\n\t\t-k STR\tattribute in INFO column to parse or to look for.");
-			printf("\n\t\t-s INT\tminimum value for attribute indicated by -k to consider for printing.  Output is VCF format. ( OPTIONAL )");
-			printf("\n\t\t-R\tprint only entries where attribute values indicated by -k are less than value indicated by -s INT .  Output is VCF format. ( OPTIONAL )");
+			//printf("\n\t\t-s INT\tminimum value for attribute indicated by -k to consider for printing.  Output is VCF format. ( OPTIONAL )");
+			printf("\n\t\t-s INT\tannotate passed or failed based on minimum value of INT.\n\t\t\tFor example, if -k TLOD -s 20 then PASSED_TLOD_FILTER is added to INFO column\n\t\t\tif TLOD value is greater than 20.  Otherwise, FAILED_TLOD_FILTER is added.  Output is VCF format.");
+			//printf("\n\t\t-R\tprint only entries where attribute values indicated by -k are less than value indicated by -s INT .  Output is VCF format. ( OPTIONAL )");
 			         
 			printf ("\n\n\t\tExample:\n\t\t\t%s vcf -m %d -i test_data/vcf/test.vcf -k AC", argv[0], MODE_VCF_PARSE_INFO_COLUMN_FOR_KEY);     
 
@@ -107,6 +108,13 @@ void vcf_main_Usage(int argc, char *argv[], struct input_data *id) {
 			printf ("\n\n\t\tExample:\n\t\t\t%s vcf -m %d -i test_data/vcf/test.vcf -f test_data/fasta/chrM.fa ", argv[0], MODE_VCF_ANNOTATE_SEQUENCE_CONTEXT);     
 		}
 	}
+	if ((id->mode == MODE_VCF_ANNOTATE_VARIANT_CLASS) || (id->mode == 0))  {
+		printf("\n\t-m %d\tannotate variant class (VC).  For example, VC=SNV, VC=INDELS, etc.", MODE_VCF_ANNOTATE_VARIANT_CLASS);
+		if (id->mode == MODE_VCF_ANNOTATE_VARIANT_CLASS) {
+			printf("\n\t\t-i FILE\tinput VCF file.");
+		}
+	}
+
 	if ((id->mode == MODE_VCF_ANNOTATE_SUBSTITUTION_SUB_TYPES) || (id->mode == 0))  {
 		printf("\n\t-m %d\tannotate 6 substitution sub-types ( C->A, C->T, etc. )",MODE_VCF_ANNOTATE_SUBSTITUTION_SUB_TYPES);
 		if (id->mode == MODE_VCF_ANNOTATE_SUBSTITUTION_SUB_TYPES) {
@@ -300,6 +308,10 @@ void vcf_main(int argc, char *argv[]) {
 		if (strlen(id->inputFilePrefix)==0)
 			strcpy(id->inputFilePrefix,"SEQUENCE_CONTEXT");
 		vcf_MODE_VCF_ANNOTATE_SEQUENCE_CONTEXT(id,od,fa, flanking);
+
+	} else if (id->mode == MODE_VCF_ANNOTATE_VARIANT_CLASS) {
+		vcf_MODE_VCF_ANNOTATE_VARIANT_CLASS(id,od);
+
 	} else if (id->mode == MODE_VCF_ANNOTATE_SUBSTITUTION_SUB_TYPES) {
 		if (strlen(id->inputFileName) == 0) {
 			vcf_main_Usage(argc,argv,id);
