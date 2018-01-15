@@ -5,7 +5,7 @@ The following sections describe how to use **_qpipeline_** with input FASTA file
 [Extract FASTA sequences from a FASTA file](#extract-fasta-sequences-from-fasta-file)
 
 There are two ways of extracting FASTA sequences from a FASTA file:
-* use -r argument if there is only one region to extract.  For example,
+* use -r argument if there is only one region to extract.  For example, to extract the region chr1:20000-20100 from chr1.fa, do the following:
 ```
 qpipeline fasta -m 1000 -i chr1.fa  -r chr1:20000-20100
 ```
