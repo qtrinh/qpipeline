@@ -4,11 +4,11 @@ The following sections describe how to use **_qpipeline_** with input text (txt)
 
 ---
 ## Selecting One or More Columns From A Text File
-Sometimes it is handy to be able to select one or more columns from a text file regardless of where the columns are in the file. Using the Unix command:
+Sometimes it is handy to be able to select or delete one or more columns from a text file regardless of where the columns are in the file.   Using the Unix command:
 ```
-cut -f N FILE | less
+cut -f N,M FILE | less
 ```
-will work, however, if any columns in the input file changed, then _N_ needs to be updated accordingly.  Inspired by the SQL _select_ statement, **_qpipeline_** can be used to select one or more columns from the input file regardless of where the columns are in the file.  For example, select the two columns _input_file_ and _mean_coverage_ from the file _alignment.stats.txt_:
+will work, however, if any columns in the input file changed or moved, then _N_ and/or _M_ needs to be updated accordingly.  Inspired by the SQL _select_ statement, **_qpipeline_** can be used to select or delete one or more columns from the input file regardless of where the columns are in the file.  For example, the following command is used select the two columns _input_file_ and _mean_coverage_ from the file _alignment.stats.txt_:
 ```
 qpipeline txt  -m 1010 -i alignment.stats.txt -k input_file,mean_coverage | less
 ```
@@ -20,16 +20,16 @@ input_file      mean_coverage
 11_P.bam        992.97
 11_R.bam        2001.93
 12_P.bam        3213.51
+...
 ```
 
-Another example is selecting entries in the file _alignment.stats.txt_ where _mean_coveage_ is greater than 200.    This can be done easily as follows:
+Another example is to select entries in the file _alignment.stats.txt_ where _mean_coveage_ is greater than 200.    This can be done easily as follows:
 ```
-qpipeline txt  -m 1010 -i alignment.stats.txt -k "mean_coverage" -s 100 -A | cut -f 2- | less
+qpipeline txt  -m 1010 -i alignment.stats.txt -k "mean_coverage" -s 100 -A | less
 ```
 where
-* -A indicates adding all columns in the input file to the right of the selected column "mean_coverage"
-* -s 100 prints only rows where value of mean_coverage is greater than 100
-* cut -f 2- extracts all columns starting from column 2 and on
+* -s 100 means print only rows where value of mean_coverage is greater than 100
+* -A indicates append all columns in the input file to the right of the selected column "mean_coverage"
 
 ---
 
