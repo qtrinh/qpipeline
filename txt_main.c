@@ -44,6 +44,15 @@ void txt_main_Usage(int argc, char *argv[], struct input_data *id) {
 			printf("\n\n\t\tExample:\n\t\t\t%s txt -m %d -i test_data/txt/data.txt -k total_number_of_reads -A", argv[0], MODE_TXT_EXTRACT_COLUMN_FROM_FILE);
 		}
 	}
+	if ((id->mode == MODE_TXT_EXTRACT_ROW_FROM_FILE) || (id->mode == 0))  {
+		printf("\n\t-m %d\textract rows from a file based on value(s) of a column.",MODE_TXT_EXTRACT_ROW_FROM_FILE);
+		if ((id->mode == MODE_TXT_EXTRACT_ROW_FROM_FILE) )  {
+			printf("\n\t\t-i FILE\tinput txt file.");
+			printf("\n\t\t-j FILE\t1-column file to match");
+			printf("\n\t\t-n INT\tcolumn number in input file to match against values in the 1-column file");
+			//printf("\n\t\t-D\tdelete matching row(s) instead of printing");
+		}
+	}
 
 	printf("\n\n");
 }
@@ -66,8 +75,9 @@ void txt_main(int argc, char *argv[]) {
 
 	int alsoPrintOtherColumns = 0;
 	int deleteColumns = 0;
+	int n = 0;
 
-	while ((c = getopt(argc, argv, "s:m:i:j:q:k:vAHD")) != -1) {
+	while ((c = getopt(argc, argv, "s:m:n:i:j:q:k:vAHD")) != -1) {
 		switch (c) {
 		case 'A':
 			alsoPrintOtherColumns = 1;
@@ -77,6 +87,9 @@ void txt_main(int argc, char *argv[]) {
 			break;
 		case 'm':
 			id->mode = atoi(optarg);
+			break;
+		case 'n':
+			n = atoi(optarg);
 			break;
 		case 'q':
 			strcpy(id->inputFilePrefix, optarg);
@@ -149,6 +162,9 @@ void txt_main(int argc, char *argv[]) {
 		else 
 			txt_MODE_TXT_DELETE_COLUMN_FROM_FILE(id, id->inputFileName, key);
 
+	} else if (id->mode == MODE_TXT_EXTRACT_ROW_FROM_FILE) {
+			
+		txt_MODE_TXT_DELETE_ROW_FROM_FILE(id, id->inputFileName, secondInputFileName, n, deleteColumns);
 	}
 }
 

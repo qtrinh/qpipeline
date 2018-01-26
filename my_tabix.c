@@ -154,6 +154,111 @@ void tabix_MODE_TABIX_ANNOTATE_VCF_WITH_BED(struct input_data *id, struct output
 
 
 
+
+/**
+  annotate txt file with tabix index BED file 
+  **/
+void tabix_MODE_TABIX_ANNOTATE_TXT_WITH_BED(struct input_data *id, struct output_data *od, struct my_tabix *tabix, int chrColumn , int posColumn ) {
+
+	char str[MAX_CHAR_PER_COLUMN];
+
+	acgtn_t *acgtn = acgtn_Init();
+
+	// open input file 
+   id->inputFile = fopen(id->inputFileName, "r");
+   if (id->inputFile == NULL) {
+      printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, id->inputFileName);
+      printf ("\n\n");
+      exit (1);
+   }   
+	
+	{ 
+		tabix_loadFile(tabix);
+		
+		// get number of columns in tabix file 
+		//tabix_getNumberOfColumns(tabix);
+
+		while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
+			// adding info on that target file used
+			if (strstr(id->line,"CHROM")) {
+				printf ("##%s,BED_FILE=%s\n",tabix->inputFilePrefix, tabix->inputFileName); 
+				printf ("%s", id->line);
+				continue;
+			}
+
+			if (id->line[0] == '#') {
+				printf ("%s", id->line);
+				continue;
+			}
+
+
+			// remove newline at the end of line 
+			if (id->line[strlen(id->line)-1] == '\n')
+				id->line[strlen(id->line)-1] = '\0';
+
+			id->columns = input_data_parseLineMem(id, id->line, '\t', &(id->n));
+
+			sprintf(tabix->region,"%s:%s-%s", id->columns[id->chrColumnNumber], id->columns[id->startColumnNumber], id->columns[id->endColumnNumber]);
+
+			if (id->verbose) {
+				printf("\n\n======================");
+				printf("\n[%s:%d]\n%s\n'%s'\n", __FILE__, __LINE__, id->line,tabix->region);
+				printf("\n");
+			}
+			
+			tabix->matches = 0;
+			strcpy(tabix->outputData,"");
+
+			if (ti_parse_region(tabix->t->idx, tabix->region, &tabix->tid, &tabix->beg, &tabix->end) == 0) {
+				tabix->iter = ti_queryi(tabix->t, tabix->tid, tabix->beg, tabix->end);
+
+				while ((tabix->data = ti_read(tabix->t, tabix->iter, &tabix->len)) != 0 ) {
+					
+					tabix->matches++;
+
+					if (id->verbose) {
+						printf("[%s:%d] - FOUND entry %d in tabix databse:\t'%s'", __FILE__, __LINE__, tabix->matches, tabix->data);
+						printf("\n\n");
+					}
+
+					//sprintf (tabix->datacpy,"%s\t%s", "on-target", tabix->data);
+					sprintf (tabix->datacpy,".\t%s", tabix->data);
+					tabix->columns = input_data_parseLineMem(id, tabix->datacpy, '\t', &(tabix->n));
+					if (id->verbose)
+						input_data_printParsedLineMemDebugging(tabix->columns, tabix->n);
+			
+					my_tabix_concatAnnotationData(tabix->datacpy,tabix->outputData);
+
+					//free(id->tabix->data);
+				}
+				ti_iter_destroy(tabix->iter);
+			}
+			if (tabix->matches == 0) {
+				if (id->verbose) {
+					printf("[%s:%d] - didn't find any entries in tabix database ... ", __FILE__, __LINE__);
+					printf("\n\n");
+				}
+				strcpy(tabix->outputData, ".");
+			} else {
+				if (id->verbose)
+					printf ("\nstring to add to output:\t%s\n\n", tabix->outputData);
+			}
+				
+			my_tabix_formatAnnotation(str, tabix->inputFilePrefix, tabix->matches, tabix->outputData);
+
+			printf ("%s\t%s\n", id->line, str);
+			//vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str); 
+
+			// free mem allocated by Input_parseLineMem 
+			input_data_freeMem(id->columns, id->n);
+	}
+	ti_close(tabix->t);
+	fclose(id->inputFile);
+	}
+}
+
+
+
 /**
   annotate VCF file with PILEUP file index by tabix 
   **/

@@ -83,3 +83,96 @@ void bedtools_MODE_PARSE_ALL_FOR_1X_2X(struct input_data *id, struct output_data
 }
 
 
+
+
+/*
+	module load BEDTools; bedtools coverage -abam $i -b target.bed -d > out.txt 
+
+	chr1    27098918        27099190        1       15
+	chr1    27098918        27099190        2       15
+	chr1    27098918        27099190        3       15
+	chr1    27098918        27099190        4       15
+	chr1    27098918        27099190        5       15
+	chr1    27098918        27099190        6       15
+	chr1    27098918        27099190        7       15
+	chr1    27098918        27099190        8       15
+	chr1    27098918        27099190        9       15
+	chr1    27098918        27099190        10      15
+	chr1    27098918        27099190        11      63
+	chr1    27098918        27099190        12      63
+	chr1    27098918        27099190        13      63
+	chr1    27098918        27099190        14      63
+	chr1    27098918        27099190        15      63
+	chr1    27098918        27099190        16      63
+	chr1    27098918        27099190        17      63
+
+	chr1    27098918        27099190        270     1
+	chr1    27098918        27099190        271     1
+	chr1    27098918        27099190        272     1
+
+	*/
+void bedtools_MODE_PARSE_READ_DEPTH_FROM_INDIVIDUAL_AMPLICON(struct input_data *id, struct output_data *od, int minReadDepth) {
+
+	int CHR_COL = 1;
+	int START_COL = 2;
+	int END_COL = 3;
+	int POS = 4;
+	int RD_COL = 5;
+
+   id->inputFile = fopen(id->inputFileName, "r");
+	if (id->inputFile == NULL) {
+		printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, id->inputFileName);
+		printf ("\n\n");
+		exit (1);
+	}
+
+	char chr[1024] = "";
+	long  start = 0,end = 0;
+	long  ss, ee, rd;
+	int ampliconLength;
+	int baseCount; // count of bases greater than minReadDepth 
+
+	printf ("chr\tstart\tend\tlength\tbase-count>=%d\tpercent\n", minReadDepth);
+	// read input file 
+   while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
+		// remove new line at the end 
+		id->line[strlen(id->line)-1] = '\0';
+
+		id->columns = input_data_parseLineMem(id, id->line, '\t', &(id->n));
+		if (id->verbose)
+			;//input_data_printParsedLineMemDebugging(id->columns, id->n);
+
+		ss = atoi(id->columns[START_COL]);
+		ee = atoi(id->columns[END_COL]);
+		ampliconLength= ee-ss;
+		rd = atoi(id->columns[RD_COL]);
+		
+		if (id->verbose) {
+      	printf ("\n\n\n[%s:%d] - \t%s", __FILE__, __LINE__, id->line);
+			if (rd >= minReadDepth)
+				printf ("\t+counting %d", baseCount+1);
+		}
+
+
+		if ((start != ss) || (end != ee)) {
+			if ((start > 0) || (end > 0)) {
+				// so we ignore the very first iterative 
+				if (id->verbose)
+					printf ("\n\noutput\n\n");
+				printf ("%s\t%ld\t%ld\t%d\t%d\t%.2f\n",chr, start, end ,end-start,baseCount, baseCount*100.0/(end-start));
+			}
+			baseCount = 0;
+			strcpy(chr, id->columns[CHR_COL]);
+			start = ss; end = ee;
+		}
+
+		if ( rd >= minReadDepth) {
+			baseCount++;
+		}
+
+		input_data_freeMem(id->columns, id->n);
+   }
+   fclose(id->inputFile);
+}
+
+

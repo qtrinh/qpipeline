@@ -67,24 +67,21 @@ $outputFile = "_bam_${myColumn}.data.txt";
 $desc = "$myColumn,category";
 system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
 
-
 # plot all samples 
 system "echo \"x|y|category\" | tr '|' '\t' > _data.2.plot.all"; 
-system "cat $outputFile | awk '\$2 ~ /BART/'  | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tTEAM UK Tumors\" }' >>  _data.2.plot.all";  
-system "cat $outputFile | awk '\$2 ~ /_P\$/' | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tGECCO Tumors\" }' >>  _data.2.plot.all";  
-#system "cat $outputFile | awk '\$2 ~ /_R\$/' | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tGECCO Normal\" }' >>  _data.2.plot.all";  
-#system "cat $outputFile | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tall-samples\" }' >>  _data.2.plot.all";  
+system "cat $outputFile | cut -f 1 | grep -v $myColumn | sort -k1,1n | awk '{ print NR\"\\t\"\$1\"\\tAll-Samples\" }' >>  _data.2.plot.all";  
+
 $xlab = "Samples"; $ylab="" ;
 $myRscript = `cat ${QPIPELINE_HOME}/scripts/plot_xy_category_dot.ggplot.R`;
 $myRscript =~ s/#USE_MILLION_ON_Y_AXIS#//;
-$myRscript =~ s/#SET_X_RANGE#//g; $myRscript =~ s/X_RANGE/breaks = seq(0,3000, 500), limits=c(0,3000)/g;
-$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,50, 10), limits=c(0,50)/g;
+#$myRscript =~ s/#SET_X_RANGE#//g; $myRscript =~ s/X_RANGE/breaks = seq(0,3000, 500), limits=c(0,3000)/g;
+#$myRscript =~ s/#SET_Y_RANGE#//g; $myRscript =~ s/Y_RANGE/breaks = seq(0,50, 10), limits=c(0,50)/g;
 open FILE, ">$rFile";
 print FILE $myRscript;
 close FILE;
 
 system "Rscript _plot.R _data.2.plot.all \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.all.pdf";
-$pdfFiles = $pdfFiles . " $outputFile.all.pdf";
+#$pdfFiles = $pdfFiles . " $outputFile.all.pdf";
 
 
 # get unique types ; and use it to group data together 
@@ -104,7 +101,7 @@ print FILE $myRscript;
 close FILE;
 
 system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.pdf";
-$pdfFiles = $pdfFiles . " $outputFile.pdf";
+#$pdfFiles = $pdfFiles . " $outputFile.pdf";
 
 # =====
 # number of reads in BAM file using LOG 10 
@@ -115,16 +112,37 @@ print FILE $myRscript;
 close FILE;
 
 system "Rscript _plot.R _data.2.plot \"$title\" \"$xlab\" \"$ylab\"; cp Rplots.pdf $outputFile.log10.pdf";
-$pdfFiles = $pdfFiles . " $outputFile.log10.pdf";
+#$pdfFiles = $pdfFiles . " $outputFile.log10.pdf";
+
+# ===============================================
+
+$myRscript = `cat /u/qtrinh/qtrinh/svn/qpipeline/clean/scripts/plot_xcategory_boxplot_ggplot.R` ;
+
+$myRscript =~ s/#USE_LOG_10_ON_Y_AXIS#//g;
+$myRscript =~ s/#NO_RANGE#//g;
+open FILE, ">$rFile";
+print FILE $myRscript;
+close FILE;
+
+system "cat _data.2.plot | cut -f 2- | sed \'s/^y/x/\' > a; cp a _data.2.plot";
+system "Rscript _plot.R _data.2.plot \"$title\" \"\" \"$ylab\"; cp Rplots.pdf $outputFile.log10.box.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.log10.box.pdf";
 
 # ===============================================
 
 
-plot_percent_on_Y ("percent_of_reads_aligned_to_hg19");
-plot_percent_on_Y ("percent_of_reads_aligned_to_target");
-plot_percent_on_Y ("1x_or_higher");
-plot_percent_on_Y ("25x_or_higher");
-plot_log10_on_Y ("mean_coverage");
+plot_boxplot("percent_of_reads_aligned_to_hg19","0");
+#plot_percent_on_Y ("percent_of_reads_aligned_to_hg19");
+plot_boxplot("percent_of_reads_aligned_to_target","0");
+#plot_percent_on_Y ("percent_of_reads_aligned_to_target");
+plot_boxplot("1x_or_higher","0");
+#plot_percent_on_Y ("1x_or_higher");
+plot_boxplot("25x_or_higher","0");
+#plot_percent_on_Y ("25x_or_higher");
+plot_boxplot("50x_or_higher","0");
+#plot_percent_on_Y ("50x_or_higher");
+plot_boxplot("mean_coverage","1");
+#plot_log10_on_Y ("mean_coverage");
 
 # ===============================================
 
@@ -238,6 +256,7 @@ exit (0);
 
 
 
+
 sub plot_log10_on_Y { 
 
 	 ($myColumn) = @_;
@@ -311,6 +330,35 @@ $pdfFiles = $pdfFiles . " $outputFile.pdf";
 
 # ===============================================
 
+sub plot_boxplot { 
+
+	 my ($myColumn,$log10) = @_;
+
+$title = $myColumn ; $title =~ s/_/ /g;
+print "\n\nplotting boxplot $title";
+
+$outputFile = "_bam_${myColumn}.data.txt";
+
+# use qpipeline to extract these two columns 
+$desc = "$myColumn,category";
+system "qpipeline txt -m 1010 -i $ALIGNMENT_STATS_FILE -k $desc > $outputFile";
+
+$myRscript = `cat /u/qtrinh/qtrinh/svn/qpipeline/clean/scripts/plot_xcategory_boxplot_ggplot.R` ;
+
+if ($log10 == 1) {
+	$myRscript =~ s/#USE_LOG_10_ON_Y_AXIS#//g;
+}
+$myRscript =~ s/#NO_RANGE#//g;
+open FILE, ">$rFile";
+print FILE $myRscript;
+close FILE;
+
+system "echo \"x|category\"  | tr '|' '\t' > _data.2.plot";
+system "cat $outputFile | grep -v category >> _data.2.plot";
+system "Rscript _plot.R _data.2.plot \"$title\" \"\" \"$ylab\"; cp Rplots.pdf $outputFile.log10.box.pdf";
+$pdfFiles = $pdfFiles . " $outputFile.log10.box.pdf";
+}
 
 
 
+# ===============================================

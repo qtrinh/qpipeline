@@ -37,12 +37,20 @@ void vcf_main_Usage(int argc, char *argv[], struct input_data *id) {
 		}
 	}
 	if ((id->mode == MODE_VCF_FILTER_SNV_OR_INDEL) || (id->mode == 0))  {
-		printf("\n\t-m %d\tprint substitutions or indels .",MODE_VCF_FILTER_SNV_OR_INDEL);
+		printf("\n\t-m %d\tprint substitutions or indels.",MODE_VCF_FILTER_SNV_OR_INDEL);
 		if (id->mode == MODE_VCF_FILTER_SNV_OR_INDEL) {
 			printf("\n\t\t-i FILE\tinput VCF file.");
 			printf("\n\t\t-t\tINT\tvariant class");
 			printf("\n\t\t\t%d\tsubstitutions ( single base or mutliple bases )", VARIANT_CLASS_SUBSTITUTION);
 			printf("\n\t\t\t%d\tindels", VARIANT_CLASS_INDELS );
+		}
+	}
+	if ((id->mode == MODE_VCF_SWITCH_SAMPLE_ORDER) || (id->mode == 0))  {
+		printf("\n\t-m %d\tswitch sample order.",MODE_VCF_SWITCH_SAMPLE_ORDER);
+		if (id->mode == MODE_VCF_SWITCH_SAMPLE_ORDER) {
+			printf("\n\t\t-i FILE\tinput VCF file.");
+			printf("\n\t\t-x\tINT\tindex of first sample ( index for first sample is 0)");
+			printf("\n\t\t-y\tINT\tindex of second sample");
 		}
 	}
 
@@ -180,11 +188,18 @@ void vcf_main(int argc, char *argv[]) {
 	char recordSeparator[1024]="", columnSeparator[1024] = "";
 
 	od->outputFormat = OUTPUT_AS_COUNTS;
+	int x=-1,y = -1;
 
-	while ((c = getopt(argc, argv, "r:c:l:f:t:n:m:i:p:k:s:z:RvHSP")) != -1) {
+	while ((c = getopt(argc, argv, "x:y:r:c:l:f:t:n:m:i:p:k:s:z:RvHSP")) != -1) {
 		switch (c) {
 		case 'm':
 			id->mode = atoi(optarg);
+			break;
+		case 'x':
+			x = atoi(optarg);
+			break;
+		case 'y':
+			y = atoi(optarg);
 			break;
 		case 'p':
 			strcpy(id->inputFilePrefix, optarg);
@@ -271,6 +286,8 @@ void vcf_main(int argc, char *argv[]) {
 			exit(1);
 		}
 		vcf_MODE_VCF_PARSE_ANNOTATED_DATABASE(id,od,key,recordSeparator,columnSeparator);
+	} else if (id->mode == MODE_VCF_SWITCH_SAMPLE_ORDER) {
+		vcf_MODE_VCF_SWITCH_SAMPLE_ORDER(id, od,x,y);
 	} else if (id->mode == MODE_VCF_PARSE_SNPEFF_ANN) {
 		vcf_MODE_VCF_PARSE_SNPEFF_ANN(id, od);
 	} else if (id->mode == MODE_VCF_FILTER_PASS_FILTERS_ONLY) {

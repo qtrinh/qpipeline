@@ -14,6 +14,7 @@
 #include "common.h"
 
 #define MAX_READ_DEPTH 1000
+#define MIN_READ_DEPTH 1
 
 /**
   bedtools usage 
@@ -31,12 +32,18 @@ void bedtools_main_Usage(int argc, char *argv[], struct input_data *id) {
 		printf("\n\t-m %d\tparse 'all' to get %% of bases in target at 1x, 2x, etc.",MODE_PARSE_ALL_FOR_1X_2X);
 		if ((id->mode == MODE_PARSE_ALL_FOR_1X_2X) )  {
 			printf("\n\t\t-i FILE\tinput file.");
-			printf("\n\t\t-s INT\tmaximum read depth.  Default is %d ( any read deph > %d will be counted as %d ).", MAX_READ_DEPTH, MAX_READ_DEPTH);
+			printf("\n\t\t-s INT\tmaximum read depth.  Default is %d ( any read deph > %d will be counted as %d ).", MAX_READ_DEPTH, MAX_READ_DEPTH, MAX_READ_DEPTH);
 			// bedtools coverage -abam $i -b target.bed -hist
 		}
 	}
-
-	
+	if ((id->mode == MODE_PARSE_READ_DEPTH_FROM_INDIVIDUAL_AMPLICON) || (id->mode == 0))  {
+		printf("\n\t-m %d\tparse percent of amplicon bases covered at minimum read depth.",MODE_PARSE_READ_DEPTH_FROM_INDIVIDUAL_AMPLICON);
+		if ((id->mode == MODE_PARSE_READ_DEPTH_FROM_INDIVIDUAL_AMPLICON) )  {
+			printf("\n\t\t-i FILE\tinput file.");
+			printf("\n\t\t-s INT\tminimum read depth.  Default is %d ( any read deph > %d will be counted as %d ).", MIN_READ_DEPTH, MIN_READ_DEPTH, MIN_READ_DEPTH);
+			// bedtools coverage -abam $i -b target.bed  -d
+		}
+	}
 
 	printf("\n\n");
 }
@@ -50,7 +57,7 @@ void bedtools_main(int argc, char *argv[]) {
 	struct input_data *id = input_data_init();
 	struct output_data *od = output_data_init();
 
-	int maxReadDepth = MAX_READ_DEPTH;
+	int inputReadDepth = -1;
 
 	while ((c = getopt(argc, argv, "m:s:i:v")) != -1) {
 		switch (c) {
@@ -58,7 +65,7 @@ void bedtools_main(int argc, char *argv[]) {
 			id->mode = atoi(optarg);
 			break;
 		case 's':
-			maxReadDepth = atoi(optarg);
+			inputReadDepth = atoi(optarg);
 			break;
 		case 'i':
 			strcpy(id->inputFileName, optarg);
@@ -88,7 +95,12 @@ void bedtools_main(int argc, char *argv[]) {
 	}
 
 	if (id->mode == MODE_PARSE_ALL_FOR_1X_2X) {
-		bedtools_MODE_PARSE_ALL_FOR_1X_2X(id,od,maxReadDepth);
+		if (inputReadDepth == -1)
+			inputReadDepth = MAX_READ_DEPTH;
+		bedtools_MODE_PARSE_ALL_FOR_1X_2X(id,od,inputReadDepth);
+	} else if (id->mode == MODE_PARSE_READ_DEPTH_FROM_INDIVIDUAL_AMPLICON) {
+		bedtools_MODE_PARSE_READ_DEPTH_FROM_INDIVIDUAL_AMPLICON(id,od,inputReadDepth);
+
 	}
 }
 

@@ -81,7 +81,7 @@ int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileN
 	}
 
 	if ((value > DBL_MIN) && (columns2ExtractN != 1)) {
-		printf ("\n\nOnly 1 column is allowed when filtering!\n\n");
+		printf ("\n\n[%s:%d] - ERROR: Only 1 column is allowed when -s is used.!\n\n");
 		exit (1);
 	}
 
@@ -95,7 +95,7 @@ int txt_MODE_TXT_EXTRACT_COLUMN_FROM_FILE(struct input_data *id, char inputFileN
 
    id->inputFile = fopen(inputFileName, "r");
 	if (id->inputFile == NULL) {
-		printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, inputFileName);
+		printf ("\n[%s:%d] - ERROR: open file '%s'", __FILE__, __LINE__, inputFileName);
 		printf ("\n\n");
 		exit (1);
 	}
@@ -364,5 +364,111 @@ int txt_MODE_TXT_DELETE_COLUMN_FROM_FILE(struct input_data *id, char inputFileNa
    }   
    fclose(id->inputFile);
 	return n;
+}
+
+
+
+
+
+
+/**
+  delete rows from file where values of column n matches with values in dataFileName 
+
+  **/
+int txt_MODE_TXT_DELETE_ROW_FROM_FILE(struct input_data *id, char inputFileName[], char dataFileName[], int n, int deleteRow) { 
+
+	int i,j;
+
+	// data from the 1-column file 
+	int dataIndex = 0;
+	char data[100][200];
+
+
+   id->inputFile = fopen(dataFileName, "r");
+	if (id->inputFile == NULL) {
+		printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, dataFileName);
+		printf ("\n\n");
+		exit (1);
+	}
+	   
+	// read input file 
+   while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
+
+		if (id->verbose)  {
+			printf ("\n[%s:%d] - line read from input file:\n'%s'", __FILE__, __LINE__, id->line);
+			fflush(stdout);
+		}
+
+		// remove the new line if it is there 
+		if (id->line[strlen(id->line)-1] =='\n')
+			id->line[strlen(id->line)-1] = '\0';
+
+		dataIndex++;
+		strcpy(data[dataIndex], id->line);
+
+   }   
+   fclose(id->inputFile);
+
+
+
+
+
+
+   id->inputFile = fopen(inputFileName, "r");
+	if (id->inputFile == NULL) {
+		printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, inputFileName);
+		printf ("\n\n");
+		exit (1);
+	}
+	   
+	// read input file 
+   while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
+
+		if (id->verbose)  {
+			printf ("\n======================\n[%s:%d] - line read from input file:\n'%s'", __FILE__, __LINE__, id->line);
+			fflush(stdout);
+		}
+
+
+		if (strstr(id->line,"#")) {
+			if (id->verbose)  {
+				printf ("\n[%s:%d] - print header line\n", __FILE__, __LINE__);;
+				fflush(stdout);
+			}
+			printf ("%s", id->line);
+			continue;
+		}
+
+		// remove the new line if it is there 
+		if (id->line[strlen(id->line)-1] =='\n')
+			id->line[strlen(id->line)-1] = '\0';
+
+   	id->columns = input_data_parseLineMem(id, id->line, '\t', &(id->n));
+		if (id->verbose)
+			input_data_printParsedLineMemDebugging(id->columns, id->n);
+
+		int found = 0;
+		for (i = 1; i <= dataIndex; i++) {
+			if (strstr(data[i],id->columns[n]) && (strlen(data[i]) == strlen(id->columns[n]))) {
+				found = 1;
+				i = dataIndex+1;
+			}
+		}
+	 
+
+		if (found == 1) {
+			if (id->verbose)  {
+				printf ("\n[%s:%d] - matched ... printing\n", __FILE__, __LINE__);
+				fflush(stdout);
+			}
+			printf ("%s\n", id->line);
+		}
+	 
+		input_data_freeMem(id->columns, id->n);
+	}	
+		
+	fclose(id->inputFile);
+
+	return 1;
 }
 

@@ -11,32 +11,15 @@
 #include "input_data.h"
 #include "output_data.h"
 
+
 /**
 
 ##INFO=<ID=ANN,Number=.,Type=String,Description="Functional annotations: 'Allele | Annotation | Annotation_Impact | Gene_Name | Gene_ID | Feature_Type | Feature_ID | Transcript_BioType | Rank | HGVS.c | HGVS.p | cDNA.pos / cDNA.length | CDS.pos / CDS.length | AA.pos / AA.length | Distance | ERRORS / WARNINGS / INFO' ">
 
 
   **/
-void snpeff_parseANN(struct input_data *id, struct output_data *od, char outputData[][1024], int *outputDataN) {
+void snpeff_parseANN(struct input_data *id, struct output_data *od, char **snpeffHeader, int snpeffLength, char outputData[][1024], int *outputDataN) {
 
-	const char * SNPEFF_HEADERS[] = { 
-		"Allele",
-		"Annotation", 
-		"Annotation_Impact",
-		"Gene_Name",
-		"Gene_ID",
-		"Feature_Type",
-		"Feature_ID",
-		"Transcript_BioType",
-		"Rank",
-		"HGVS.c",
-		"HGVS.p",
-		"cDNA.pos/cDNA.length",
-		"CDS.pos/CDS.length",
-		"AA.pos/AA.length",
-		"Distance",
-		"ERRORS / WARNINGS / INFO"
-	};
 	int MAX_ANNOTATION = 100;
 	char data[MAX_ANNOTATION][1024];
 	int dataN;
@@ -68,18 +51,18 @@ void snpeff_parseANN(struct input_data *id, struct output_data *od, char outputD
 			numberOfAnnotations++;
 
 			// expect 16 fields 
-			int FIELDS = 16;
+			//int FIELDS = 16;
 			fieldCounter = 0;
 			i = 0; 
-			while ((fieldCounter < FIELDS) && (*ptr != '\0')) {
+			while ((fieldCounter < snpeffLength) && (*ptr != '\0')) {
 				if (*ptr == ';') {
 					// *ptr == ';' means ptr has no nore EFF annotation 
-					fieldCounter = FIELDS;
+					fieldCounter = snpeffLength;
 					continue;
 				}
 				if (*ptr == ',') {
 					// *ptr == ',' means the last field is emptied ( i.e., |,)// annotations are separated by ','
-					fieldCounter = FIELDS;
+					fieldCounter = snpeffLength;
 					ptr++;
 					continue;
 				}
@@ -107,7 +90,7 @@ void snpeff_parseANN(struct input_data *id, struct output_data *od, char outputD
 
 			if (id->verbose) {
 				printf ("\n\n");
-				for (i = 0; i < FIELDS; i++) {
+				for (i = 0; i < snpeffLength; i++) {
 					//printf ("%d-'%s'\t", i+1, outputData[*outputDataN]);
 					printf ("%d-'%s'\t", i+1, data[i]);
 				}
@@ -115,12 +98,12 @@ void snpeff_parseANN(struct input_data *id, struct output_data *od, char outputD
 			}
 				
 
-			printf ("%d-annotations\t", numberOfAnnotations);
-			for (i = 0; i < FIELDS; i++) {
+			printf ("%d-", numberOfAnnotations);
+			for (i = 0; i < snpeffLength; i++) {
 				if (strlen(data[i])==0)
 					printf (".\t");
 				else
-					printf ("%s=%s\t", SNPEFF_HEADERS[i], data[i]);
+					printf ("%s=%s\t", snpeffHeader[i], data[i]);
 			}
 			printf ("%s\n", id->line);
 

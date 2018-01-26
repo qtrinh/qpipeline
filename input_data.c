@@ -100,7 +100,7 @@ void input_data_printParsedLineMemDebugging(char **data, int n) {
 	int i;
 
 	printf("\n");
-	printf ("\nnumber of columns %d", n);
+	printf ("\n[%s:%d] - number of columns %d", __FILE__, __LINE__,n);
 	fflush(stdout);
 	for (i = 1; i <= n; i++) {
 		printf ("\ncolumn %3d\t'%s'", i, data[i]);

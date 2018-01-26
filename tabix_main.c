@@ -50,6 +50,16 @@ void tabix_main_Usage(int argc, char *argv[], struct input_data *id) {
 			printf ("\n\n\t\tExample:\n\t\t\t%s tabix -m %d -d test_data/vcf/dbSNP_147.vcf.gz -i test_data/vcf/sample.vcf -q dbSNP_147", argv[0], MODE_TABIX_ANNOTATE_VCF_WITH_VCF);
 		}
 	}
+	if ((id->mode == MODE_TABIX_ANNOTATE_TXT_WITH_BED) || (id->mode == 0))  {
+		printf("\n\t-m %d\tannotate a txt file against a txt database file.", MODE_TABIX_ANNOTATE_TXT_WITH_BED);
+		if (id->mode == MODE_TABIX_ANNOTATE_TXT_WITH_BED)  {
+			printf("\n\t\t-d TABIX_DATABASE_FILE\tdatabase file indexed by tabix ( .gz ). The first three columns must be chr, start, and end.");
+			printf("\n\t\t-q STR\tdatabase identifier.  e.g., PANEL_PROBES.");
+			printf("\n\t\t-i FILE\tinput txt file.  The first three columns must be chr, start, and end.");
+			//printf("\n\t\t-R\tinclude matches where the ALT do not match.  Default, both REF and ALT must match.");
+
+		}
+	}
 	
 	printf("\n\n");
 }
@@ -64,11 +74,12 @@ void tabix_main(int argc, char *argv[]) {
 	struct output_data *od = output_data_init();
 	struct my_tabix *tabix = tabix_init();
 	tabix->considerMisMatchedALT = 0;
+	int chrColumn = -1, posColumn = -1;
 
 	// assume input file will be in VCF format 
 	vcf_setInputFileToVCFformat(id);
 
-	while ((c = getopt(argc, argv, "F:m:i:d:q:n:vNR")) != -1) {
+	while ((c = getopt(argc, argv, "F:m:i:d:q:n:s:b:vNR")) != -1) {
 		switch (c) {
 		case 'F':
 			tabix->inputFileFormat = atoi(optarg);
@@ -93,6 +104,12 @@ void tabix_main(int argc, char *argv[]) {
 			break;
 		case 'n':
 			id->columnOffSet = atoi(optarg);
+			break;
+		case 's':
+			chrColumn = atoi(optarg);
+			break;
+		case 'b':
+			posColumn = atoi(optarg);
 			break;
 		case 'v':
 			id->verbose = 1;
@@ -127,6 +144,11 @@ void tabix_main(int argc, char *argv[]) {
 		tabix_MODE_TABIX_ANNOTATE_VCF_WITH_PILEUP(id,od,tabix);
 	} else if (id->mode == MODE_TABIX_ANNOTATE_VCF_WITH_VCF) {
 		tabix_MODE_TABIX_ANNOTATE_VCF_WITH_VCF(id,od,tabix);
+	} else if (id->mode == MODE_TABIX_ANNOTATE_TXT_WITH_BED) {
+		id->chrColumnNumber = 1;
+		id->startColumnNumber = 2;
+		id->endColumnNumber = 3;
+		tabix_MODE_TABIX_ANNOTATE_TXT_WITH_BED(id,od,tabix,chrColumn,posColumn);
 	}
 }
 

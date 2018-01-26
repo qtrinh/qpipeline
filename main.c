@@ -14,6 +14,8 @@ void fastq_main (int argc, char *argv[]);
 void tabix_main (int argc, char *argv[]);
 void vcf_main (int argc, char *argv[]);
 void bedtools_main (int argc, char *argv[]);
+void ucsc_main (int argc, char *argv[]);
+void math_main (int argc, char *argv[]);
 
 /** 
   main usage 
@@ -30,6 +32,8 @@ void usage(int argc, char *argv[]) {
 	printf("\n\t%s tabix\t", argv[0]);
 	printf("\n\t%s vcf\t", argv[0]);
 	printf("\n\t%s bedtools\t", argv[0]);
+	printf("\n\t%s ucsc \t", argv[0]);
+	printf("\n\t%s math\t", argv[0]);
 	printf("\n\n");
 	exit(0);
 }
@@ -56,6 +60,10 @@ int main(int argc, char *argv[]) {
 		tabix_main(argc, argv);
 	} else if (strstr(argv[1], "bedtools") ) {
 		bedtools_main(argc, argv);
+	} else if (strstr(argv[1], "ucsc") ) {
+		ucsc_main(argc, argv);
+	} else if (strstr(argv[1], "math") ) {
+		math_main(argc, argv);
 	}
 
 	return 0;

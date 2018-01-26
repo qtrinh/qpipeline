@@ -11,11 +11,14 @@
 #include "output_data.h"
 
 #ifndef SNPEFF_H
+
 #define SNPEFF_H 
 
 
 
-void snpeff_parseANN(struct input_data *id, struct output_data *od, char outputData[][1024], int *outputDataN) ;
+//void snpeff_parseANN(struct input_data *id, struct output_data *od, char outputData[][1024], int *outputDataN) ;
+void snpeff_parseANN(struct input_data *id, struct output_data *od, char **snpeffHeader, int snpeffLength, char outputData[][1024], int *outputDataN) ;
+
 
 
 #endif 

@@ -12,6 +12,7 @@
 #include "utils.h"
 #include "my_string.h"
 #include "my_tabix.h"
+#include "snpeff.h"
 
 
 struct vcf * vcf_init() {
@@ -1037,12 +1038,30 @@ void vcf_MODE_VCF_ANNOTATE_SUBSTITUTION_SUB_TYPES(struct input_data *id, struct 
 		id->columns = input_data_parseLineMem(id, id->line, '\t', &(id->n));
 		if (id->verbose)
 			input_data_printParsedLineMemDebugging(id->columns, id->n);
+
+
+		variant_class_t type = vcf_getVariantClass(id->columns[VCF_COLUMN_REF + id->columnOffSet], id->columns[VCF_COLUMN_ALT + id->columnOffSet], str);
+
+						      
+		if (type != VARIANT_CLASS_SUBSTITUTION_SINGLE_BASE)  {
+			sprintf (str,"SUBSTITUTION_SUB_TYPE=NNN,N->N");
+			     
+			if (id->verbose) {
+				printf ("[%s:%d] - string to add '%s'\n\n", __FILE__, __LINE__, str);
+			}
+			vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
+
+			input_data_freeMem(id->columns, id->n);
+			continue;
+		}
+
 		
 		
 		// left flanking region 
 		sprintf(fa->region,"%s:%d-%d", id->columns[VCF_COLUMN_CHR], atoi(id->columns[VCF_COLUMN_POS])-flanking, atoi(id->columns[VCF_COLUMN_POS])-1);
 		left = fai_fetch(fa->fai,fa->region,&(fa->regionDataLength));
 		my_string_toupper(left);
+
 
 		sprintf(fa->region,"%s:%d-%d", id->columns[VCF_COLUMN_CHR], atoi(id->columns[VCF_COLUMN_POS]), atoi(id->columns[VCF_COLUMN_POS]));
 		fa->regionData = fai_fetch(fa->fai,fa->region,&(fa->regionDataLength));
@@ -1053,10 +1072,10 @@ void vcf_MODE_VCF_ANNOTATE_SUBSTITUTION_SUB_TYPES(struct input_data *id, struct 
 		right = fai_fetch(fa->fai,fa->region,&(fa->regionDataLength));
 		my_string_toupper(right);
 
-
+		/*
 		if ((fa->regionData[0] == 'G') || (fa->regionData[0] == 'A')) {
 			fa->regionData[0] = acgtn_getBaseComplement(fa->regionData[0]);
-		}
+		}*/
 
 
 		// get ref and alt bases 
@@ -1076,9 +1095,9 @@ void vcf_MODE_VCF_ANNOTATE_SUBSTITUTION_SUB_TYPES(struct input_data *id, struct 
 			alt = acgtn_getBaseComplement(alt);
 		}
 
-		
+
 		//sprintf (str,"6_SUBSTITUTION_SUB_TYPE=%c->%c",ref, alt);
-		sprintf (str,"MUTATION_SIGNATURE=%c%c%c,%c->%c",left[0], fa->regionData[0], right[0], ref, alt);
+		sprintf (str,"SUBSTITUTION_SUB_TYPE=%c%c%c,%c->%c",left[0], fa->regionData[0], right[0], ref, alt);
 
 		if (id->verbose) {
       	printf ("[%s:%d] - string to add '%s'\n\n", __FILE__, __LINE__, str);
@@ -1888,7 +1907,31 @@ void vcf_parseAnnotatedDatabase(int verbose, char line[], char infoColumn[], cha
   **/
 void vcf_MODE_VCF_PARSE_SNPEFF_ANN(struct input_data *id, struct output_data *od) { 
 
+
+
+	const int SNPEFF_HEADERS_LENGTH = 16;
+	const char * SNPEFF_HEADERS[] = { 
+		"Allele",
+		"Annotation", 
+		"Annotation_Impact",
+		"Gene_Name",
+		"Gene_ID",
+		"Feature_Type",
+		"Feature_ID",
+		"Transcript_BioType",
+		"Rank",
+		"HGVS.c",
+		"HGVS.p",
+		"cDNA.pos/cDNA.length",
+		"CDS.pos/CDS.length",
+		"AA.pos/AA.length",
+		"Distance",
+		"ERRORS/WARNINGS/INFO"
+	};
+
 	struct vcf * myVCF = vcf_init();
+
+	int i;
 
 	char outputData[100][1024];
 	int outputDataN;
@@ -1904,6 +1947,9 @@ void vcf_MODE_VCF_PARSE_SNPEFF_ANN(struct input_data *id, struct output_data *od
    while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
 
 		if (strstr(id->line,"#CHROM")) {
+			for (i = 0; i < SNPEFF_HEADERS_LENGTH; i++) {
+				printf ("%s\t", SNPEFF_HEADERS[i]);
+			}
 			printf ("%s", id->line);
 			vcf_parseHEADER(id, myVCF);
 			continue;
@@ -1926,7 +1972,7 @@ void vcf_MODE_VCF_PARSE_SNPEFF_ANN(struct input_data *id, struct output_data *od
 		if (id->verbose)
 			input_data_printParsedLineMemDebugging(id->columns, id->n);
 
-		snpeff_parseANN(id, od, outputData, &outputDataN);
+		snpeff_parseANN(id, od, SNPEFF_HEADERS, SNPEFF_HEADERS_LENGTH, outputData, &outputDataN);
 
 		input_data_freeMem(id->columns, id->n);
    }   
@@ -1991,26 +2037,32 @@ void vcf_MODE_VCF_ANNOTATE_VARIANT_CLASS(struct input_data *id, struct output_da
 
 		variant_class_t type = vcf_getVariantClass(id->columns[VCF_COLUMN_REF + id->columnOffSet], id->columns[VCF_COLUMN_ALT + id->columnOffSet], tmp);
 
+		char prefix[1024];
+		sprintf (prefix,"VariantClass");
 		if (type == VARIANT_CLASS_SUBSTITUTION_SINGLE_BASE)  {
-			strcpy(str,"VC=SNV");
+			sprintf(str,"%s=SNV",prefix);
 			if (id->verbose) 
 				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
 		} else if (type == VARIANT_CLASS_SUBSTITUTION_MULTIPLE_BASES) {
-			strcpy(str,"VC=MNV");
+			sprintf(str,"%s=MNV",prefix);
 			if (id->verbose) 
 				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
 		} else if (type == VARIANT_CLASS_INSERTION) {
-			strcpy(str,"VC=INSERTION");
+			sprintf(str,"%s=INSERTION",prefix);
 			if (id->verbose) 
 				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
 		} else if (type == VARIANT_CLASS_DELETION) {
-			strcpy(str,"VC=DELETION");
+			sprintf(str,"%s=DELETION",prefix);
 			if (id->verbose) 
 				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
 		} else if (type == VARIANT_CLASS_INDELS) {
-			strcpy(str,"VC=INDELS");
+			sprintf(str,"%s=INDELS",prefix);
 			if (id->verbose) 
 				printf ("\n[%s:%d] - adding '%s' annotation ...\n",__FILE__, __LINE__,str);
+		} else {
+			printf ("\n\n[%s:%d] - ERROR: don't know that Variant Class this belongs to:\n",__FILE__, __LINE__);
+			printf ("\n%s\n\n", id->line);
+			exit (1);
 		}
 
 		vcf_addAnnotation2VCFINFO(id, id->columns, id->n, str);
@@ -2019,6 +2071,84 @@ void vcf_MODE_VCF_ANNOTATE_VARIANT_CLASS(struct input_data *id, struct output_da
    }   
    fclose(id->inputFile);
 }
+
+
+
+
+
+/**
+  **/
+void vcf_MODE_VCF_SWITCH_SAMPLE_ORDER(struct input_data *id, struct output_data *od, int x, int y) { 
+
+	struct vcf * myVCF = vcf_init();
+	char tmp[1024];
+	int i;
+
+   id->inputFile = fopen(id->inputFileName, "r");
+	if (id->inputFile == NULL) {
+		printf ("\n[%s:%d] - error open file '%s'", __FILE__, __LINE__, id->inputFileName);
+		printf ("\n\n");
+		exit (1);
+	}
+	   
+	// read input file 
+   while ((fgets(id->line, MAX_CHAR_PER_LINE, id->inputFile) != NULL)) {
+		
+		// remove '\n' 
+		id->line[strlen(id->line)-1] = '\0';
+
+		id->columns = input_data_parseLineMem(id, id->line, '\t', &(id->n));
+		if (id->verbose)
+			input_data_printParsedLineMemDebugging(id->columns, id->n);
+
+		if (strstr(id->line,"#CHROM")) {
+//			printf ("%s", id->line);
+//vcf_parseHEADER(id, myVCF);
+
+			for (i = 1; i <= id->n; i++) {
+				if (i == (VCF_COLUMN_FIRST_SAMPLE + x)) {
+					printf ("%s", id->columns[VCF_COLUMN_FIRST_SAMPLE + y]);
+				} else if (i == (VCF_COLUMN_FIRST_SAMPLE + y)) {
+					printf ("%s", id->columns[VCF_COLUMN_FIRST_SAMPLE + x]);
+				} else {
+					printf ("%s", id->columns[i]);
+				}
+				printf ("\t");
+			}
+			printf ("\n");
+
+			continue;
+		}
+
+		if (id->line[0] == '#') {
+			printf ("%s\n", id->line);
+			continue;
+		}
+
+		if (id->verbose)  {
+      	printf ("\n%s\n", LINE_DIVIDER_LONG);
+      	printf ("[%s:%d] - %s", __FILE__, __LINE__, id->line);
+		}	
+		         
+
+		for (i = 1; i <= id->n; i++) {
+			if (i == (VCF_COLUMN_FIRST_SAMPLE + x)) {
+				printf ("%s", id->columns[VCF_COLUMN_FIRST_SAMPLE + y]);
+			} else if (i == (VCF_COLUMN_FIRST_SAMPLE + y)) {
+				printf ("%s", id->columns[VCF_COLUMN_FIRST_SAMPLE + x]);
+			} else {
+				printf ("%s", id->columns[i]);
+			}
+			printf ("\t");
+		}
+		printf ("\n");
+
+
+		input_data_freeMem(id->columns, id->n);
+   }   
+   fclose(id->inputFile);
+}
+
 
 
 
