@@ -62,7 +62,7 @@ chr1	10616	rs376342519	CCGCCGTTGCAAAGGCGCGCCG	C	.	.	RS=376342519;MY_TARGET=1,1,.
 chr1	10642	rs558604819	G	A	.	.	RS=558604819;MY_TARGET=1,1,.?chr1?10500?10700??
 ```
 
-Similarly, number of entries that are not on target can be extracted by doing the following command
+Similarly, entries that are not on target can be extracted by doing the following command
 ```
 cat sample.target.vcf | grep MY_TARGET=0 | less  
 ```
