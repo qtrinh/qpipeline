@@ -1,6 +1,6 @@
 
 
-The following sections describe how to use **qpipeline** to annotate a VCF file with a BED database file.
+The following sections describe how to use **_qpipeline_** to annotate a VCF file with a BED database file.
 
 ## Create and index a BED database file 
 
@@ -33,7 +33,7 @@ Annotate _sample.vcf_ with the _target.bed.sorted.gz_ database and direct output
 ```
 qpipeline tabix -m 2000 -i sample.vcf  -d target.bed.sorted.gz -q MY_TARGET > sample.target.vcf 
 ```
-where ( see qpipeline tabix -m 2000 for full usage info )
+where ( run _qpipeline tabix -m 2000_ for full usage info )
 * -i input VCF file 
 * -d bgziped and tabix indexed BED database file 
 * -q BED database identifer.  For example, MY_TARGET.
@@ -54,7 +54,7 @@ where
 
 Once annotated, entries on target can be easily extracted by doing the following:
 ```
-cat sample.target.vcf | grep MY_TARGET=1
+cat sample.target.vcf | grep MY_TARGET=1 | less
 ```
 The command above produced 2 entries:
 ```
@@ -64,7 +64,7 @@ chr1	10642	rs558604819	G	A	.	.	RS=558604819;MY_TARGET=1,1,.?chr1?10500?10700??
 
 Similarly, number of entries that are not on target can be extracted by doing the following command
 ```
-cat sample.target.vcf | grep MY_TARGET=1 | wc -l 
+cat sample.target.vcf | grep MY_TARGET=0 | less  
 ```
 
 
