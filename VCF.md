@@ -5,7 +5,9 @@ The following sections describe how to use **_qpipeline_** with input VCF files:
 * [Annotate an input VCF file against a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
 
 ---
-## Other miscellaneous commands ( examples below used data in **_${QPIPELINE_HOME}/test_data/vcf_** folder )
+## Other miscellaneous commands 
+
+The examples below used data in **_${QPIPELINE_HOME}/test_data/vcf_** folder.
 
 * parse an attribute from the INFO column.  For example, VC (Variant Class)
 ```
