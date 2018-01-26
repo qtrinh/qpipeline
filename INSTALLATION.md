@@ -15,15 +15,15 @@ QPIPELINE_HOME=`pwd`
 
 Recompile both **samtools** and **tabix** binaries to ensure they work on your system:
 ```
-cd external_tools/samtools/samtools-0.1.18
+cd ${QPIPELINE_HOME}/external_tools/samtools/samtools-0.1.18
 make
 
-cd ../../tabix/tabix-0.2.5
+cd ${QPIPELINE_HOME}/external_tools/tabix/tabix-0.2.5
 make
 ```
 Compile **_qpipeline_**
 ```
-cd ../../../
+cd ${QPIPELINE_HOME}
 make
 ```
 Run **_qpipeline_** by itself to see if it is compiled successfully
