@@ -6,8 +6,11 @@ Change to a directory where to install **_qpipeline_**
 # clone qpipeline 
 git clone https://github.com/qtrinh/qpipeline.git
 
-# change into qpipeline directory ( this directory will be referred to as QPIPELINE_HOME from now on )
+# change into qpipeline directory 
 cd qpipeline
+
+# set QPIPELINE_HOME to current directory.  This is home directory of qpipeline
+QPIPELINE_HOME=`pwd`
 ```
 
 Recompile both **samtools** and **tabix** binaries to ensure they work on your system:
