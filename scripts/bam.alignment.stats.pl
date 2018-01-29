@@ -30,9 +30,20 @@ sub read_SAMTOOLS_flagstat {
 # we need input 3 arguments:  BAM file, zipped BED file, and output file 
 if ( @ARGV != 3 ) {
    print "\n";
-   print "\nGenerate the following BAM alignment stats:\n\tnumber of reads\n\tnumber of reads aligned to reference genome\n\tpercent of reads aligned to reference genome\n\tnumber of reads aligned to target (if target file provided )\n\tpercent of reads aligned to target\n\tpercent of bases on target at 1x or higher\n\tpercent of bases on target at 25x or higher\n\tpercent of bases on target at 50x or higher";
+   print "\nGenerate the following BAM alignment stats:";
+	print "\n\tnumber of reads";
+	print "\n\tnumber of reads aligned to reference genome";
+	print "\n\tpercent of reads aligned to reference genome";
+	print "\n\tif target file provided,";
+	print "\n\t\tnumber of reads aligned to target";
+	print "\n\t\tpercent of reads aligned to target";
+	print "\n\t\tpercent of bases on target at 1x or higher";
+	print "\n\t\tpercent of bases on target at 25x or higher";
+	print "\n\t\tpercent of bases on target at 50x or higher";
    print "\n\nusage: perl " . $0 . " [ BAM_FILE ] [ ZIPPED_BED_FILE ] [ OUTPUT_FILE ]";
-   print "\n\n\tZIPPED_BED_FILE\t3 column zipped target file (chr, start, end ).  Use 'NULL' if there are no target file";
+   print "\n\n\tBAM_FILE\tinput BAM file";
+   print "\n\tZIPPED_BED_FILE\t3 column zipped target file (chr, start, end ).  Use 'NULL' if there are no target file";
+   print "\n\tBAM_FILE\toutput stat file";
    print "\n\n";
    exit (0);
 }
@@ -166,7 +177,7 @@ close $fh;
 
 # cleaning up temporary and/or intermediate files 
 print "\ncleanning up temporary and/or intermediate files ... ";
-#system "rm $OUTPUT_FILE.* ";
+system "rm $OUTPUT_FILE.* ";
 print "\ndone\n";
 
 exit (0);
