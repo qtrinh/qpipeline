@@ -38,10 +38,10 @@ Usage:
         qpipeline txt
         ...
 ```
-Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the following lines to your ~/.bashrc
+Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by copying the outputs from the command below to your ~/.bashrc file:
 ```
-export QPIPELINE_HOME=/path/to/where/qpipeline/is/stored
-export PATH=$PATH:${QPIPELINE_HOME}:${QPIPELINE_HOME}/external_tools/samtools/samtools-0.1.18:${QPIPELINE_HOME}/external_tools/tabix/tabix-0.2.5
+${QPIPELINE_HOME}/scripts/env.sh $QPIPELINE_HOME 
+
 ```
 
 
