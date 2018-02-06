@@ -5,6 +5,8 @@ This page describes how to use qpipeline with PolyPhen-2 annotations for whole h
 
 If it is not already there, create a directory in *${QPIPELINE_HOME}/external_databases* to store PolyPhen2-WHESS database
 ```
+mkdir cd ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
+
 cd ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
 ```
 
