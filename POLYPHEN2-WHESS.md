@@ -26,17 +26,20 @@ In the extracted directory, create a directory called 'database' and go into it.
 ```
 mkdir database; cd database
 ```
-Combine all the features.tab and scores.tab files
+Combine all the features.tab and scores.tab files in the extracted directory
 ```
+# set the WHESS database file name
 DB="WHESS"
 
+# for each feature.tab file, combine with its score.tab file and save it to $DB 
 for i in `ls ../*features.tab`; do j=`echo $i | sed 's/features/scores/'`; paste  $i $j ; done  | cut -d$'\t' -f1-10,16-20,56- > $DB
 
-
+# create the database tab file 
 head -1 $DB | cut -f 2- | awk '{ print "#chr\tstart\tend\t"$0 }' > ${DB}.tab
 
 cat $DB | grep -v transcript | sed 's/:/\t/' | awk '{ print $1"\t"$2"\t"$2"\t"$0 }' | cut -f 1-3,6- | sort -k1,1 -k2,2n -k3,3n >> ${DB}.tab
 
+# comparess using bgzip
 bgzip ${DB}.tab ; tabix -s 1 -b 2 -e 3 ${DB}.tab.gz
 
 
