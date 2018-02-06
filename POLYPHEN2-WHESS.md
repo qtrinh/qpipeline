@@ -20,16 +20,17 @@ Uncompress the downloaded file ( note: this will take a while )
 tar xvfj polyphen-2.2.2-whess-2011_12.tab.tar.bz2
 ```
 
-Go into the extracted directory ( polyphen-2.2.2-whess-2011_12 ).  There are two files associated with each transcript ( *features.tab and *scores.tab ) so they need to be combined to create the WHESS database.
+There are two files associated with each transcript ( *features.tab and *scores.tab ) so they need to be combined to create the WHESS database.  Go into the extracted directory ( polyphen-2.2.2-whess-2011_12 ) and create a directory called 'database'
 
-In the extracted directory, create a directory called 'database' and go into it.
 ```
+cd polyphen-2.2.2-whess-2011_12
+
 mkdir database; cd database
 ```
-Combine all the features.tab and scores.tab files in the extracted directory
+Combine all the features.tab and scores.tab files in the extracted directory ( note: this will take a while )
 ```
 # set the WHESS database file name
-DB="WHESS"
+DB="polyphen-2.2.2-whess-2011_12"
 
 # for each feature.tab file, combine with its score.tab file and save it to $DB 
 for i in `ls ../*features.tab`; do j=`echo $i | sed 's/features/scores/'`; paste  $i $j ; done  | cut -d$'\t' -f1-10,16-20,56- > $DB
