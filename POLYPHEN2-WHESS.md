@@ -41,11 +41,11 @@ Combine all the VCF files to create the PolyPhen2-WHESS database.  The instructi
 DB="polyphen-2.2.2-whess-2011_11.vcf";
 
 # take VCF header from the first file
-i=`ls *.combined.vcf | head -1`;
+i=`ls *.vcf | head -1`;
 cat $i | grep ^# > $DB
 
 # combine all VCF files and sort base on chr and pos
-cat *combined.vcf | grep -v ^# | sort -k1,1 -k2,2n >> $DB
+cat *.vcf | grep -v ^# | sort -k1,1 -k2,2n >> $DB
 
 # compress the newly created database using bgzip
 bgzip ${DB}
