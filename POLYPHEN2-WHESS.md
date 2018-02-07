@@ -36,10 +36,26 @@ DB="polyphen-2.2.2-whess-2011_12"
 for i in `ls ../*features.tab`; do echo ; N=`basename $i`; j=`echo $i | sed 's/features/scores/'`; paste  $i $j > ${N}.combined "; done
 
 # for each combined file, convert it to VCF 
-for i in `ls ../*combined`; do echo ; N=`basename $i`; perl ${QPIPELINE_HOME}/scripts/polyphen-whess_2_vcf.pl $i > $N ; done
-
+for i in `ls ../*combined`; do echo ; N=`basename $i`; perl ${QPIPELINE_HOME}/scripts/polyphen-whess_2_vcf.pl $i > ${N}.vcf ; done
 ```
+Combine all the VCF files to create PolyPhen WHESS database.
+```
+# set DB as name of the PolyPhen database 
+DB="polyphen-2.2.2-whess-2011_1.vcf";
 
+# take VCF header from the first file
+i=`ls *.combined.vcf | head -1`;
+cat $i | grep ^# > $DB
+
+# combine all VCF files 
+cat *combined.vcf | grep -v ^# | sort -k1,1 -k2,2n >> $DB
+
+# compress the newly created database 
+bgzip ${DB}
+
+# index the newly created database
+tabix -p vcf ${DB}.gz
+```
 More to come shortly!
 
 
