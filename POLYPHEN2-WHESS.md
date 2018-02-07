@@ -36,7 +36,7 @@ DB="polyphen-2.2.2-whess-2011_12"
 for i in `ls ../*features.tab`; do echo ; N=`basename $i`; j=`echo $i | sed 's/features/scores/'`; paste  $i $j > ${N}.combined "; done
 
 # for each combined file, convert it to VCF 
-for i in `ls ../*combined`; do echo ; N=`basename $i`; perl /u/qtrinh/qtrinh/svn/qpipeline/clean/scripts/polyphen-whess_2_vcf.pl $i > $N ; done
+for i in `ls ../*combined`; do echo ; N=`basename $i`; perl ${QPIPELINE_HOME}/scripts/polyphen-whess_2_vcf.pl $i > $N ; done
 
 ```
 
