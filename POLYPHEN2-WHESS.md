@@ -38,7 +38,7 @@ for i in `ls ../*features.tab`; do echo ; N=`basename $i`; j=`echo $i | sed 's/f
 # for each combined file, convert it to VCF 
 for i in `ls ../*combined`; do echo ; N=`basename $i`; perl ${QPIPELINE_HOME}/scripts/polyphen-whess_2_vcf.pl $i > ${N}.vcf ; done
 ```
-Combine all the VCF files to create PolyPhen WHESS database.
+Combine all the VCF files to create PolyPhen WHESS database.  The instructions below do not need to be paralellized.
 ```
 # set DB as name of the PolyPhen database 
 DB="polyphen-2.2.2-whess-2011_1.vcf";
