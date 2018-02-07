@@ -32,11 +32,8 @@ Combine all the features.tab and scores.tab files in the extracted directory.  T
 # set the WHESS database file name
 DB="polyphen-2.2.2-whess-2011_12"
 
-# for each feature.tab file, combine with its score.tab file and save it as feature.tab.combined 
-for i in `ls ../*features.tab`; do echo $i; N=`basename $i`; j=`echo $i | sed 's/features/scores/'`; paste  $i $j > ${N}.combined "; done
-
-# for each combined file, convert it to VCF 
-for i in `ls ../*combined`; do echo ; N=`basename $i`; perl ${QPIPELINE_HOME}/scripts/polyphen-whess_2_vcf.pl $i > ${N}.vcf ; done
+# for each feature.tab file, combine with its score.tab file and generate its equivalent VCF file
+for i in `ls ../*features.tab`; do echo $i; N=`basename $i`; j=`echo $i | sed 's/features/scores/'`;  perl ${QPIPELINE_HOME}/scripts/polyphen-whess_2_vcf.pl  $i $j > ${N}.vcf "; done
 ```
 Combine all the VCF files to create the PolyPhen2-WHESS database.  The instructions below do not need to be paralellized.
 ```
