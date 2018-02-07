@@ -20,7 +20,7 @@ Uncompress the downloaded file ( note: this will take a while )
 tar xvfj polyphen-2.2.2-whess-2011_12.tab.tar.bz2
 ```
 
-There are two files associated with each transcript ( *features.tab and *scores.tab ) so they need to be combined to create the WHESS database.  Go into the extracted directory ( polyphen-2.2.2-whess-2011_12 ) and create a directory called 'database'
+There are two files associated with each transcript ( *features.tab and *scores.tab ) so they need to be combined to create the WHESS database.  There is a total of ~45,000 transcripts so the instructions below need to be paralellized.   Go into the extracted directory ( polyphen-2.2.2-whess-2011_12 ) and create a directory called 'database'
 
 ```
 cd polyphen-2.2.2-whess-2011_12
@@ -32,17 +32,11 @@ Combine all the features.tab and scores.tab files in the extracted directory ( n
 # set the WHESS database file name
 DB="polyphen-2.2.2-whess-2011_12"
 
-# for each feature.tab file, combine with its score.tab file and save it to $DB 
-for i in `ls ../*features.tab`; do j=`echo $i | sed 's/features/scores/'`; paste  $i $j ; done  | cut -d$'\t' -f1-10,16-20,56- > $DB
+# for each feature.tab file, combine with its score.tab file and save it as feature.tab.combined 
+for i in `ls ../*features.tab`; do echo ; N=`basename $i`; j=`echo $i | sed 's/features/scores/'`; paste  $i $j > ${N}.combined "; done
 
-# create the database tab file 
-head -1 $DB | cut -f 2- | awk '{ print "#chr\tstart\tend\t"$0 }' > ${DB}.tab
-
-cat $DB | grep -v transcript | sed 's/:/\t/' | awk '{ print $1"\t"$2"\t"$2"\t"$0 }' | cut -f 1-3,6- | sort -k1,1 -k2,2n -k3,3n >> ${DB}.tab
-
-# comparess using bgzip
-bgzip ${DB}.tab ; tabix -s 1 -b 2 -e 3 ${DB}.tab.gz
-
+# for each combined file, convert it to VCF 
+for i in `ls ../*combined`; do echo ; N=`basename $i`; perl /u/qtrinh/qtrinh/svn/qpipeline/clean/scripts/polyphen-whess_2_vcf.pl $i > $N ; done
 
 ```
 
