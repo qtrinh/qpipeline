@@ -1,5 +1,5 @@
 
-The following sections describe how to use **_qpipeline_** with input VCF files:
+This page describes how to use **_qpipeline_** with input VCF files:
 
 * [Annotate an input VCF file against a BED database file](ANNOTATE_VCF_WITH_BED.md)
 * [Annotate an input VCF file against a VCF database file](ANNOTATE_VCF_WITH_VCF.md)
