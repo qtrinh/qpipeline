@@ -1,6 +1,6 @@
 
 
-The following sections describe how to use **_qpipeline_** to annotate a VCF file with any VCF database file (e.g., COSMIC, dbSNP, ClinVar, _etc._). 
+This page describes how to use **_qpipeline_** to annotate a VCF file with any VCF database file (e.g., COSMIC, dbSNP, ClinVar, _etc._). 
 
 ## Create and index a VCF database file 
 
