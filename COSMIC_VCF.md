@@ -65,7 +65,7 @@ rm _*
 ```
 Test to see if **_qpipeline_** works with the newly created database
 ```
-# take the first 200 lines from newly created COSIMC database as a test file
+# take the first 200 lines from newly created database as a test file
 zcat COSMIC_83.vcf.gz | head -200 > test.vcf 
 
 # use qpipeline to annotate the test.vcf file against COSMIC_v83 database.  
