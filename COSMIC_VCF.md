@@ -9,7 +9,7 @@ Create a directory in *${QPIPELINE_HOME}/external_databases/cosmic* to store COS
 ```
 cd ${QPIPELINE_HOME}/external_databases/cosmic 
 
-mkdir v83 ; cd v83
+mkdir -p v83/VCF ; cd v83/VCF
 ```
 
 Follow instructions from the COSMIC website to download both coding and non-coding VCF files - http://cancer.sanger.ac.uk/cosmic/download.  User registration is required. The following are instructions on how to download the coding and non-coding VCF files using sftp:
