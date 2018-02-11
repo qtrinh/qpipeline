@@ -27,7 +27,7 @@ cd polyphen-2.2.2-whess-2011_12
 
 mkdir database; cd database
 ```
-Combine all the features.tab and scores.tab files in the extracted directory.  There is a total of ~45,000 transcripts so the instructions below need to be paralellized.   
+Combine all the features.tab and scores.tab files in the extracted directory.  There is a total of ~45,000 transcripts so the instructions below need to be paralellized.   Otherwise, it will take a while!
 ```
 # for each feature.tab file, combine with its score.tab file and generate its equivalent VCF file
 for i in `ls ../*features.tab`; do echo $i; N=`basename $i`; j=`echo $i | sed 's/features/scores/'`;  perl ${QPIPELINE_HOME}/scripts/polyphen-whess_2_vcf.pl  $i $j > ${N}.vcf "; done
