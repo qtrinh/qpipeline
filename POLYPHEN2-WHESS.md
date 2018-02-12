@@ -47,10 +47,6 @@ echo "#CHROM|POS|ID|REF|ALT|QUAL|FILTER|INFO" | tr '|' '\t' >> $DB
 
 
 # combine all VCF files and sort base on chr and pos
-# 
-
-
-
 # NOTE this will take a while as we combine and sort all ~45,000 transcripts by chromosomes and positions.
 cat *.vcf | grep -v ^# | sort -k1,1 -k2,2n >> $DB
 
