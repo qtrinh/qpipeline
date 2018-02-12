@@ -5,7 +5,7 @@ This page describes how to use **_qpipeline_** with **_PolyPhen2_** annotations 
 
 Create a directory in *${QPIPELINE_HOME}/external_databases* to store PolyPhen2-WHESS database
 ```
-mkdir cd ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
+mkdir ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
 
 cd ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
 ```
