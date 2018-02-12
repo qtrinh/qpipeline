@@ -5,6 +5,7 @@ This page describes how to use **_qpipeline_** to:
 * [Annotate an input VCF file against a VCF database file](ANNOTATE_VCF_WITH_VCF.md) ( general ) or against
   * [NCBI ClinVar database file](NCBI_ClinVar.md)
   * [PolyPhen2-WHESS database file](POLYPHEN2-WHESS.md)
+  * [COSMIC database file](COSMIC_VCF.md)
   
 
 ---
