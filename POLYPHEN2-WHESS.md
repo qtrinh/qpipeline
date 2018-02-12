@@ -10,12 +10,12 @@ mkdir ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
 cd ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
 ```
 
-Download PolyPhen2-WHESS ( note: this will take a while as PolyPhen2-WHESS is fairly large )
+Download PolyPhen2-WHESS ( NOTE: this will take a while as PolyPhen2-WHESS is fairly large )
 ```
 wget --no-passive  ftp://genetics.bwh.harvard.edu/pph2/whess/polyphen-2.2.2-whess-2011_12.tab.tar.bz2
 ```
 
-Uncompress the downloaded file ( note: this will take a while )
+Uncompress the downloaded file ( NOTE: this will take a while )
 ```
 tar xvfj polyphen-2.2.2-whess-2011_12.tab.tar.bz2
 ```
@@ -47,6 +47,11 @@ echo "#CHROM|POS|ID|REF|ALT|QUAL|FILTER|INFO" | tr '|' '\t' >> $DB
 
 
 # combine all VCF files and sort base on chr and pos
+# 
+
+
+
+# NOTE this will take a while as we combine and sort all ~45,000 transcripts by chromosomes and positions.
 cat *.vcf | grep -v ^# | sort -k1,1 -k2,2n >> $DB
 
 # compress the newly created database using bgzip
