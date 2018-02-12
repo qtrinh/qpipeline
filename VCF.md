@@ -15,7 +15,7 @@ The examples below used data in **_${QPIPELINE_HOME}/test_data/vcf_** folder.
 
 * parse an attribute from the INFO column.  For example, VC (Variant Class)
 ```
- qpipeline vcf -m 1500 -i common_all_20161122.vcf -k VC= 
+ qpipeline vcf -m 1500 -i common_all_20161122.vcf -k VC= | less
 ```
 
 * parse an attribute from the FORMAT column: 
