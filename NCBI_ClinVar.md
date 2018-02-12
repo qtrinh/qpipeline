@@ -25,7 +25,7 @@ tabix -p vcf clinvar_20180128.modified.vcf.gz
 ```
 Test to see if **_qpipeline_** works with the newly created database
 ```
-# take the first 200 lines from the newly created database as a test file
+# take a few lines from the newly created database as a test file
 zcat clinvar_20180128.modified.vcf.gz | head -200 > test.vcf 
 
 # use qpipeline to annotate the test.vcf file against clinvar_20180128.modified.vcf.g database.  
