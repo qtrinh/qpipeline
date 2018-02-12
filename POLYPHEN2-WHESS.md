@@ -58,11 +58,12 @@ tabix -p vcf ${DB}.gz
 ```
 
 Test to see if qpipeline works with the newly created database
-
+```
 # take the first few lines from the newly created database as a test file
 zcat polyphen-2.2.2-whess-2011_11.vcf | head -200 > test.vcf 
 
 # use qpipeline to annotate the test.vcf file against clinvar_20180128.modified.vcf.g database.  
 qpipeline tabix -m 2020 -i test.vcf  -d polyphen-2.2.2-whess-2011_11.vcf -q POLYPHEN2-WHESS-2011_11 | less 
+```
 All of the entries in test.vcf should be annotated as in polyphen-2.2.2-whess-2011_11.vcf database.
 
