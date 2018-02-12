@@ -10,7 +10,7 @@ mkdir ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
 cd ${QPIPELINE_HOME}/external_databases/PolyPhen2-WHESS
 ```
 
-Download PolyPhen2-WHESS ( note: this will take a while as PolyPhen2-WHESS is large )
+Download PolyPhen2-WHESS ( note: this will take a while as PolyPhen2-WHESS is fairly large )
 ```
 wget --no-passive  ftp://genetics.bwh.harvard.edu/pph2/whess/polyphen-2.2.2-whess-2011_12.tab.tar.bz2
 ```
