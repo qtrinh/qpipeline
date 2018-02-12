@@ -32,6 +32,8 @@ mkdir database; cd database
 Combine all the features.tab and scores.tab files in the extracted directory.  There is a total of ~45,000 transcripts so the instructions below need to be paralellized.  Running sequentially will take a while!
 ```
 # for each feature.tab file, combine with its score.tab file and generate its equivalent VCF file
+# $i is the feature file and $j is the score file
+$ ${N}.vcf is the output VCF file
 for i in `ls ../*features.tab`; do echo $i; N=`basename $i`; j=`echo $i | sed 's/features/scores/'`;  perl ${QPIPELINE_HOME}/scripts/polyphen2-whess_2_vcf.pl $i $j ${N}.vcf ; done
 ```
 Combine all the VCF files to create the PolyPhen2-WHESS database.  The instructions below do not need to be paralellized.
