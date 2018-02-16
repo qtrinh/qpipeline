@@ -1,6 +1,6 @@
 
 
-## USAGE
+## General Usage
 **_qpipeline_** is designed to work with different file formats.  Run **_qpipeline_** by itself to see what file formats currently supported:
 ```
 An annotation and a collection of utils for Next Gen Sequencing (NGS) data.
