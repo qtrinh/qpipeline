@@ -5,7 +5,6 @@ qpipeline
 1. flexible
 2. reusable
 3. reproducible
-4. fast
 5. uniform
 5. and most importantly, allows users to quickly and easily extract or combine data they want from a large number of samples for further downstream analysis.
 
