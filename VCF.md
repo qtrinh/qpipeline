@@ -6,6 +6,7 @@ This page describes how to use **_qpipeline_** to:
   * [NCBI ClinVar](NCBI_ClinVar.md)
   * [PolyPhen2-WHESS](POLYPHEN2-WHESS.md)
   * [COSMIC](COSMIC_VCF.md)
+  * more to come shortly
   
 
 ---
