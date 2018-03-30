@@ -14,11 +14,9 @@ Follow instructions from the COSMIC website to download both coding and non-codi
 ```
 sftp "email@somewhere.com"@sftp-cancer.sanger.ac.uk
 
-cd /cosmic/grch37/cosmic/v83/VCF
-
-mget CosmicCodingMuts.vcf.gz CosmicNonCodingVariants.vcf.gz
+mget /cosmic/grch37/cosmic/v83/VCF/Cosmic*gz
 ```
-Once downloaded, set CFILE and NCFILE variables to coding and non-coding VCF files.  We will be using these variables a few times
+Once downloaded, set the CFILE and NCFILE variables to the coding and non-coding VCF files ( we will be using these variables a few times )
 ```
 CFILE="CosmicCodingMuts.vcf.gz"
 NCFILE="CosmicNonCodingVariants.vcf.gz"
