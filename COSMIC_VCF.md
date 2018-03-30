@@ -2,10 +2,11 @@
 This page describes how to create the COSMIC VCF database and how to use **_qpipeline_** to annotate VCF files with COSMIC VCF database.
 
 
-Create a directory in *${QPIPELINE_HOME}/external_databases/cosmic* to store COSMIC VCF database ( for example, v83 for version 83 )
+Create a directory in *${QPIPELINE_HOME}/external_databases/cosmic* to store COSMIC VCF database
 ```
 cd ${QPIPELINE_HOME}/external_databases/cosmic
 
+# create a directory to store version 83 of COSMIC VCF database 
 mkdir -p v83/VCF ; cd v83/VCF
 ```
 
