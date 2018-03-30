@@ -34,7 +34,7 @@ echo "##header for $NCFILE " >> _header ; cat _${NCFILE}.header >> _header
 ```
 
 
-Add 'chr' and 'CODING=1' to data in coding file.  This is necessary so we know where the entries came from later on
+Add 'chr' and 'CODING=1' to data in coding file.  This is necessary so we know where entries came from later on
 ```
 zcat $CFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";CODING=1" }}' | grep -v "^#" > _${CFILE}.modified
 ```
@@ -43,11 +43,11 @@ Similarly, add 'chr' and 'NONCODING=1' to data in non-coding file
 ```
 zcat $NCFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";non-coding=1" }}' | grep -v "^#" > _${NCFILE}.modified
 ```
-Combine data from coding and non-coding files
+Combine coding and non-coding files, sort by chromosomes and positions 
 ```
 cat _${CFILE}.modified _${NCFILE}.modified | sort -k1,1 -k2,2n > _data
 ```
-Set the COSMIC version and create the COSMIC database
+Set the COSMIC version number and create the COSMIC database
 ```
 VER="v83"; 
 cat _header _data | sed 's/^chrMT/chrM/' > COSMIC_${VER}.vcf
