@@ -1,13 +1,9 @@
 
 
-
-
 ## General Usage
-The primary function of **_qpipeline_** is to annotation NGS data across multiple databases while allowing users to quickly query the integrated data for new knowledge.  Furthermore, 
+The primary function of **_qpipeline_** is to annotate NGS data with multiple databases while allowing users to quickly query the annotated data for new knowledge.  In addition, **_qpipeline_** also contained a set of utils that support the many commonly tasks for  different file formats.  
 
-so that 
 
-designed to work with different file formats.  Run **_qpipeline_** by itself to see what file formats currently supported:
 ```
 An annotation and a collection of utils for Next Gen Sequencing (NGS) data.
 
