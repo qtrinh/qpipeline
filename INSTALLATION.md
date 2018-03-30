@@ -38,11 +38,10 @@ Usage:
         qpipeline txt
         ...
 ```
-Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by copying the outputs from the command below to your ~/.bashrc file:
+Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the output from the bash command below to your ~/.bashrc file:
 ```
 ${QPIPELINE_HOME}/scripts/env.sh $QPIPELINE_HOME 
 
 ```
-
 
 See [usage instructions](https://github.com/qtrinh/qpipeline/blob/master/USAGE.md) on how to use **_qpipeline_** 
