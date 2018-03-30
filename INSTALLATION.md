@@ -40,7 +40,7 @@ Usage:
 ```
 Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the output from the bash command below to your ~/.bashrc file:
 ```
-${QPIPELINE_HOME}/scripts/env.sh $QPIPELINE_HOME 
+cd ${QPIPELINE_HOME}; scripts/env.sh
 
 ```
 
