@@ -60,7 +60,7 @@ bgzip COSMIC_${VER}.vcf;
 # index the database using tabix 
 tabix -p vcf COSMIC_${VER}.vcf.gz
 ```
-Finally, delete intermediate files.
+Finally, delete all intermediate files.
 ```
 rm _*
 ```
