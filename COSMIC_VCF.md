@@ -1,4 +1,6 @@
 
+## COSMIC Coding and Non-Coding VCF Files 
+
 This page describes how to create the COSMIC VCF database and how to use **_qpipeline_** to annotate VCF files with COSMIC VCF database.
 
 
@@ -65,9 +67,9 @@ rm _*
 Test to see if **_qpipeline_** works with the newly created database
 ```
 # take the first 200 lines from newly created database as a test file
-zcat COSMIC_83.vcf.gz | head -200 > test.vcf 
+zcat COSMIC_${VER}.vcf.gz | head -200 > test.vcf 
 
 # use qpipeline to annotate the test.vcf file against COSMIC_v83 database.  
-qpipeline tabix -m 2020 -i test.vcf  -d COSMIC_83.vcf.gz -q COSMIC_v83 | less 
+qpipeline tabix -m 2020 -i test.vcf -d COSMIC_${VER}.vcf.gz -q COSMIC_${VER} | less 
 ```
 All of the entries in test.vcf should be annotated as in COSMIC_v83.vcf.gz database.
