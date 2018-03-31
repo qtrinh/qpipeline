@@ -1,4 +1,4 @@
-
+## NCBI ClinVar VCF File
 
 This page describes how to create the ClinVar VCF database and how to use **_qpipeline_** to annotate VCF files with ClinVar VCF database.
 
@@ -8,20 +8,26 @@ Create a directory in *${QPIPELINE_HOME}/external_databases/clinvar* to store Cl
 cd ${QPIPELINE_HOME}/external_databases/clinvar 
 ```
 
-Download ClinVar VCF database
+Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ) 
 ```
 wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180128.vcf.gz --no-passive-ftp
 ```
-Add the 'chr' prefix and save it as 'clinvar_20180128.modified.vcf'
+Set FILE variable to the downloaded ClinVar VCF file ( we will be using this a few times )
 ```
-zcat clinvar_20180128.vcf.gz  | grep ^# > clinvar_20180128.modified.vcf
-zcat clinvar_20180128.vcf.gz  | grep -v ^# | awk '{ print "chr"$0 }' >> clinvar_20180128.modified.vcf
+FILE="clinvar_20180128.vcf.gz"
+```
+Add the 'chr' prefix and save it as ${FILE}.modified.vcf 
+```
+zcat $FILE  | grep ^# > ${FILE}.modified.vcf 
+zcat $FILE  | grep -v ^# | awk '{ print "chr"$0 }' >>  ${FILE}.modified.vcf 
 ```
 Compress and index 
 ```
-bgzip clinvar_20180128.modified.vcf
+# compress 
+bgzip ${FILE}.modified.vcf 
 
-tabix -p vcf clinvar_20180128.modified.vcf.gz 
+# index 
+tabix -p vcf ${FILE}.modified.vcf.gz 
 ```
 Test to see if **_qpipeline_** works with the newly created database
 ```
