@@ -9,4 +9,5 @@ Typically, annotations are done in 2 steps: (1) create and index database to be 
   * [COSMIC Coding and non-coding VCF files](COSMIC_VCF.md)
 * NCBI
   * [NCBI ClinVar](NCBI_ClinVar.md)
+* [POLYPHEN2-WHESS](POLYPHEN2-WHESS.md)
 * More to come shortly
