@@ -12,7 +12,7 @@ Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf
 ```
 wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180128.vcf.gz --no-passive-ftp
 ```
-Set FILE variable to the downloaded ClinVar VCF file ( we will be using this a few times )
+Set FILE variable to the downloaded ClinVar VCF file ( we will be using this variable a few times )
 ```
 FILE="clinvar_20180128.vcf.gz"
 ```
