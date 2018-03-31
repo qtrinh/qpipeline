@@ -29,7 +29,7 @@ zcat $CFILE  | head -300  | grep "^#"  > _${CFILE}.tmp.header
 zcat $NCFILE  | head -300  | grep "^#" > _${NCFILE}.tmp.header
 
 # get the headers
-echo "#################################" >_header ; echo "##header for $CFILE " >> _header; 
+echo "#################################" >_tmp.header ; echo "##header for $CFILE " >> _tmp.header; 
 cat _${CFILE}.tmp.header | grep -v CHROM >> _tmp.header ; 
 echo "#################################" >> _tmp.header ; 
 echo "##header for $NCFILE " >> _tmp.header ; cat _${NCFILE}.tmp.header >> _tmp.header
