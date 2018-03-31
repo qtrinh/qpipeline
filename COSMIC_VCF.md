@@ -29,10 +29,10 @@ zcat $CFILE  | head -300  | grep "^#"  > _${CFILE}.tmp.header
 zcat $NCFILE  | head -300  | grep "^#" > _${NCFILE}.tmp.header
 
 # get the headers
-echo "#################################" >_tmp.header ; echo "##header for $CFILE " >> _tmp.header; 
-cat _${CFILE}.tmp.header | grep -v CHROM >> _tmp.header ; 
-echo "#################################" >> _tmp.header ; 
-echo "##header for $NCFILE " >> _tmp.header ; cat _${NCFILE}.tmp.header >> _tmp.header
+echo "#################################" > _.tmp.header ; echo "##header for $CFILE " >> _.tmp.header; 
+cat _${CFILE}.tmp.header | grep -v CHROM >> _.tmp.header ; 
+echo "#################################" >> _.tmp.header ; 
+echo "##header for $NCFILE " >> _.tmp.header ; cat _${NCFILE}.tmp.header >> _.tmp.header
 ```
 
 
@@ -47,12 +47,12 @@ zcat $NCFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";non-cod
 ```
 Combine coding and non-coding files, sort by chromosomes and positions 
 ```
-cat _${CFILE}.tmp.modified _${NCFILE}.tmp.modified | sort -k1,1 -k2,2n > _tmp.data
+cat _${CFILE}.tmp.modified _${NCFILE}.tmp.modified | sort -k1,1 -k2,2n > _.tmp.data
 ```
 Set the COSMIC version number and create the COSMIC database
 ```
 VER="v83"; 
-cat _tmp.header _tmp.data | sed 's/^chrMT/chrM/' > COSMIC_${VER}.vcf
+cat _.tmp.header _.tmp.data | sed 's/^chrMT/chrM/' > COSMIC_${VER}.vcf
 
 # compress the newly created database
 bgzip COSMIC_${VER}.vcf; 
