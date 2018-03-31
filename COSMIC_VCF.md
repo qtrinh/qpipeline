@@ -25,34 +25,34 @@ NCFILE="CosmicNonCodingVariants.vcf.gz"
 ```
 Get headers of both files so we can include them in the database file
 ```
-zcat $CFILE  | head -300  | grep "^#"  > _${CFILE}.header
-zcat $NCFILE  | head -300  | grep "^#" > _${NCFILE}.header
+zcat $CFILE  | head -300  | grep "^#"  > _${CFILE}.tmp.header
+zcat $NCFILE  | head -300  | grep "^#" > _${NCFILE}.tmp.header
 
 # get the headers
 echo "#################################" >_header ; echo "##header for $CFILE " >> _header; 
-cat _${CFILE}.header | grep -v CHROM >>_header ; 
-echo "#################################" >> _header ; 
-echo "##header for $NCFILE " >> _header ; cat _${NCFILE}.header >> _header
+cat _${CFILE}.tmp.header | grep -v CHROM >> _tmp.header ; 
+echo "#################################" >> _tmp.header ; 
+echo "##header for $NCFILE " >> _tmp.header ; cat _${NCFILE}.tmp.header >> _tmp.header
 ```
 
 
 Add 'chr' and 'CODING=1' to data in coding file.  This is necessary so we know where entries came from later on
 ```
-zcat $CFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";CODING=1" }}' | grep -v "^#" > _${CFILE}.modified
+zcat $CFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";CODING=1" }}' | grep -v "^#" > _${CFILE}.tmp.modified
 ```
 
 Similarly, add 'chr' and 'NONCODING=1' to data in non-coding file
 ```
-zcat $NCFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";non-coding=1" }}' | grep -v "^#" > _${NCFILE}.modified
+zcat $NCFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";non-coding=1" }}' | grep -v "^#" > _${NCFILE}.tmp.modified
 ```
 Combine coding and non-coding files, sort by chromosomes and positions 
 ```
-cat _${CFILE}.modified _${NCFILE}.modified | sort -k1,1 -k2,2n > _data
+cat _${CFILE}.tmp.modified _${NCFILE}.tmp.modified | sort -k1,1 -k2,2n > _tmp.data
 ```
 Set the COSMIC version number and create the COSMIC database
 ```
 VER="v83"; 
-cat _header _data | sed 's/^chrMT/chrM/' > COSMIC_${VER}.vcf
+cat _tmp.header _tmp.data | sed 's/^chrMT/chrM/' > COSMIC_${VER}.vcf
 
 # compress the newly created database
 bgzip COSMIC_${VER}.vcf; 
@@ -62,7 +62,7 @@ tabix -p vcf COSMIC_${VER}.vcf.gz
 ```
 Finally, delete all intermediate files.
 ```
-rm _*
+rm _*.tmp.*
 ```
 Test to see if **_qpipeline_** works with the newly created database
 ```
