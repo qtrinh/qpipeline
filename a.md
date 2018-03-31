@@ -5,6 +5,8 @@ The primary function of **_qpipeline_** is to annotate NGS data with multiple da
 
 ### Annotations
 Typically, annotations are done in 2 steps: (1) create and index database to be used; and (2) annotate input file with the newly created database.  Below are instructions on how to create and index different commonly used databases:
+* ICGC
+  * simple_somatic_mutation
 * COSMIC 
   * [COSMIC Coding and non-coding VCF files](COSMIC_VCF.md)
 * NCBI
