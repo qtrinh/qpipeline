@@ -8,14 +8,13 @@ Create a directory in *${QPIPELINE_HOME}/external_databases/clinvar* to store Cl
 cd ${QPIPELINE_HOME}/external_databases/clinvar 
 ```
 
-Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ). As of March 30, 2018, 'clinvar_20180128.vcf.gz' is the latest version. 
+Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ). As of March 30, 2018, 'clinvar_20180225.vcf.gz' is the latest version. 
 ```
+# Set FILE variable for the ClinVar VCF file to be downloaded ( we will be using this variable a few times )
+FILE="clinvar_20180225.vcf.gz"
+
 # use wget to download the ClinVar
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180128.vcf.gz --no-passive-ftp
-```
-Set FILE variable to the downloaded ClinVar VCF file ( we will be using this variable a few times )
-```
-FILE="clinvar_20180128.vcf.gz"
+wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/${FILE} --no-passive-ftp
 ```
 Add the 'chr' prefix and save it as ${FILE}.modified.vcf 
 ```
@@ -35,7 +34,7 @@ Test to see if **_qpipeline_** works with the newly created database
 # take a few lines from the newly created database as a test file
 zcat  ${FILE}.modified.vcf.gz  | head -200 > test.vcf 
 
-# use qpipeline to annotate the test.vcf file against clinvar_20180128.modified.vcf.g database.  
-qpipeline tabix -m 2020 -i test.vcf  -d  ${FILE}.modified.vcf.gz  -q ClinVar_20180128 | less 
+# use qpipeline to annotate the test.vcf file against ${FILE}.modified.vcf.gz database.  
+qpipeline tabix -m 2020 -i test.vcf  -d  ${FILE}.modified.vcf.gz  -q clinvar_20180225 | less 
 ```
-All of the entries in test.vcf should be annotated as in clinvar_20180128.vcf.gz.modified.vcf.gz database.
+All of the entries in test.vcf should be annotated as in ${FILE}.modified.vcf.gz database.
