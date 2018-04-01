@@ -26,7 +26,7 @@ NCFILE="CosmicNonCodingVariants.vcf.gz"
 Get headers of both files so we can include them in the database file
 ```
 zcat $CFILE  | head -300  | grep "^#"  > _${CFILE}.tmp.header
-zcat $NCFILE  | head -300  | grep "^#" > _${NCFILE}.tmp.header
+zcat $NCFILE | head -300  | grep "^#" > _${NCFILE}.tmp.header
 
 # get the headers
 echo "#################################" > _.tmp.header ; echo "##header for $CFILE " >> _.tmp.header; 
