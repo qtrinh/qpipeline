@@ -8,8 +8,9 @@ Create a directory in *${QPIPELINE_HOME}/external_databases/clinvar* to store Cl
 cd ${QPIPELINE_HOME}/external_databases/clinvar 
 ```
 
-Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ) 
+Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ). As of March 30, 2018, 'clinvar_20180128.vcf.gz' is the latest version. 
 ```
+# use wget to download the ClinVar
 wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180128.vcf.gz --no-passive-ftp
 ```
 Set FILE variable to the downloaded ClinVar VCF file ( we will be using this variable a few times )
