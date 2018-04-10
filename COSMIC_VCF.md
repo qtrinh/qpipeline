@@ -23,7 +23,7 @@ Once downloaded, set the CFILE and NCFILE variables to the coding and non-coding
 CFILE="CosmicCodingMuts.vcf.gz"
 NCFILE="CosmicNonCodingVariants.vcf.gz"
 ```
-Get headers of both files so we can include them in the database file
+Get headers of both files so we can include them in the new database file
 ```
 zcat $CFILE  | head -300  | grep "^#"  > _${CFILE}.tmp.header
 zcat $NCFILE | head -300  | grep "^#" > _${NCFILE}.tmp.header
@@ -60,10 +60,7 @@ bgzip COSMIC_${VER}.vcf;
 # index the database using tabix 
 tabix -p vcf COSMIC_${VER}.vcf.gz
 ```
-Finally, delete all intermediate files.
-```
-rm _*.tmp.*
-```
+
 Test to see if **_qpipeline_** works with the newly created database
 ```
 # take the first 200 lines from newly created database as a test file
@@ -72,4 +69,9 @@ zcat COSMIC_${VER}.vcf.gz | head -200 > test.vcf
 # use qpipeline to annotate the test.vcf file against COSMIC_v83 database.  
 qpipeline tabix -m 2020 -i test.vcf -d COSMIC_${VER}.vcf.gz -q COSMIC_${VER} | less 
 ```
-All of the entries in test.vcf should be annotated as in COSMIC_v83.vcf.gz database.
+All of the entries in test.vcf should be annotated as in COSMIC_${VER}.vcf.gz database.
+
+Finally, delete all intermediate files.
+```
+rm _*.tmp.*
+```
