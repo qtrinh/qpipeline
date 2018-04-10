@@ -8,33 +8,33 @@ Create a directory in *${QPIPELINE_HOME}/external_databases/clinvar* to store Cl
 cd ${QPIPELINE_HOME}/external_databases/clinvar 
 ```
 
-Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ). As of March 30, 2018, 'clinvar_20180225.vcf.gz' is the latest version.  Previous versions of ClinVar are in ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/archive_n.n directory. 
+Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ). As of April 10, 2018, 'clinvar_20180401.vcf.gz' is the latest version.  Previous versions of ClinVar are in 'archive' directory under ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37. 
 ```
-# Set FILE variable for the ClinVar VCF file to be downloaded ( we will be using this variable a few times )
-FILE="clinvar_20180225.vcf.gz"
+# Set FILE_URL variable for the ClinVar VCF file to be downloaded ( we will be using this variable a few times )
+FILE_URL="ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180401.vcf.gz"
 
-# use wget to download the ClinVar
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/${FILE} --no-passive-ftp
-```
-Add the 'chr' prefix and save it as ${FILE}.modified.vcf 
-```
-zcat $FILE  | grep ^# > ${FILE}.modified.vcf 
-zcat $FILE  | grep -v ^# | awk '{ print "chr"$0 }' >>  ${FILE}.modified.vcf 
-```
-Compress and index 
-```
-# compress 
-bgzip ${FILE}.modified.vcf 
+# use wget to download the ClinVar VCF file
+wget $FILE_URL --no-passive-ftp
 
-# index 
-tabix -p vcf ${FILE}.modified.vcf.gz 
-```
-Test to see if **_qpipeline_** works with the newly created database
-```
+# use basename to get just the file name from FILE_URL so we can modify it 
+FILE_NAME=`basename $FILE_URL`;
+
+# Add the 'chr' prefix and save it as ${FILE_NAME} 
+zcat $FILE_URL  | grep ^# > ${FILE_NAME}.modified.vcf 
+zcat $FILE_URL  | grep -v ^# | awk '{ print "chr"$0 }' >>  ${FILE_NAME}.modified.vcf 
+
+# compress using bgzip 
+bgzip ${FILE_NAME}.modified.vcf 
+
+# index using tabix
+tabix -p vcf ${FILE_NAME}.modified.vcf.gz 
+
+# Test to see if **_qpipeline_** works with the newly created database
 # take a few lines from the newly created database as a test file
-zcat  ${FILE}.modified.vcf.gz  | head -200 > test.vcf 
+zcat  ${FILE_NAME}.modified.vcf.gz  | head -200 > test.vcf 
 
 # use qpipeline to annotate the test.vcf file against ${FILE}.modified.vcf.gz database.  
 qpipeline tabix -m 2020 -i test.vcf  -d  ${FILE}.modified.vcf.gz  -q clinvar_20180225 | less 
-```
+
 All of the entries in test.vcf should be annotated as in ${FILE}.modified.vcf.gz database.
+```
