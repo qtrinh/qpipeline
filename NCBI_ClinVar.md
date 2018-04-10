@@ -36,6 +36,6 @@ zcat  ${FILE_NAME}.modified.vcf.gz  | head -200 > test.vcf
 # use qpipeline to annotate the test.vcf file against ${FILE_NAME}.modified.vcf.gz database.  
 # All of the entries in test.vcf should be annotated as in ClinVar database!
 
-qpipeline tabix -m 2020 -i test.vcf  -d  ${FILE_NAME}.modified.vcf.gz  -q $FILE_NAME | less 
+qpipeline tabix -m 2020 -i test.vcf  -d  ${FILE_NAME}.modified.vcf.gz  -q `basename $FILE_NAME .vcf.gz` | less 
 
 ```
