@@ -20,8 +20,8 @@ wget $FILE_URL --no-passive-ftp
 FILE_NAME=`basename $FILE_URL`;
 
 # Add the 'chr' prefix and save it as ${FILE_NAME} 
-zcat $FILE_URL  | grep ^# > ${FILE_NAME}.modified.vcf 
-zcat $FILE_URL  | grep -v ^# | awk '{ print "chr"$0 }' >>  ${FILE_NAME}.modified.vcf 
+zcat $FILE_NAME | grep ^# > ${FILE_NAME}.modified.vcf 
+zcat $FILE_NAME | grep -v ^# | awk '{ print "chr"$0 }' >>  ${FILE_NAME}.modified.vcf 
 
 # compress using bgzip 
 bgzip ${FILE_NAME}.modified.vcf 
