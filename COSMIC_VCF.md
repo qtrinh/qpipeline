@@ -1,5 +1,5 @@
 
-## VCF Files (coding and non-coding mutations) 
+## COSMIC VCF Files (coding and non-coding mutations) 
 
 This page describes how to create the COSMIC VCF database and how to use **_qpipeline_** to annotate VCF files with COSMIC VCF database.
 
