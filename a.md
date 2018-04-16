@@ -8,7 +8,7 @@ Typically, annotations are done in 2 steps: (1) create and index the database to
 * ICGC
   * [simple_somatic_mutations](ICGC_simple_mutations.md)
 * COSMIC 
-  * [COSMIC VCF Files (coding and non-coding mutations)](COSMIC_VCF.md) ;  [COSMIC_cancer_gene_census](COSMIC_cancer_gene_census.md)
+  * [VCF Files (coding and non-coding mutations)](COSMIC_VCF.md) ;  [cancer_gene_census](COSMIC_cancer_gene_census.md)
   
 * NCBI
   * [NCBI ClinVar](NCBI_ClinVar.md)
