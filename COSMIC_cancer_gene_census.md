@@ -24,7 +24,7 @@ cat cancer_gene_census.txt | grep -v Gene | awk -F"\t" '{ print "chr"$4"\t"$0 }'
 # remove entries where start and end are missing ( with values "." );
 cat tmp | awk -F"\t" '($2!=".") || ($3!=".")' > _tmp ; mv _tmp tmp ;
 
-# convert tmp to bed 
+# convert to bed 
 perl ${QPIPELINE_HOME}/scripts/tab2bed.pl  tmp 1 2 3 | sort -k1,1 -k2,2n -k3,3 > cancer_gene_census.txt.db.bed
 
 # compress and index 
