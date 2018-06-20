@@ -1,50 +1,24 @@
 
 
 ## General Usage
-**_qpipeline_** is designed to work with different file formats.  Run **_qpipeline_** by itself to see what file formats currently supported:
-```
-An annotation and a collection of utils for Next Gen Sequencing (NGS) data.
+The primary function of **_qpipeline_** is to annotate NGS data with multiple databases while allowing users to quickly query the annotated data for new knowledge.  In addition, **_qpipeline_** also contained a set of utils that support the many different common tasks in different file formats.  
 
-Usage:
-        qpipeline txt 
-        qpipeline fasta
-        qpipeline fastq
-        qpipeline tabix
-        qpipeline vcf 
-```
-
-Each file format (txt, fasta, fastq, _etc._ ) has multiple modes supporting different commands.  For example, **_qpipeline tabix_** currently supported two commands: (1) annotate a VCF file against a BED database file; and (2) annotate a VCF file against a VCF database file.
-```
-Utils for annotating VCF files using tabix.
-
-        qpipeline tabix [ -m mode ]  [ options ]
-
-        -m 2000 annotate a VCF file against a BED database file.
-        -m 2020 annotate a VCF file against a VCF database file.
-```
-
-Use **_-m_** argument to get usage information for a particular command.  For example, **_qpipeline tabix -m 2000_** gives usage and example of how to annotate a VCF file against a BED database file:
-```
-Utils for annotating VCF files using tabix.
-
-        qpipeline tabix [ -m mode ]  [ options ]
-
-        -m 2000 annotate a VCF file against a BED database file.
-                -d TABIX_DATABASE_FILE  database file indexed by tabix ( .gz ).
-                -q STR  target name.  e.g., BREAST_CANCER_PANEL.
-                -i FILE input VCF file.
-
-                Example:
-                        qpipeline tabix -m 2000 -d test_data/vcf/target.bed.sorted.gz -i test_data/vcf/sample.vcf -q BREAST_CANCER_PANEL
-
-        Missing input file (-i).  Please see usage above!
-```
-
-Most of the commands are straight forward to run and their usage information can be used as a guide on how to run them ( run **_qpipeline_** by itself to see its usage information ).  Some commands, such as annotate a VCF against a VCF database, require additional information so they will be described in detailed.  
+### Annotations
+Typically, annotations are done in 2 steps: (1) create and index the database to be used; and (2) annotate the input file with the newly created database.  Below are instructions on how to create and index different commonly used databases:
+* ICGC
+  * [simple_somatic_mutations](ICGC_simple_mutations.md) ; [copy number somatic mutations](ICGC_copy_number.md)
+* COSMIC 
+  * [VCF Files (coding and non-coding mutations)](COSMIC_VCF.md) ;  [cancer_gene_census](COSMIC_cancer_gene_census.md)
+* NCBI
+  * [NCBI ClinVar](NCBI_ClinVar.md)
+* [POLYPHEN2-WHESS](POLYPHEN2-WHESS.md)
+* More to come soon
+### Utils
+**_qpipeline_** utils are designed to work with many common file formats associated with NGS. Each file format, for example, txt format) has multiple modes supporting different tasks.  Most of the commands are straight forward to run and their usage information can be used as a guide on how to run these commands.  
 
 * [TXT](TXT.md)
 * [FASTA](FASTA.md)
 * [FASTQ](FASTQ.md)
 * [VCF](VCF.md)
-
+* More to come soon
 
