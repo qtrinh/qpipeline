@@ -9,7 +9,7 @@ Typically, annotations are done in 2 steps: (1) create and index the database to
   * [simple_somatic_mutations](ICGC_simple_mutations.md) ; [copy number somatic mutations](ICGC_copy_number.md)
 * [COSMIC](https://cancer.sanger.ac.uk/cosmic) 
   * [VCF Files (coding and non-coding mutations)](COSMIC_VCF.md) ;  [cancer_gene_census](COSMIC_cancer_gene_census.md)
-* [NCBI](ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37)
+* NCBI (ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37)
   * [NCBI ClinVar](NCBI_ClinVar.md)
 * [POLYPHEN2-WHESS](POLYPHEN2-WHESS.md)
 * More to come soon
