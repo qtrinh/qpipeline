@@ -20,4 +20,5 @@ Typically, annotations are done in 2 steps: (1) create and index the database to
 * [FASTA](FASTA.md)
 * [FASTQ](FASTQ.md)
 * [VCF](VCF.md)
+* More to come soon
 
