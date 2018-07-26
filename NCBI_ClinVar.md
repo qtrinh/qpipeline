@@ -2,10 +2,11 @@
 
 This page describes how to create the ClinVar VCF database and how to use **_qpipeline_** to annotate VCF files with ClinVar VCF database.
 
-
-Create 'clinvar' directory in *${QPIPELINE_HOME}/external_databases/ncbi* 
+Create 'clinvar' directory in *${QPIPELINE_HOME}/external_databases/ncbi* and go into it:
 ```
+mkdir ${QPIPELINE_HOME}/external_databases/ncbi/clinvar 
 cd ${QPIPELINE_HOME}/external_databases/ncbi/clinvar 
+
 ```
 
 Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ). As of April 10, 2018, 'clinvar_20180401.vcf.gz' is the latest version.  Previous versions of ClinVar are in 'archive' directory under ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37. 
