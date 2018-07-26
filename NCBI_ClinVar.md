@@ -10,12 +10,12 @@ mkdir ${QPIPELINE_HOME}/external_databases/ncbi/clinvar
 cd ${QPIPELINE_HOME}/external_databases/ncbi/clinvar 
 ```
 
-Download ClinVar VCF database ( check ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37 for latest version ). As of April 10, 2018, 'clinvar_20180401.vcf.gz' is the latest version.  Previous versions of ClinVar are in 'archive' directory under ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37. 
+Download and index ClinVar VCF database 
 ```
-# Set FILE_URL variable for the ClinVar VCF file to be downloaded ( we will be using this variable a few times )
-FILE_URL="ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180401.vcf.gz"
+# Set FILE_URL variable to point to the ClinVar VCF database file to be downloaded ( we will be using this variable a few times )
+FILE_URL="FILE_URL="ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz""
 
-# use wget to download the ClinVar VCF file
+# use wget to download the ClinVar VCF database file
 wget $FILE_URL --no-passive-ftp
 
 # use basename to get just the file name from FILE_URL so we can modify it 
@@ -30,7 +30,9 @@ bgzip ${FILE}.modified.vcf
 
 # index using tabix
 tabix -p vcf ${FILE}.modified.vcf.gz 
-
+```
+Test the newly created database
+```
 # Test to see if qpipeline works with the newly created database
 # take a few lines from the newly created database as a test file
 zcat  ${FILE}.modified.vcf.gz  | head -200 > test.vcf 
