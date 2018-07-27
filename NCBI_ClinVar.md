@@ -32,7 +32,7 @@ bgzip ${FILE}.modified.vcf
 # index using tabix
 tabix -p vcf ${FILE}.modified.vcf.gz 
 ```
-Test the newly created database with qpipeline 
+Test the newly created database with **_qpipeline_** 
 ```
 # take a few lines from the newly created database and use it as a test file
 zcat  ${FILE}.modified.vcf.gz  | head -200 > test.vcf 
