@@ -1,6 +1,6 @@
 ## NCBI ClinVar VCF File
 
-This page describes how to create the ClinVar VCF database and how to use **_qpipeline_** to annotate VCF files with it.
+This page describes how to create ClinVar VCF database and how to use **_qpipeline_** to annotate VCF files with it.
 
 Create a directory to store ClinVar database
 ```
