@@ -66,8 +66,8 @@ Test the newly created database with **_qpipeline_**
 zcat COSMIC_${VER}.vcf.gz | head -200 > test.vcf 
 
 # use qpipeline to annotate the test.vcf file against COSMIC_v83 database.  
-# All of the entries in test.vcf should be annotated as in COSMIC_${VER}.vcf.gz database.
-
+# All of the entries in test.vcf should be annotated as in COSMIC_${VER}.vcf.gz database 
+# ( look for the string 'COSMIC_v83=1' in the INFO column ) 
 qpipeline tabix -m 2020 -i test.vcf -d COSMIC_${VER}.vcf.gz -q COSMIC_${VER} | less 
 ```
 
