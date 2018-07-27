@@ -1,7 +1,7 @@
 
 ## COSMIC VCF Files (coding and non-coding mutations) 
 
-This page describes how to create COSMIC VCF database and how to use **_qpipeline_** to annotate VCF files with it.
+This page describes how to create COSMIC VCF database and how to use **_qpipeline_** to annotate user data with it.
 
 Create a directory to store COSMIC database
 ```
