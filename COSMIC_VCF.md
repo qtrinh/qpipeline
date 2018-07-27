@@ -1,11 +1,13 @@
 
 ## COSMIC VCF Files (coding and non-coding mutations) 
 
-This page describes how to create the COSMIC VCF database and how to use **_qpipeline_** to annotate VCF files with COSMIC VCF database.
+This page describes how to create COSMIC VCF database and how to use **_qpipeline_** to annotate VCF files with it.
 
-
-Create a directory in *${QPIPELINE_HOME}/external_databases/cosmic* to store COSMIC VCF database
+Create a directory to store COSMIC database
 ```
+# create directory
+mkdir ${QPIPELINE_HOME}/external_databases/cosmic
+# change into it
 cd ${QPIPELINE_HOME}/external_databases/cosmic
 
 # create a directory to store version 83 of COSMIC VCF database 
@@ -21,13 +23,14 @@ mget /cosmic/grch37/cosmic/v83/VCF/Cosmic*gz
 
 Once downloaded, combine both coding and non-coding files together to create the COSMIC database
 ```
-# set the CFILE and NCFILE variables to the coding and non-coding VCF files ( we will be using these variables a few times )
+# set the CFILE and NCFILE variables to the coding and non-coding VCF files 
+# ( we will be using these variables a few times )
 CFILE="CosmicCodingMuts.vcf.gz"
 NCFILE="CosmicNonCodingVariants.vcf.gz"
 
 # Get headers of both files so we can include them in the new database file
-zcat $CFILE  | head -300  | grep "^#"  > _${CFILE}.tmp.header
-zcat $NCFILE | head -300  | grep "^#" > _${NCFILE}.tmp.header
+zcat $CFILE  | grep "^#" > _${CFILE}.tmp.header
+zcat $NCFILE | grep "^#" > _${NCFILE}.tmp.header
 
 # get the headers
 echo "#################################" > _.tmp.header ; echo "##header for $CFILE " >> _.tmp.header; 
