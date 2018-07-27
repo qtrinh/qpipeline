@@ -8,7 +8,7 @@ Create a directory to store the copy number database
 # using similar structure as the ICGC - see https://dcc.icgc.org/releases/release_26/Summary 
 cd ${QPIPELINE_HOME}/external_databases/icgc/release_26/Projects/BRCA-US/
 ```
-Download the copy number somatic mutation database from ICGC, for example BRCA-US https://dcc.icgc.org/releases/release_26/Projects/BRCA-US and save it to ${QPIPELINE_HOME}/external_databases/icgc/release_26/Projects/BRCA-US/ 
+Download the copy number somatic mutation database from ICGC, for example BRCA-US ( see https://dcc.icgc.org/releases/release_26/Projects/BRCA-US ) and save it to _${QPIPELINE_HOME}/external_databases/icgc/release_26/Projects/BRCA-US/_ 
 ```
 # set FILE variable to point to the downloaded file
 FILE="copy_number_somatic_mutation.BRCA-US.tsv.gz"
