@@ -1,8 +1,8 @@
 ## NCBI ClinVar VCF File
 
-This page describes how to create the ClinVar VCF database and how to use **_qpipeline_** to annotate VCF files with ClinVar VCF database.
+This page describes how to create the ClinVar VCF database and how to use **_qpipeline_** to annotate VCF files with it.
 
-Create a directory to store ClinVar database ( *${QPIPELINE_HOME}/external_databases/ncbi* )
+Create a directory to store ClinVar database
 ```
 # create directory
 mkdir ${QPIPELINE_HOME}/external_databases/ncbi/clinvar 
@@ -10,15 +10,16 @@ mkdir ${QPIPELINE_HOME}/external_databases/ncbi/clinvar
 cd ${QPIPELINE_HOME}/external_databases/ncbi/clinvar 
 ```
 
-Download and index ClinVar VCF database 
+Download and use tabix to index ClinVar VCF database 
 ```
-# Set FILE_URL variable to point to the ClinVar VCF database file to be downloaded ( we will be using this variable a few times )
+# Set FILE_URL variable to point to the ClinVar VCF database file to be downloaded
+# ( we will be using this variable a few times )
 FILE_URL="FILE_URL="ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz""
 
 # use wget to download the ClinVar VCF database file
 wget $FILE_URL --no-passive-ftp
 
-# use basename to get just the file name from FILE_URL so we can modify it 
+# use basename to get just the file name from FILE_URL so we can save our modifications to it 
 FILE=`basename $FILE_URL`;
 
 # Add the 'chr' prefix and save it as ${FILE} 
