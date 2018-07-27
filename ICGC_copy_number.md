@@ -1,16 +1,15 @@
 
 ## ICGC Copy Number Somatic Mutation
 
-This page describes how to create the ICGC Copy Number Somatic Mutation database and how to use **_qpipeline_** to annotate VCF files with it
+This page describes how to create the ICGC Copy Number Somatic Mutation database and how to use **_qpipeline_** to annotate user data with it.
 
-Create a directory in *${QPIPELINE_HOME}/external_databases* to store the ICGC copy number somatic mutation database - see https://dcc.icgc.org/releases
+Create a directory to store the copy number database
 ```
-# using the same structure as the ICGC - https://dcc.icgc.org/releases/release_26/Summary 
+# using similar structure as the ICGC - see https://dcc.icgc.org/releases/release_26/Summary 
 cd ${QPIPELINE_HOME}/external_databases/icgc/release_26/Projects/BRCA-US/
 ```
-Download the copy number somatic mutation from the ICGC, for example BRCA-US https://dcc.icgc.org/releases/release_26/Projects/BRCA-US
+Download the copy number somatic mutation database from ICGC, for example BRCA-US https://dcc.icgc.org/releases/release_26/Projects/BRCA-US and save it to ${QPIPELINE_HOME}/external_databases/icgc/release_26/Projects/BRCA-US/ 
 ```
-# in  ${QPIPELINE_HOME}/external_databases/icgc/release_26/Projects/BRCA-US/ 
 # set FILE variable to point to the downloaded file
 FILE="copy_number_somatic_mutation.BRCA-US.tsv.gz"
 
