@@ -16,9 +16,10 @@ mkdir -p v83/VCF ; cd v83/VCF
 
 Follow instructions from the COSMIC website to download both coding and non-coding VCF files - http://cancer.sanger.ac.uk/cosmic/download.  User registration is required. The following are instructions on how to download the coding and non-coding VCF files using sftp:
 ```
-sftp "email@somewhere.com"@sftp-cancer.sanger.ac.uk
-
-mget /cosmic/grch37/cosmic/v83/VCF/Cosmic*gz
+# login 
+sftp "your_email@somewhere.com"@sftp-cancer.sanger.ac.uk
+# get Cosmic VCF files
+mget /cosmic/grch37/cosmic/v83/VCF/Cosmic*.vcf.gz
 ```
 
 Once downloaded, combine both coding and non-coding files together to create the COSMIC database
