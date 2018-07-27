@@ -40,7 +40,8 @@ echo "#################################" >> _.tmp.header ;
 echo "##header for $NCFILE " >> _.tmp.header ; cat _${NCFILE}.tmp.header >> _.tmp.header
 
 
-# Add 'chr' and 'CODING=1' to data in coding file.  This is necessary so we know where entries came from later on
+# Add 'chr' and 'CODING=1' to data in coding file.  This is necessary so we know where the 
+# entries are from later on
 zcat $CFILE  | awk '{ if ($1 ~ /^#/) { print $0 } else { print "chr"$0";CODING=1" }}' | grep -v "^#" > _${CFILE}.tmp.modified
 
 # Similarly, add 'chr' and 'NONCODING=1' to data in non-coding file
