@@ -57,9 +57,9 @@ bgzip COSMIC_${VER}.vcf;
 
 # index the database using tabix 
 tabix -p vcf COSMIC_${VER}.vcf.gz
-
-
-# Test to see if qpipeline works with the newly created database
+```
+Test the newly created database with **_qpipeline_**
+```
 # take the first 200 lines from newly created database as a test file
 zcat COSMIC_${VER}.vcf.gz | head -200 > test.vcf 
 
