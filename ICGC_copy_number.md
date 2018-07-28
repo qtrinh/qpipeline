@@ -24,8 +24,9 @@ bgzip ${FILE}.modified.tsv
  
 # index using tabix
 tabix -p bed  ${FILE}.modified.tsv.gz 
-
-
+```
+Testing the newly created database with **_qpipeline_**
+```
 # Use the file '${QPIPELINE_HOME}/test_data/vcf/test.vcf' to test qpipeline with the newly created database
 qpipeline tabix -m 2000 -i ${QPIPELINE_HOME}/test_data/vcf/test.vcf  -d copy_number_somatic_mutation.BRCA-US.tsv.gz.modified.tsv.gz  -q BRCA-US | less
 ```
