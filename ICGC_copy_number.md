@@ -17,11 +17,9 @@ FILE="copy_number_somatic_mutation.BRCA-US.tsv.gz"
 zcat $FILE | head -1 | awk '{ print "chr\tstart\tend\t"$0 }' > ${FILE}.modified.tsv
 zcat $FILE | grep -v icgc_donor |  awk -F"\t" '{ print "chr"$12"\t"$13"\t"$14"\t"$0 }' | sort -k1,1 -k2,2n -k3,3n >> ${FILE}.modified.tsv  
 
-
 # compress using bgzip 
 bgzip ${FILE}.modified.tsv 
- 
- 
+  
 # index using tabix
 tabix -p bed  ${FILE}.modified.tsv.gz 
 ```
