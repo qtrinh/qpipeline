@@ -5,12 +5,13 @@ This page describes how to create the ICGC Simple Somatic Mutations database and
 
 Create a directory in *${QPIPELINE_HOME}/external_databases* to store the ICGC simple somatic mutations database - see https://dcc.icgc.org/releases
 ```
-# using the same structure as the ICGC - https://dcc.icgc.org/releases/release_26/Summary 
-cd ${QPIPELINE_HOME}/external_databases/icgc/release_26/Summary
+# using the same structure as the ICGC - for example, for release 26 - https://dcc.icgc.org/releases/release_26/Summary 
+mkdir -p ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Summary
 ```
 Download the simple somatic mutation from  https://dcc.icgc.org/releases/release_26/Summary
 ```
-# in ${QPIPELINE_HOME}/external_databases/icgc/release_26/Summary
+# in ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Summary
+cd ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Summary
 # set FILE variable to point to the simple_somatic_mutation.aggregated.vcf.gz
 FILE="simple_somatic_mutation.aggregated.vcf.gz"
 
