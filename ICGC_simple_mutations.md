@@ -8,10 +8,9 @@ Create a directory in *${QPIPELINE_HOME}/external_databases* to store the ICGC s
 # using the same structure as the ICGC - for example, for release 26 - https://dcc.icgc.org/releases/release_26/Summary 
 mkdir -p ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Summary
 ```
-Download the simple somatic mutation from  https://dcc.icgc.org/releases/release_26/Summary
+Download the simple somatic mutation from  https://dcc.icgc.org/releases/release_26/Summary and save it to ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Summary
 ```
 # in ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Summary
-cd ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Summary
 # set FILE variable to point to the simple_somatic_mutation.aggregated.vcf.gz
 FILE="simple_somatic_mutation.aggregated.vcf.gz"
 
