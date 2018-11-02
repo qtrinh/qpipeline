@@ -39,7 +39,7 @@ Usage:
         qpipeline txt
         ...
 ```
-Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the output from the bash command below to your ~/.bashrc file:
+Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the output from running the bash command below to your ~/.bashrc file:
 ```
 cd ${QPIPELINE_HOME}; scripts/env.sh ${QPIPELINE_HOME}
 
