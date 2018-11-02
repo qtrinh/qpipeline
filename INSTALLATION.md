@@ -32,13 +32,14 @@ Run **_qpipeline_** by itself to see if it is compiled successfully
 ```
 If you see the following, then you have successuflly compiled **_qpipeline_**
 ```
-An annotation and a collection of utils for Next Gen Sequencing (NGS) data.
+...
+qpipeline is an annotation and a collection of utils for Next Gen Sequencing (NGS) data.
 
 Usage:
         qpipeline txt
         ...
 ```
-Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the output from the bash command below to your ~/.bashrc file:
+Add **${QPIPELINE_HOME}**, **samtools** and **tabix** to your path by adding the output from running the bash command below to your ~/.bashrc file:
 ```
 cd ${QPIPELINE_HOME}; scripts/env.sh ${QPIPELINE_HOME}
 
