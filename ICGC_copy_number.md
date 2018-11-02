@@ -5,10 +5,10 @@ This page describes how to create the ICGC Copy Number Somatic Mutation database
 
 Create a directory to store the ICGC copy number database - for example, BRCA-US ( https://dcc.icgc.org/releases/release_26/Projects/BRCA-US )
 ```
-# using similar structure as the ICGC - see https://dcc.icgc.org/releases/release_26/Summary 
+# using similar structure as the ICGC
 mkdir -p ${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Projects/BRCA-US/
 ```
-Download the copy number somatic mutation database from ICGC, for example BRCA-US ( see https://dcc.icgc.org/releases/release_26/Projects/BRCA-US ) and save it to _${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Projects/BRCA-US/_ 
+Download the copy number somatic mutation database from ICGC, for example BRCA-US ( copy_number_somatic_mutation.BRCA-US.tsv.gz from https://dcc.icgc.org/releases/release_26/Projects/BRCA-US ) and save it to _${QPIPELINE_HOME}/external_databases/icgc/releases/release_26/Projects/BRCA-US/_ 
 ```
 # set FILE variable to point to the downloaded file
 FILE="copy_number_somatic_mutation.BRCA-US.tsv.gz"
