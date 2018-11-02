@@ -20,13 +20,12 @@ zcat $FILE | grep -v ^# | awk '{ print "chr"$0 }' | sed 's/chrMT/chrM/' |  sort 
 
 # compress using bgzip 
 bgzip ${FILE}.modified.vcf 
- 
- 
+  
 # index using tabix
 tabix -p vcf  ${FILE}.modified.vcf.gz 
-
-
-# Test to see if qpipeline works with the newly created database
+```
+Test the newly created database with ***_qpipeline_***
+```
 # take a few lines from the newly created database as a test file
 zcat  ${FILE}.modified.vcf.gz  | head -200 > test.vcf 
 
