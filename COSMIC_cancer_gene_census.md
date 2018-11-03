@@ -22,9 +22,9 @@ cat cancer_gene_census.txt | grep -v Gene | awk -F"\t" '{ print "chr"$4"\t"$0 }'
 cat tmp | awk -F"\t" '($2!=".") || ($3!=".")' > _tmp ; mv _tmp tmp ;
 
 # convert to bed 
-perl ${QPIPELINE_HOME}/scripts/tab2bed.pl  tmp 1 2 3 | sort -k1,1 -k2,2n -k3,3 > cancer_gene_census.txt.db.bed
+perl ${QPIPELINE_HOME}/scripts/tab2bed.pl  tmp 1 2 3 | sort -k1,1 -k2,2n -k3,3 > cancer_gene_census.txt.bed
 
 # compress and index 
-bgzip cancer_gene_census.txt.db.bed
-tabix -p bed cancer_gene_census.txt.db.bed.gz
+bgzip cancer_gene_census.txt.bed
+tabix -p bed cancer_gene_census.txt.bed.gz
 ```
