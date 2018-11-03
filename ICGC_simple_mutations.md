@@ -15,6 +15,7 @@ Download the simple somatic mutation from  https://dcc.icgc.org/releases/release
 FILE="simple_somatic_mutation.aggregated.vcf.gz"
 
 # add 'chr' prefix, change 'chrMT' to 'chrM'; sort by genomic positions
+# NOTE: this will take a while because simple_somatic_mutation.aggregated.vcf.gz contained ~ 68M entries
 zcat $FILE | head -100 | grep ^# > ${FILE}.modified.vcf 
 zcat $FILE | grep -v ^# | awk '{ print "chr"$0 }' | sed 's/chrMT/chrM/' |  sort -k1,1 -k2,2n >> ${FILE}.modified.vcf 
 
