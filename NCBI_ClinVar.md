@@ -14,7 +14,7 @@ Download and use tabix to index ClinVar VCF database
 ```
 # Set FILE_URL variable to point to the ClinVar VCF database file to be downloaded
 # ( we will be using this variable a few times )
-FILE_URL="FILE_URL="ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz""
+FILE_URL="ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz"
 
 # use wget to download the ClinVar VCF database file
 wget $FILE_URL --no-passive-ftp
