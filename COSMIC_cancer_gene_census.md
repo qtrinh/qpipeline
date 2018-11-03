@@ -12,19 +12,22 @@ Follow instructions from the COSMIC website to download the COSMIC Cancer Gene C
 Once downloaded, the following instructions described how to create the cancer census database and test it with qpipeline
 
 ```
-# convert csv to txt 
-${QPIPELINE_HOME}/scripts/convert.csv2tab.using.python.sh  < cancer_gene_census.csv > cancer_gene_census.txt
+# set FILE variable to point to the cancer census database
+FILE="cancer_gene_census.csv"
 
-# create the chr, start, end as the first 3 columns and save it as tmp 
-cat cancer_gene_census.txt | head -1 | awk -F"\t" '{ print "chr\tstart\tend\t"$0 }' > tmp;
-cat cancer_gene_census.txt | grep -v Gene | awk -F"\t" '{ print "chr"$4"\t"$0 }' | sed 's/:-/:.-./' | sed 's/:/\t/' | sed 's/-/\t/' >> tmp
+# convert csv to txt 
+${QPIPELINE_HOME}/scripts/convert.csv2tab.using.python.sh  < $FILE > ${FILE}.txt
+
+# create the chr, start, end as the first 3 columns and save it as ${FILE}.txt.tmp  
+cat ${FILE}.txt | head -1 | awk -F"\t" '{ print "chr\tstart\tend\t"$0 }' > ${FILE}.txt.tmp;
+cat ${FILE}.txt | grep -v Gene | awk -F"\t" '{ print "chr"$4"\t"$0 }' | sed 's/:-/:.-./' | sed 's/:/\t/' | sed 's/-/\t/' >> ${FILE}.txt.tmp
 # remove entries where start and end are missing ( with values "." );
-cat tmp | awk -F"\t" '($2!=".") || ($3!=".")' > _tmp ; mv _tmp tmp ;
+cat ${FILE}.txt.tmp | awk -F"\t" '($2!=".") || ($3!=".")' > tmp ; mv tmp ${FILE}.txt.tmp ;
 
 # convert to bed 
-perl ${QPIPELINE_HOME}/scripts/tab2bed.pl  tmp 1 2 3 | sort -k1,1 -k2,2n -k3,3 > cancer_gene_census.txt.bed
+perl ${QPIPELINE_HOME}/scripts/tab2bed.pl  ${FILE}.txt.tmp  1 2 3 | sort -k1,1 -k2,2n -k3,3 > ${FILE}.bed
 
 # compress and index 
-bgzip cancer_gene_census.txt.bed
-tabix -p bed cancer_gene_census.txt.bed.gz
+bgzip ${FILE}.bed
+tabix -p bed ${FILE}.bed.gz 
 ```
