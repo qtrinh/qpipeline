@@ -32,5 +32,5 @@ bgzip ${FILE}.bed
 tabix -p bed ${FILE}.bed.gz 
 
 # remove intermediate files
-rm  ${FILE}.txt.*
+rm  ${FILE}.txt*
 ```
