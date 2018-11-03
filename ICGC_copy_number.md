@@ -20,12 +20,14 @@ zcat $FILE | grep -v icgc_donor |  awk -F"\t" '{ print "chr"$12"\t"$13"\t"$14"\t
 # make columns 4 and on as key-value pairs
 qpipeline txt -m 1500 -i ${FILE}.tmp | sed 's/\xD7/;/g' | sed 's/chr=//' | sed 's/start=//' | sed 's/end=//' | sed 's/;/\t/2' | sed 's/;/\t/' | sed 's/;/\t/' > ${FILE}.bed 
 
-# 
 # compress using bgzip 
 bgzip ${FILE}.bed  
   
 # index using tabix
 tabix -p bed  ${FILE}.bed.gz 
+
+# remove intermediate file 
+rm  ${FILE}.tmp
 ```
 Testing the newly created database with **_qpipeline_**
 ```
