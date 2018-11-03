@@ -2,7 +2,7 @@
 
 This page describes how to create ClinVar VCF database and how to use **_qpipeline_** to annotate user data with it.
 
-Create a directory to store ClinVar database
+Create a directory to store NCBI ClinVar database
 ```
 # create directory
 mkdir ${QPIPELINE_HOME}/external_databases/ncbi/clinvar 
