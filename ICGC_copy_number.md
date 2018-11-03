@@ -14,17 +14,21 @@ Download the copy number somatic mutation database from ICGC, for example BRCA-U
 FILE="copy_number_somatic_mutation.BRCA-US.tsv.gz"
 
 # add 'chr', 'start', and 'end' as the first 3 columns; sort by genomic positions
-zcat $FILE | head -1 | awk '{ print "chr\tstart\tend\t"$0 }' > ${FILE}.modified.tsv
-zcat $FILE | grep -v icgc_donor |  awk -F"\t" '{ print "chr"$12"\t"$13"\t"$14"\t"$0 }' | sort -k1,1 -k2,2n -k3,3n >> ${FILE}.modified.tsv  
+zcat $FILE | head -1 | awk '{ print "chr\tstart\tend\t"$0 }' > ${FILE}.tmp
+zcat $FILE | grep -v icgc_donor |  awk -F"\t" '{ print "chr"$12"\t"$13"\t"$14"\t"$0 }' | sort -k1,1 -k2,2n -k3,3n >> ${FILE}.tmp  
 
+# make columns 4 and on as key-value pairs
+qpipeline txt -m 1500 -i ${FILE}.tmp | sed 's/\xD7/;/g' | sed 's/chr=//' | sed 's/start=//' | sed 's/end=//' | sed 's/;/\t/2' | sed 's/;/\t/' | sed 's/;/\t/' > ${FILE}.bed 
+
+# 
 # compress using bgzip 
-bgzip ${FILE}.modified.tsv 
+bgzip ${FILE}.bed  
   
 # index using tabix
-tabix -p bed  ${FILE}.modified.tsv.gz 
+tabix -p bed  ${FILE}.bed.gz 
 ```
 Testing the newly created database with **_qpipeline_**
 ```
 # Use the file '${QPIPELINE_HOME}/test_data/vcf/test.vcf' to test qpipeline with the newly created database
-qpipeline tabix -m 2000 -i ${QPIPELINE_HOME}/test_data/vcf/test.vcf  -d copy_number_somatic_mutation.BRCA-US.tsv.gz.modified.tsv.gz  -q BRCA-US | less
+qpipeline tabix -m 2000 -i ${QPIPELINE_HOME}/test_data/vcf/test.vcf  -d copy_number_somatic_mutation.BRCA-US.tsv.gz.bed.gz  -q BRCA-US | less
 ```
