@@ -30,4 +30,7 @@ perl ${QPIPELINE_HOME}/scripts/tab2bed.pl  ${FILE}.txt.tmp  1 2 3 | sort -k1,1 -
 # compress and index 
 bgzip ${FILE}.bed
 tabix -p bed ${FILE}.bed.gz 
+
+# remove intermediate files
+rm  ${FILE}.txt.*
 ```
