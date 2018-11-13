@@ -1,5 +1,7 @@
 
 
+This page describes instructions on how to convert COSMIC databases to use with _**qpipeline**_.  
+Follow instructions from the COSMIC website to download the databases needed ( http://cancer.sanger.ac.uk/cosmic/download ) then follow the instructions below on how to convert them before using with _**qpipeline**_.
 
 [COSMIC Cancer Gene Census](#CGC)
 
