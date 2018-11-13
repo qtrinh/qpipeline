@@ -1,9 +1,9 @@
 
-## COSMIC Cancer Gene Census
-
-This page describes how to create the COSMIC Cancer Gene Census database and how to use **_qpipeline_** to annotate VCF files with COSMIC Cancer Gene Census database.
 
 
+[COSMIC Cancer Gene Census](#CGC)
+
+# COSMIC Cancer Gene Census
 Create a directory to store COSMIC Cancer Gene Census database
 ```
 mkdir -p ${QPIPELINE_HOME}/external_databases/cosmic/cancer_gene_census
